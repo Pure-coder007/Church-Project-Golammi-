@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
+    <meta name="description" content="Gateway of Life and Miracle Ministries International - Golammi Worship Center. A Prophetic Ministry where God reconstructs anything the devil has destroyed in the life of people.">
+    <meta name="keywords" content="Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, prophetic ministry, church, worship, prayer, miracles">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        /* ===== GOLD, BLACK & WHITE THEME - Custom Styles ===== */
+        :root {
+            --gold: #c9a84c;
+            --gold-dark: #a8892e;
+            --gold-light: #e8d5a3;
+            --black: #1a1a1a;
+            --dark-gray: #2d2d2d;
+            --light-gray: #f8f6f0;
+            --white: #ffffff;
+        }
+
+        .my_logo {
+            width: 6rem;
+            height: 6rem;
+        }
+
+        /* ===== HERO CAROUSEL - GOLD THEME ===== */
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-carousel .carousel-item {
+            height: 100vh;
+            min-height: 600px;
+        }
+
+        .hero-carousel .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-carousel .carousel-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.35) 100%);
+        }
+
+        .hero-carousel .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 950px;
+        }
+
+        .hero-carousel .carousel-caption .church-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--black);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-carousel .carousel-caption h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-carousel .carousel-caption .sub-title {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 1.1s ease;
+        }
+
+        .hero-carousel .carousel-caption .tagline {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s ease;
+            font-style: italic;
+            border-top: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
+            padding: 15px 0;
+            display: inline-block;
+        }
+
+        .hero-carousel .carousel-caption .btn-hero {
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1.4s ease;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-primary {
+            background: var(--gold);
+            color: var(--black);
+            border: 2px solid var(--gold);
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-primary:hover {
+            background: transparent;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.4);
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+            border-color: #fff;
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-live {
+            background: #ff0000;
+            color: #fff;
+            border: 2px solid #ff0000;
+            animation: pulse-btn 2s infinite;
+        }
+
+        .hero-carousel .carousel-caption .btn-hero-live:hover {
+            background: transparent;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        @keyframes pulse-btn {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+            }
+        }
+
+        .hero-carousel .carousel-indicators {
+            bottom: 120px;
+        }
+
+        .hero-carousel .carousel-indicators button {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: transparent;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-carousel .carousel-indicators button.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: scale(1.2);
+        }
+
+        .hero-carousel .carousel-control-prev,
+        .hero-carousel .carousel-control-next {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-container:hover .hero-carousel .carousel-control-prev,
+        .hero-container:hover .hero-carousel .carousel-control-next {
+            opacity: 1;
+        }
+
+        .hero-carousel .carousel-control-prev:hover,
+        .hero-carousel .carousel-control-next:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* Hero Stats Overlay */
+        .hero-stats-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 5;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+            padding: 80px 0 30px;
+        }
+
+        .hero-stats-overlay .stat-item {
+            text-align: center;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .hero-stats-overlay .stat-item .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            display: block;
+            color: var(--gold);
+        }
+
+        .hero-stats-overlay .stat-item .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-carousel .carousel-caption h1 {
+                font-size: 2.8rem;
+            }
+            .hero-carousel .carousel-caption .sub-title {
+                font-size: 1.2rem;
+            }
+            .hero-carousel .carousel-caption .tagline {
+                font-size: 1rem;
+                padding: 10px 0;
+            }
+            .hero-stats-overlay .stat-item .stat-number {
+                font-size: 2rem;
+            }
+            .hero-carousel .carousel-indicators {
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-carousel .carousel-caption h1 {
+                font-size: 1.8rem;
+            }
+            .hero-carousel .carousel-caption .sub-title {
+                font-size: 1rem;
+            }
+            .hero-carousel .carousel-caption .tagline {
+                font-size: 0.85rem;
+                padding: 8px 0;
+            }
+            .hero-carousel .carousel-caption .btn-hero {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                display: block;
+                margin: 8px auto;
+                max-width: 220px;
+            }
+            .hero-stats-overlay .stat-item {
+                padding: 5px;
+            }
+            .hero-stats-overlay .stat-item .stat-number {
+                font-size: 1.4rem;
+            }
+            .hero-stats-overlay .stat-item .stat-label {
+                font-size: 0.7rem;
+            }
+            .hero-carousel .carousel-indicators {
+                bottom: 80px;
+            }
+            .hero-carousel .carousel-indicators button {
+                width: 10px;
+                height: 10px;
+                margin: 0 5px;
+            }
+        }
+
+        /* ===== EVENT TICKER - GOLD THEME ===== */
+        .event-ticker {
+            background: var(--gold);
+            padding: 20px 0;
+        }
+
+        .event-ticker .ticker-item .date {
+            background: rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: var(--black);
+        }
+
+        .event-ticker .ticker-item .title {
+            color: var(--black);
+        }
+
+        .event-ticker .ticker-item .btn-register {
+            background: rgba(0, 0, 0, 0.15);
+            color: var(--black);
+        }
+
+        .event-ticker .ticker-item .btn-register:hover {
+            background: var(--black);
+            color: var(--gold);
+        }
+
+        /* ===== ABOUT SECTION - GOLD THEME ===== */
+        .about .display-6 span {
+            color: var(--gold);
+        }
+        .about .display-6 span:after {
+            background-color: rgba(201, 168, 76, 0.2);
+        }
+
+        .about .stat-box {
+            border-bottom-color: var(--gold);
+        }
+
+        .about .mission-vision-row .value-card .card-icon {
+            background-color: rgba(201, 168, 76, 0.1);
+        }
+        .about .mission-vision-row .value-card .card-icon i {
+            color: var(--gold);
+        }
+        .about .mission-vision-row .value-card:before {
+            background-color: rgba(201, 168, 76, 0.05);
+        }
+
+        /* ===== MINISTRIES - GOLD THEME ===== */
+        .featured-programs .program-badge {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+        .featured-programs .program-btn {
+            color: var(--gold);
+        }
+        .featured-programs .program-btn span:after {
+            background-color: var(--gold);
+        }
+        .featured-programs .isotope-filters li:hover,
+        .featured-programs .isotope-filters li.filter-active {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        /* ===== TESTIMONIALS - GOLD THEME ===== */
+        .testimonials .testimonial-item.highlight .testimonial-content {
+            background-color: rgba(201, 168, 76, 0.08);
+            border-color: rgba(201, 168, 76, 0.3);
+        }
+        .testimonials .testimonial-item.highlight .testimonial-content .quote-pattern {
+            background-color: rgba(201, 168, 76, 0.15);
+        }
+        .testimonials .testimonial-item.highlight .testimonial-content .quote-pattern i {
+            color: var(--gold);
+        }
+        .testimonials .quote-pattern i {
+            color: var(--gold);
+        }
+
+        /* ===== STATS - GOLD THEME ===== */
+        .stats .stats-card .stats-icon {
+            color: var(--gold);
+        }
+        .stats .stats-overview .stats-cta .btn-primary {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+        .stats .stats-overview .stats-cta .btn-primary:hover {
+            background-color: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: var(--black);
+        }
+        .stats .stats-overview .stats-cta .btn-outline {
+            border-color: var(--black);
+            color: var(--black);
+        }
+        .stats .stats-overview .stats-cta .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ===== EVENTS - GOLD THEME ===== */
+        .events .event-card .event-date {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+        .events .event-card .event-date .month,
+        .events .event-card .event-date .day,
+        .events .event-card .event-date .year {
+            color: var(--black);
+        }
+        .events .event-card .event-meta .meta-item i {
+            color: rgba(201, 168, 76, 0.5);
+        }
+        .events .event-card .event-actions .btn-learn-more {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+        .events .event-card .event-actions .btn-learn-more:hover {
+            background-color: var(--gold-dark);
+            color: var(--black);
+        }
+        .events .event-card .event-actions .btn-calendar {
+            color: var(--gold);
+            border-color: rgba(201, 168, 76, 0.5);
+        }
+        .events .btn-view-all {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+        .events .btn-view-all:hover {
+            background-color: var(--gold-dark);
+            color: var(--black);
+        }
+
+        /* ===== FOOTER - GOLD THEME ===== */
+        .footer .social-links a:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        .footer .footer-links ul a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== NAV HOVER - GOLD THEME ===== */
+        .navmenu li:hover>a,
+        .navmenu .active,
+        .navmenu .active:focus {
+            color: var(--gold) !important;
+        }
+
+        /* ===== SECTION TITLES - GOLD THEME ===== */
+        .section-title h2:before,
+        .section-title h2:after {
+            background: var(--gold);
+        }
+
+        /* ===== GIVING CARD - GOLD THEME ===== */
+        .giving-card {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            border-radius: 16px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        .giving-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(201, 168, 76, 0.3);
+        }
+        .giving-card .giving-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .giving-card h3 {
+            color: var(--black);
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .giving-card p {
+            color: rgba(0, 0, 0, 0.85);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .giving-card .btn-giving {
+            background: var(--black);
+            color: var(--gold);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .giving-card .btn-giving:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: var(--gold);
+        }
+
+        /* ===== PRAYER CARD - GOLD THEME ===== */
+        .prayer-card {
+            background: linear-gradient(135deg, var(--black), var(--dark-gray));
+            color: #fff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        .prayer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .prayer-card .prayer-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--gold);
+        }
+        .prayer-card h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .prayer-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .prayer-card .btn-prayer {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .prayer-card .btn-prayer:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        /* ===== SOCIAL MEDIA FEED - GOLD THEME ===== */
+        .social-feed-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .social-feed-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .social-feed-item .feed-header .avatar {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ===== LIVE STREAM - GOLD THEME ===== */
+        .live-stream-section .section-title h2:before,
+        .live-stream-section .section-title h2:after {
+            background: var(--gold);
+        }
+
+        /* ===== RADIO - GOLD THEME ===== */
+        .radio-player .radio-icon {
+            color: var(--gold);
+        }
+        .radio-player .btn-radio {
+            background: var(--gold);
+            color: var(--black);
+        }
+        .radio-player .btn-radio:hover {
+            background: var(--gold-dark);
+            color: var(--black);
+        }
+
+        /* ===== SCROLL TOP - GOLD THEME ===== */
+        .scroll-top {
+            background-color: var(--gold);
+        }
+        .scroll-top i {
+            color: var(--black);
+        }
+        .scroll-top:hover {
+            background-color: var(--gold-dark);
+        }
+
+        /* ===== SCROLLED HEADER - GOLD THEME ===== */
+        .scrolled .header {
+            --background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* ===== RESPONSIVE - GOLD THEME ===== */
+        @media (max-width: 768px) {
+            .giving-card,
+            .prayer-card {
+                margin-bottom: 20px;
+            }
+            .live-stream-wrapper {
+                padding: 15px;
+            }
+            .radio-player {
+                padding: 20px;
+            }
+        }
+
+        /* ===== BUTTON OVERRIDES ===== */
+        .btn-primary {
+            background-color: var(--gold) !important;
+            border-color: var(--gold) !important;
+            color: var(--black) !important;
+        }
+        .btn-primary:hover {
+            background-color: var(--gold-dark) !important;
+            border-color: var(--gold-dark) !important;
+            color: var(--black) !important;
+        }
+        .btn-outline {
+            border-color: var(--black) !important;
+            color: var(--black) !important;
+        }
+        .btn-outline:hover {
+            border-color: var(--gold) !important;
+            color: var(--gold) !important;
+        }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
+                <div>
+                    <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="my_logo">
+                </div>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li class="dropdown"><a href="about.html"><span>About</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="about.html">Our Vision</a></li>
+                            <li><a href="about.html#mission">Our Mission</a></li>
+                            <li><a href="about.html#beliefs">What We Believe</a></li>
+                            <li><a href="about.html#leadership">Leadership</a></li>
+                            <li><a href="about.html#history">Our History</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="sermons.html">Sermons</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="prayer.html">Prayer</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="giving.html">Giving</a></li>
+                    <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="blog.html">Blog / News</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="radio.html">Radio</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25);">Admin</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="main">
+
+        <!-- ======= Hero Section with Carousel ======= -->
+        <section id="hero" class="hero section dark-background">
+
+            <div class="hero-container">
+
+                <!-- Image Carousel -->
+                <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="assets/img/go59.jpg" alt="Golammi Worship Center">
+                            <div class="carousel-caption">
+                                <div class="church-badge">Gateway of Life and Miracle Ministries International</div>
+                                <h1>Golammi Worship Center</h1>
+                                <p class="sub-title">A Prophetic Ministry</p>
+                                <p class="tagline">"Where God reconstructs anything the devil has destroyed in the life of people."</p>
+                                <div>
+                                    <a href="#" class="btn-hero btn-hero-primary">Join Us This Sunday</a>
+                                    <a href="#" class="btn-hero btn-hero-live"><i class="bi bi-play-circle"></i> Watch Live</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/go5.jpg" alt="Golammi Worship Center - Praise">
+                            <div class="carousel-caption">
+                                <div class="church-badge">Gateway of Life and Miracle Ministries International</div>
+                                <h1>Praise &amp; Worship</h1>
+                                <p class="sub-title">Enter His Gates with Thanksgiving</p>
+                                <p class="tagline">"Make a joyful noise unto the Lord, all ye lands." — Psalm 100:1</p>
+                                <div>
+                                    <a href="#" class="btn-hero btn-hero-primary">Join Us</a>
+                                    <a href="#" class="btn-hero btn-hero-secondary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/go8.jpg" alt="Golammi Worship Center - Prayer">
+                            <div class="carousel-caption">
+                                <div class="church-badge">Gateway of Life and Miracle Ministries International</div>
+                                <h1>Prayer &amp; Intercession</h1>
+                                <p class="sub-title">Where Miracles Happen</p>
+                                <p class="tagline">"The earnest prayer of a righteous person has great power." — James 5:16</p>
+                                <div>
+                                    <a href="#" class="btn-hero btn-hero-primary">Submit Prayer Request</a>
+                                    <a href="#" class="btn-hero btn-hero-secondary">Join Prayer Meeting</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/go39.jpg" alt="Golammi Worship Center - Youth">
+                            <div class="carousel-caption">
+                                <div class="church-badge">Gateway of Life and Miracle Ministries International</div>
+                                <h1>Youth &amp; Next Generation</h1>
+                                <p class="sub-title">Raising Kingdom Leaders</p>
+                                <p class="tagline">"Let no one despise you for your youth, but set the believers an example." — 1 Timothy 4:12</p>
+                                <div>
+                                    <a href="#" class="btn-hero btn-hero-primary">Youth Ministry</a>
+                                    <a href="#" class="btn-hero btn-hero-secondary">Events</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <!-- Stats Overlay -->
+                <div class="hero-stats-overlay">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 col-sm-3 col-md-3 stat-item">
+                                <span class="stat-number" data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2">25+</span>
+                                <span class="stat-label">Years of Ministry</span>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 stat-item">
+                                <span class="stat-number" data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2">1200+</span>
+                                <span class="stat-label">Members &amp; Counting</span>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 stat-item">
+                                <span class="stat-number" data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2">85+</span>
+                                <span class="stat-label">Miracles Reported</span>
+                            </div>
+                            <div class="col-6 col-sm-3 col-md-3 stat-item">
+                                <span class="stat-number" data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2">50+</span>
+                                <span class="stat-label">Outreach Programs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </section>
+        <!-- /Hero Section -->
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row mb-5">
+                    <div class="col-lg-6 pe-lg-5" data-aos="fade-right" data-aos-delay="200">
+                        <h2 class="display-6 fw-bold mb-4">Welcome to <span>Gateway of Life and Miracle Ministries International</span></h2>
+                        <h4 class="mb-3" style="color: var(--gold);">Golammi Worship Center</h4>
+                        <p class="lead mb-4"><strong>GOLAMMI</strong> is a prophetic ministry where God reconstructs anything the devil has destroyed in the life of people. We are a people of faith, love, and power, dedicated to winning souls and building disciples for Christ.</p>
+                        <div class="d-flex flex-wrap gap-4 mb-4">
+                            <div class="stat-box">
+                                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                                <span class="stat-label">Years of Ministry</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                                <span class="stat-label">Members</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>+</span>
+                                <span class="stat-label">Miracles</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mt-4 signature-block">
+                            <div class="ms-0">
+                                <p class="mb-0 fw-bold" style="font-size: 1.1rem;">Prophet (Dr.) James Elinissi Iferemilekun (Lion Of Jesus)</p>
+                                <p class="mb-0 text-muted">Founder &amp; General Overseer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+                        <div class="image-stack">
+                            <div class="image-stack-item image-stack-item-top" data-aos="zoom-in" data-aos-delay="400">
+                                <img src="assets/img/go26.jpg" alt="Golammi Worship Center" class="img-fluid rounded-4 shadow-lg">
+                            </div>
+                            <div class="image-stack-item image-stack-item-bottom" data-aos="zoom-in" data-aos-delay="500">
+                                <img src="assets/img/go25.jpg" alt="Worship" class="img-fluid rounded-4 shadow-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mission-vision-row g-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="value-card h-100">
+                            <div class="card-icon">
+                                <i class="bi bi-rocket-takeoff"></i>
+                            </div>
+                            <h3>Our Mission</h3>
+                            <p>To reconstruct broken lives, restore destinies, and bring people into their God-given purpose through the prophetic word, prayer, and the power of the Holy Spirit.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="value-card h-100">
+                            <div class="card-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                            <h3>Our Vision</h3>
+                            <p>To be a global gateway of life and miracles, raising a generation of prophetic believers who will impact their world with the love and power of Jesus Christ.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="value-card h-100">
+                            <div class="card-icon">
+                                <i class="bi bi-star"></i>
+                            </div>
+                            <h3>Our Values</h3>
+                            <p>Faith in God's Word, Love for all people, Prayer and Intercession, Prophetic Worship, Community Impact, and Excellence in all we do.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /About Section -->
+
+        <!-- ======= Ministries Section ======= -->
+        <section id="ministries" class="featured-programs section" style="background: #fff;">
+
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Our Ministries</h2>
+                <p>Gateway of Life and Miracle Ministries International offers a wide range of ministries designed to help you grow in faith and fulfill your purpose.</p>
+            </div>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                    <ul class="program-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                        <li data-filter="*" class="filter-active">All Ministries</li>
+                        <li data-filter=".filter-worship">Worship</li>
+                        <li data-filter=".filter-prayer">Prayer</li>
+                        <li data-filter=".filter-youth">Youth</li>
+                        <li data-filter=".filter-outreach">Outreach</li>
+                    </ul>
+
+                    <div class="row g-4 isotope-container">
+                        <div class="col-lg-6 isotope-item filter-worship" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="program-item">
+                                <div class="program-badge">Worship Ministry</div>
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <div class="program-image-wrapper">
+                                            <img src="assets/img/go5.jpg" class="img-fluid" alt="Worship">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="program-content">
+                                            <h3>Praise &amp; Worship Team</h3>
+                                            <div class="program-highlights">
+                                                <span><i class="bi bi-clock"></i> Every Sunday</span>
+                                                <span><i class="bi bi-music-note-beamed"></i> Music &amp; Arts</span>
+                                            </div>
+                                            <p>Leading the congregation into the presence of God through powerful praise, worship, and prophetic songs.</p>
+                                            <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 isotope-item filter-prayer" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="program-item">
+                                <div class="program-badge">Prayer Ministry</div>
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <div class="program-image-wrapper">
+                                            <img src="assets/img/go23.jpg" class="img-fluid" alt="Prayer">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="program-content">
+                                            <h3>Intercession &amp; Deliverance</h3>
+                                            <div class="program-highlights">
+                                                <span><i class="bi bi-clock"></i> Every Friday</span>
+                                                <span><i class="bi bi-hand-praying"></i> Prayer &amp; Fasting</span>
+                                            </div>
+                                            <p>Engaging in powerful intercessory prayer, deliverance, and spiritual warfare for individuals and the nation.</p>
+                                            <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 isotope-item filter-youth" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="program-item">
+                                <div class="program-badge">Youth Ministry</div>
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <div class="program-image-wrapper">
+                                            <img src="assets/img/go39.jpg" class="img-fluid" alt="Youth">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="program-content">
+                                            <h3>Next Generation Leaders</h3>
+                                            <div class="program-highlights">
+                                                <span><i class="bi bi-clock"></i> Every Saturday</span>
+                                                <span><i class="bi bi-people-fill"></i> Ages 13-30</span>
+                                            </div>
+                                            <p>Raising a generation of prophetic leaders who will impact their world with the gospel and live in purity and power.</p>
+                                            <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 isotope-item filter-outreach" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="program-item">
+                                <div class="program-badge">Outreach Ministry</div>
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <div class="program-image-wrapper">
+                                            <img src="assets/img/go26.jpg" class="img-fluid" alt="Outreach">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="program-content">
+                                            <h3>Community Impact</h3>
+                                            <div class="program-highlights">
+                                                <span><i class="bi bi-clock"></i> Monthly</span>
+                                                <span><i class="bi bi-heart-fill"></i> Charity &amp; Evangelism</span>
+                                            </div>
+                                            <p>Reaching out to the community with the love of Christ through evangelism, charity, and social transformation.</p>
+                                            <a href="#" class="program-btn"><span>Learn More</span> <i class="bi bi-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /Ministries Section -->
+
+        <!-- ======= Giving & Prayer Section ======= -->
+        <section id="give-pray" class="section" style="padding: 60px 0; background: var(--light-gray);">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <div class="giving-card">
+                            <span class="giving-icon"><i class="bi bi-gift-fill"></i></span>
+                            <h3>Online Giving</h3>
+                            <p>Honor the Lord with your tithes, offerings, and seeds. Your giving helps us reach more souls and expand the Kingdom of God.</p>
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
+                                <a href="#" class="btn-giving">Give Online</a>
+                                <a href="#" class="btn-giving" style="background: rgba(0,0,0,0.15); color: var(--gold);">Ways to Give</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="prayer-card">
+                            <span class="prayer-icon"><i class="bi bi-hand-index-thumb-fill"></i></span>
+                            <h3>Prayer Requests</h3>
+                            <p>Submit your prayer requests and let our intercessory team stand with you in faith. We believe that God answers prayer!</p>
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
+                                <a href="#" class="btn-prayer">Submit Request</a>
+                                <a href="#" class="btn-prayer" style="background: rgba(255,255,255,0.05);">Join Prayer Line</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials section" style="background: #fff;">
+
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Testimonies of God's Power</h2>
+                <p>Hear what God is doing in the lives of people through Golammi Worship Center.</p>
+            </div>
+
+            <div class="container">
+
+                <div class="testimonial-masonry">
+
+                    <div class="testimonial-item" data-aos="fade-up">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>After 15 years of barrenness, God visited me through the prophetic word at Golammi. Today, I am a mother of twins! God has truly reconstructed my life.</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-f-7.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Sister Grace</h3>
+                                    <span class="position">GWC Member</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-item highlight" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>I was addicted to drugs and alcohol for 10 years. Through the prayers and deliverance sessions at GOLAMMI, I am completely set free and now serving in the youth ministry!</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-m-7.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Brother Emmanuel</h3>
+                                    <span class="position">Youth Leader</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>My business was on the brink of collapse. After sowing a prophetic seed and receiving prayer, God turned things around. I am now debt-free!</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-f-8.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Sister Esther</h3>
+                                    <span class="position">Business Owner</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>I was diagnosed with a terminal illness. The doctors gave up on me. But the prayer team at GOLAMMI prayed, and God healed me completely!</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-m-8.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Brother Michael</h3>
+                                    <span class="position">GWC Member</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-item highlight" data-aos="fade-up" data-aos-delay="400">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>I found peace, purpose, and a family at Golammi Worship Center. This ministry has truly transformed my life and given me hope for the future.</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-f-9.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Sister Sarah</h3>
+                                    <span class="position">New Believer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-delay="500">
+                        <div class="testimonial-content">
+                            <div class="quote-pattern">
+                                <i class="bi bi-quote"></i>
+                            </div>
+                            <p>God used the prophetic word at GOLAMMI to locate me for a divine appointment. My destiny was reconstructed, and I am walking in my purpose.</p>
+                            <div class="client-info">
+                                <div class="client-image">
+                                    <img src="assets/img/person/person-m-13.webp" alt="Testimony">
+                                </div>
+                                <div class="client-details">
+                                    <h3>Brother David</h3>
+                                    <span class="position">Prophetic Student</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /Testimonials Section -->
+
+        <!-- ======= Stats Section ======= -->
+        <section id="stats" class="stats section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="stats-overview" data-aos="fade-right" data-aos-delay="200">
+                            <h2 class="stats-title">25 Years of Reconstructing Lives for God's Glory</h2>
+                            <p class="stats-description">Gateway of Life and Miracle Ministries International (Golammi Worship Center) has been a beacon of hope, faith, and miracles. Through prophetic worship, prayer, and the Word, we have seen countless lives transformed and destinies restored.</p>
+                            <div class="stats-cta">
+                                <a href="#" class="btn btn-primary">Our Story</a>
+                                <a href="#" class="btn btn-outline">Watch Testimonies</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="stats-card" data-aos="zoom-in" data-aos-delay="300">
+                                    <div class="stats-icon">
+                                        <i class="bi bi-people-fill"></i>
+                                    </div>
+                                    <div class="stats-number">
+                                        <span data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2" class="purecounter"></span>+
+                                    </div>
+                                    <div class="stats-label">Members</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stats-card" data-aos="zoom-in" data-aos-delay="400">
+                                    <div class="stats-icon">
+                                        <i class="bi bi-chat-heart-fill"></i>
+                                    </div>
+                                    <div class="stats-number">
+                                        <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2" class="purecounter"></span>+
+                                    </div>
+                                    <div class="stats-label">Miracles Reported</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stats-card" data-aos="zoom-in" data-aos-delay="500">
+                                    <div class="stats-icon">
+                                        <i class="bi bi-globe-americas"></i>
+                                    </div>
+                                    <div class="stats-number">
+                                        <span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2" class="purecounter"></span>+
+                                    </div>
+                                    <div class="stats-label">Outreach Programs</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stats-card" data-aos="zoom-in" data-aos-delay="600">
+                                    <div class="stats-icon">
+                                        <i class="bi bi-building"></i>
+                                    </div>
+                                    <div class="stats-number">
+                                        <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2" class="purecounter"></span>
+                                    </div>
+                                    <div class="stats-label">Years of Ministry</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="achievements-gallery" data-aos="fade-up" data-aos-delay="700">
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="achievement-item">
+                                        <img src="assets/img/go27.jpg" alt="Worship Service" class="img-fluid">
+                                        <div class="achievement-content">
+                                            <h4>Powerful Worship Services</h4>
+                                            <p>Experience the presence of God through prophetic worship and praise.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="achievement-item">
+                                        <img src="assets/img/go28.jpg" alt="Prayer Meeting" class="img-fluid">
+                                        <div class="achievement-content">
+                                            <h4>Life-Changing Prayer</h4>
+                                            <p>Join our intercessory prayer meetings and see God move mightily.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="achievement-item">
+                                        <img src="assets/img/go30.jpg" alt="Community Outreach" class="img-fluid">
+                                        <div class="achievement-content">
+                                            <h4>Community Impact</h4>
+                                            <p>Making a difference in our community through love and service.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /Stats Section -->
+
+        <!-- ======= Recent News Section ======= -->
+        <section id="recent-news" class="recent-news section" style="background: #fff;">
+
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Latest News &amp; Updates</h2>
+                <p>Stay updated with what's happening at Gateway of Life and Miracle Ministries International.</p>
+            </div>
+
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <article>
+                            <div class="post-img">
+                                <img src="assets/img/go31.jpg" alt="News" class="img-fluid">
+                            </div>
+                            <p class="post-category">Event</p>
+                            <h2 class="title">
+                                <a href="news-details.html">Annual Prophetic Conference 2026 - "The Year of Reconstruction"</a>
+                            </h2>
+                            <div class="d-flex align-items-center">
+                                <img src="assets/img/person/person-f-12.webp" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                <div class="post-meta">
+                                    <p class="post-author">Apostle Stephen</p>
+                                    <p class="post-date">
+                                        <time datetime="2026-01-15">January 15, 2026</time>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <article>
+                            <div class="post-img">
+                                <img src="assets/img/go32.jpg" alt="News" class="img-fluid">
+                            </div>
+                            <p class="post-category">Ministry</p>
+                            <h2 class="title">
+                                <a href="news-details.html">New Outreach Program Reaches 500+ Families in the Community</a>
+                            </h2>
+                            <div class="d-flex align-items-center">
+                                <img src="assets/img/person/person-f-13.webp" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                <div class="post-meta">
+                                    <p class="post-author">Sister Mercy</p>
+                                    <p class="post-date">
+                                        <time datetime="2026-02-05">February 5, 2026</time>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                        <article>
+                            <div class="post-img">
+                                <img src="assets/img/go33.jpg" alt="News" class="img-fluid">
+                            </div>
+                            <p class="post-category">Testimony</p>
+                            <h2 class="title">
+                                <a href="news-details.html">God Heals 30 People at the Friday Prayer &amp; Deliverance Service</a>
+                            </h2>
+                            <div class="d-flex align-items-center">
+                                <img src="assets/img/person/person-m-10.webp" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                <div class="post-meta">
+                                    <p class="post-author">Brother John</p>
+                                    <p class="post-date">
+                                        <time datetime="2026-02-22">February 22, 2026</time>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="#" class="btn btn-primary" style="padding: 12px 35px; border-radius: 50px; font-weight: 600;">View All News</a>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /Recent News Section -->
+
+        <!-- ======= Events Section ======= -->
+        <section id="events" class="events section">
+
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Upcoming Events</h2>
+                <p>Join us at Gateway of Life and Miracle Ministries International for these life-changing events.</p>
+            </div>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row g-4">
+
+                    <div class="col-lg-6">
+                        <div class="event-card">
+                            <div class="event-date">
+                                <span class="month">MAR</span>
+                                <span class="day">15</span>
+                                <span class="year">2026</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-tag academic">Worship</div>
+                                <h3>Sunday Prophetic Worship Service</h3>
+                                <p>Join us for a powerful time of prophetic worship, prayer, and the Word as we celebrate the goodness of God.</p>
+                                <div class="event-meta">
+                                    <div class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        <span>09:00 AM - 12:00 PM</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>Golammi Worship Center</span>
+                                    </div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn-learn-more">Learn More</a>
+                                    <a href="#" class="btn-calendar"><i class="bi bi-calendar-plus"></i> Add to Calendar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="event-card">
+                            <div class="event-date">
+                                <span class="month">MAR</span>
+                                <span class="day">19</span>
+                                <span class="year">2026</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-tag sports">Prayer</div>
+                                <h3>Midweek Prayer &amp; Bible Study</h3>
+                                <p>Dive deep into the Word of God and experience the power of corporate prayer and intercession.</p>
+                                <div class="event-meta">
+                                    <div class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        <span>06:30 PM - 08:30 PM</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>Golammi Worship Center</span>
+                                    </div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn-learn-more">Learn More</a>
+                                    <a href="#" class="btn-calendar"><i class="bi bi-calendar-plus"></i> Add to Calendar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="event-card">
+                            <div class="event-date">
+                                <span class="month">MAR</span>
+                                <span class="day">21</span>
+                                <span class="year">2026</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-tag arts">Deliverance</div>
+                                <h3>Friday Night Prayer &amp; Deliverance</h3>
+                                <p>Experience freedom and breakthrough through powerful deliverance prayer and prophetic declarations.</p>
+                                <div class="event-meta">
+                                    <div class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        <span>06:00 PM - 10:00 PM</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>Golammi Worship Center</span>
+                                    </div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn-learn-more">Learn More</a>
+                                    <a href="#" class="btn-calendar"><i class="bi bi-calendar-plus"></i> Add to Calendar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="event-card">
+                            <div class="event-date">
+                                <span class="month">APR</span>
+                                <span class="day">5</span>
+                                <span class="year">2026</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-tag community">Conference</div>
+                                <h3>Annual Prophetic Conference 2026</h3>
+                                <p>A 3-day prophetic conference with Apostle Stephen and guest ministers. Come and receive your miracle!</p>
+                                <div class="event-meta">
+                                    <div class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        <span>09:00 AM - 06:00 PM</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>Golammi Worship Center</span>
+                                    </div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn-learn-more">Learn More</a>
+                                    <a href="#" class="btn-calendar"><i class="bi bi-calendar-plus"></i> Add to Calendar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="#" class="btn-view-all">View All Events</a>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /Events Section -->
+
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer position-relative dark-background">
+
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
+                        <div>
+                            <span class="sitename" style="font-size: 22px; font-weight: 700; color: var(--gold);">GWC</span>
+                            <span style="display: block; font-size: 11px; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase; color: #fff;">Gateway of Life &amp; Miracle</span>
+                        </div>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
+                        <p><strong>Golammi Worship Center</strong></p>
+                        <p class="mt-3"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
+                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
+                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State, Country</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Ministries</h4>
+                    <ul>
+                        <li><a href="#">Worship Team</a></li>
+                        <li><a href="#">Prayer Ministry</a></li>
+                        <li><a href="#">Youth Ministry</a></li>
+                        <li><a href="#">Outreach</a></li>
+                        <li><a href="#">Children's Church</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="media.html">Media</a></li>
+                        <li><a href="radio.html">Radio</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="giving.html">Giving</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">Gateway of Life and Miracle Ministries International</strong> <span>All Rights Reserved</span></p>
+            <p class="text-muted" style="font-size: 13px;">Golammi Worship Center — A Prophetic Ministry where God reconstructs anything the devil has destroyed.</p>
+            <div class="credits">
+                Designed by <a href="#">GOLAMMI TECHNICAL DEPARTMENT</a>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 600,
+            once: true
+        });
+
+        // Initialize PureCounter
+        new PureCounter();
+    </script>
+
+</body>
+
+</html>

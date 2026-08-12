@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Terms of Service | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
-    <meta name="description" content="Terms of Service for Gateway of Life and Miracle Ministries International - Golammi Worship Center website.">
-    <meta name="keywords" content="Golammi Worship Center, GWC, terms of service, terms, conditions">
+    <title>Login | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
+    <meta name="description" content="Login to your account at Gateway of Life and Miracle Ministries International - Golammi Worship Center.">
+    <meta name="keywords" content="Golammi Worship Center, GWC, login, admin, account">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -41,7 +41,6 @@
 
         .my_logo { width: 5rem; height: 5rem; }
 
-        /* ===== PRELOADER ===== */
         #preloader {
             position: fixed;
             inset: 0;
@@ -79,127 +78,63 @@
         .navmenu li:hover>a, .navmenu .active, .navmenu .active:focus { color: var(--gold) !important; }
         .scrolled .header { --background-color: rgba(0, 0, 0, 0.9); }
 
-        /* ===== PAGE TITLE ===== */
-        .page-title {
-            padding: 150px 0 70px 0;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-        .page-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%);
-            z-index: 1;
-        }
-        .page-title .container { position: relative; z-index: 2; }
-        .page-title h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
-        }
-        .page-title p {
-            color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-            max-width: 700px;
-            margin: 0 auto 1rem;
-        }
-        .page-title .breadcrumbs {
+        .login-wrapper {
+            min-height: 70vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-        .page-title .breadcrumbs a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .page-title .breadcrumbs a:hover { color: var(--gold); }
-        .page-title .breadcrumbs .current { color: var(--gold); }
-        .page-title .breadcrumbs .separator { color: rgba(255,255,255,0.4); }
-
-        /* ===== TERMS CONTENT ===== */
-        .terms-content {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .terms-content .section-block {
-            margin-bottom: 2.5rem;
-        }
-        .terms-content .section-block:last-child { margin-bottom: 0; }
-        .terms-content .section-block h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.3rem;
-            border-bottom: 2px solid var(--gold);
-        }
-        .terms-content .section-block h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--black);
-            margin: 1rem 0 0.3rem;
-        }
-        .terms-content .section-block p {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 0.5rem;
-        }
-        .terms-content .section-block ul {
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .terms-content .section-block ul li {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.8;
-        }
-        .terms-content .last-updated {
-            font-size: 0.85rem;
-            color: #888;
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 10px;
+            padding: 60px 0;
             background: var(--light-gray);
-            border-radius: 8px;
         }
+        .login-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 45px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            max-width: 450px;
+            width: 100%;
+            border-top: 4px solid var(--gold);
+        }
+        .login-card .login-logo { text-align: center; margin-bottom: 1.5rem; }
+        .login-card .login-logo img { width: 80px; height: 80px; object-fit: contain; }
+        .login-card .login-logo h2 { font-size: 1.3rem; font-weight: 700; color: var(--black); margin-top: 0.5rem; }
+        .login-card .login-logo p { font-size: 0.85rem; color: #888; margin: 0; }
+        .login-card .form-group { margin-bottom: 1.2rem; }
+        .login-card .form-group label { font-weight: 600; color: var(--black); font-size: 0.8rem; margin-bottom: 0.3rem; display: block; }
+        .login-card .form-group .input-with-icon { position: relative; }
+        .login-card .form-group .input-with-icon i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 0.95rem; z-index: 2; }
+        .login-card .form-group .input-with-icon .form-control { padding: 12px 14px 12px 42px; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 0.85rem; transition: border-color 0.3s ease; width: 100%; }
+        .login-card .form-group .input-with-icon .form-control:focus { border-color: var(--gold); outline: none; }
+        .login-card .form-group .form-check { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #666; }
+        .login-card .form-group .form-check input { width: 16px; height: 16px; accent-color: var(--gold); }
+        .login-card .btn-login { width: 100%; padding: 14px; border: none; border-radius: 10px; background: var(--gold); color: var(--black); font-size: 0.95rem; font-weight: 700; transition: all 0.3s ease; cursor: pointer; }
+        .login-card .btn-login:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.3); }
+        .login-card .login-footer { text-align: center; margin-top: 1.2rem; font-size: 0.85rem; color: #888; }
+        .login-card .login-footer a { color: var(--gold); text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .login-card .login-footer a:hover { color: var(--gold-dark); }
+        .login-card .login-divider { display: flex; align-items: center; margin: 1.2rem 0; }
+        .login-card .login-divider::before, .login-card .login-divider::after { content: ''; flex: 1; height: 1px; background: #e8e8e8; }
+        .login-card .login-divider span { padding: 0 15px; font-size: 0.75rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
 
-        @media (max-width: 992px) {
-            .page-title h1 { font-size: 2rem; }
-        }
         @media (max-width: 768px) {
-            .page-title { padding: 120px 0 50px 0; }
-            .page-title h1 { font-size: 1.6rem; }
-            .page-title p { font-size: 0.9rem; }
             #preloader .loader-logo { width: 80px; height: 80px; }
             #preloader .loader-ring-container { width: 150px; height: 150px; }
-            .terms-content .section-block h2 { font-size: 1.1rem; }
-            .terms-content .section-block p { font-size: 0.85rem; }
-            .terms-content .section-block ul li { font-size: 0.85rem; }
+            .login-card { padding: 30px 25px; margin: 0 15px; }
         }
         @media (max-width: 576px) {
-            .page-title h1 { font-size: 1.4rem; }
+            .login-card { padding: 25px 20px; }
+            .login-card .login-logo img { width: 60px; height: 60px; }
+            .login-card .login-logo h2 { font-size: 1.1rem; }
         }
 
         .scroll-top { background-color: var(--gold); }
         .scroll-top i { color: var(--black); }
         .scroll-top:hover { background-color: var(--gold-dark); }
-        .btn-primary { background-color: var(--gold) !important; border-color: var(--gold) !important; color: var(--black) !important; }
-        .btn-primary:hover { background-color: var(--gold-dark) !important; border-color: var(--gold-dark) !important; color: var(--black) !important; }
     </style>
 </head>
 
-<body class="terms-page">
+<body class="login-page">
 
-    <!-- ===== PRELOADER ===== -->
     <div id="preloader">
         <div class="loader-wrapper">
             <div class="loader-ring-container">
@@ -217,7 +152,6 @@
         </div>
     </div>
 
-    <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
@@ -243,137 +177,77 @@
                             <li><a href="radio.html">Radio</a></li>
                             <li><a href="contact.html">Contact</a></li>
                             <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms-of-service.html" class="active">Terms of Service</a></li>
                         </ul>
                     </li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25); font-size: 0.7rem;">Login</a></li>
+                    <li><a href="login.html" class="active btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25); font-size: 0.7rem;">Login</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
         </div>
     </header>
 
+    <br>
+    <br>
+    <br>
+    <br>
     <main class="main">
 
-        <!-- ======= Page Title ======= -->
-        <div class="page-title dark-background" style="background-image: url(assets/img/go59.jpg);">
-            <div class="container position-relative text-center">
-                <h1>Terms of Service</h1>
-                <p>Please read these terms carefully before using the Gateway of Life and Miracle Ministries International website.</p>
-                <nav class="breadcrumbs">
-                    <a href="index.html">Home</a>
-                    <span class="separator">/</span>
-                    <span class="current">Terms of Service</span>
-                </nav>
+        <div class="login-wrapper">
+            <div class="login-card" data-aos="fade-up">
+                <div class="login-logo">
+                    <img src="assets/img/logo_2.png" alt="Golammi Worship Center">
+                    <h2>Admin Login</h2>
+                    <p>Gateway of Life and Miracle Ministries International</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="bi bi-envelope"></i>
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-with-icon">
+                            <i class="bi bi-lock"></i>
+                            <input type="password" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-between align-items-center">
+                        <label class="form-check">
+                            <input type="checkbox" checked> Remember me
+                        </label>
+                        <a href="#" style="font-size: 0.8rem; color: var(--gold); text-decoration: none;">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </button>
+
+                    <div class="login-divider">
+                        <span>or</span>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <a href="index.html" style="color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;" onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='#888'">
+                            <i class="bi bi-arrow-left"></i> Back to Home
+                        </a>
+                    </div>
+
+                    <div class="login-footer">
+                        Don't have an account? <a href="#">Contact Admin</a>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <!-- ======= Terms Content ======= -->
-        <section class="section" style="padding-top: 40px;">
-            <div class="container">
-
-                <div class="terms-content" data-aos="fade-up">
-
-                    <div class="last-updated">
-                        <i class="bi bi-clock" style="color: var(--gold);"></i> Last Updated: August 10, 2026
-                    </div>
-
-                    <div class="section-block">
-                        <h2>1. Acceptance of Terms</h2>
-                        <p>By accessing and using the Gateway of Life and Miracle Ministries International ("GOLAMMI", "we", "us", or "our") website and services, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our website or services.</p>
-                        <p>These Terms of Service apply to all users of the GOLAMMI website, including but not limited to visitors, members, donors, and content contributors.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>2. Use of Website</h2>
-                        <p>You agree to use the GOLAMMI website for lawful purposes only. You shall not:</p>
-                        <ul>
-                            <li>Use the website in any way that violates applicable laws or regulations</li>
-                            <li>Post or transmit any harmful, offensive, or inappropriate content</li>
-                            <li>Attempt to gain unauthorized access to any part of the website</li>
-                            <li>Interfere with the proper functioning of the website</li>
-                            <li>Use the website to distribute spam or malicious software</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>3. Intellectual Property</h2>
-                        <p>All content on this website, including but not limited to text, graphics, logos, images, audio, video, and software, is the property of Gateway of Life and Miracle Ministries International or its content suppliers and is protected by copyright and other intellectual property laws.</p>
-                        <p>You may not reproduce, distribute, modify, or create derivative works of any content without our express written permission. However, you may share content for personal, non-commercial purposes provided you give appropriate credit to GOLAMMI.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>4. User Accounts</h2>
-                        <p>Some features of our website may require you to create an account. You are responsible for:</p>
-                        <ul>
-                            <li>Maintaining the confidentiality of your account credentials</li>
-                            <li>All activities that occur under your account</li>
-                            <li>Notifying us immediately of any unauthorized use of your account</li>
-                        </ul>
-                        <p>We reserve the right to terminate accounts that violate these terms or are inactive for an extended period.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>5. Donations and Giving</h2>
-                        <p>All donations and giving made through our website are voluntary and non-refundable. By making a donation, you acknowledge that:</p>
-                        <ul>
-                            <li>You are authorized to make the donation using the payment method provided</li>
-                            <li>The donation will be used for the ministry's operations and programs</li>
-                            <li>We may provide receipts for tax purposes where applicable</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>6. Prayer Requests and Testimonies</h2>
-                        <p>When submitting prayer requests or testimonies to our website, you agree that:</p>
-                        <ul>
-                            <li>You have the right to share the information provided</li>
-                            <li>We may pray for your request and share it with our prayer team</li>
-                            <li>We may use your testimony for promotional purposes with your consent</li>
-                            <li>We will not share your personal contact information without your permission</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>7. Third-Party Links</h2>
-                        <p>Our website may contain links to third-party websites. These links are provided for your convenience and do not constitute our endorsement of those websites. We are not responsible for the content, privacy policies, or practices of any third-party websites.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>8. Limitation of Liability</h2>
-                        <p>GOLAMMI provides this website "as is" without warranties of any kind. We do not guarantee that the website will be uninterrupted, secure, or error-free. We are not liable for any damages arising from your use of the website, including but not limited to direct, indirect, incidental, or consequential damages.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>9. Changes to Terms</h2>
-                        <p>We reserve the right to update these Terms of Service at any time. We will notify you of significant changes by posting a notice on our website. Your continued use of the website after such changes constitutes your acceptance of the new terms.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>10. Governing Law</h2>
-                        <p>These Terms of Service shall be governed by and construed in accordance with the laws of the jurisdiction in which GOLAMMI operates, without regard to its conflict of law provisions.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>11. Contact Information</h2>
-                        <p>If you have any questions about these Terms of Service, please contact us at:</p>
-                        <p style="margin-top: 0.5rem;">
-                            <strong>Gateway of Life and Miracle Ministries International</strong><br>
-                            <strong>Golammi Worship Center</strong><br>
-                            Email: <a href="mailto:info@golammi.org" style="color: var(--gold);">info@golammi.org</a><br>
-                            Phone: +234 800 000 0000
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
     </main>
 
-    <!-- ======= Footer ======= -->
     <footer id="footer" class="footer position-relative dark-background">
         <div class="container footer-top">
             <div class="row gy-4">
@@ -434,7 +308,7 @@
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="active">Terms of Service</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
                         <li><a href="#">Cookie Policy</a></li>
                     </ul>
                 </div>
@@ -447,10 +321,8 @@
         </div>
     </footer>
 
-    <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="assets/vendor/aos/aos.js"></script>

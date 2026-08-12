@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Terms of Service | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
-    <meta name="description" content="Terms of Service for Gateway of Life and Miracle Ministries International - Golammi Worship Center website.">
-    <meta name="keywords" content="Golammi Worship Center, GWC, terms of service, terms, conditions">
+    <title>Giving | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
+    <meta name="description" content="Give your tithes, offerings, and seeds to Gateway of Life and Miracle Ministries International - Golammi Worship Center.">
+    <meta name="keywords" content="Golammi Worship Center, GWC, giving, tithes, offerings, seeds, donations">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -41,7 +41,6 @@
 
         .my_logo { width: 5rem; height: 5rem; }
 
-        /* ===== PRELOADER ===== */
         #preloader {
             position: fixed;
             inset: 0;
@@ -79,101 +78,62 @@
         .navmenu li:hover>a, .navmenu .active, .navmenu .active:focus { color: var(--gold) !important; }
         .scrolled .header { --background-color: rgba(0, 0, 0, 0.9); }
 
-        /* ===== PAGE TITLE ===== */
-        .page-title {
-            padding: 150px 0 70px 0;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-        .page-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%);
-            z-index: 1;
-        }
+        .page-title { padding: 150px 0 70px 0; position: relative; background-size: cover; background-position: center; }
+        .page-title::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%); z-index: 1; }
         .page-title .container { position: relative; z-index: 2; }
-        .page-title h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
-        }
-        .page-title p {
-            color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-            max-width: 700px;
-            margin: 0 auto 1rem;
-        }
-        .page-title .breadcrumbs {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-        .page-title .breadcrumbs a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+        .page-title h1 { color: #fff; font-size: 2.5rem; font-weight: 800; text-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .page-title p { color: rgba(255,255,255,0.8); font-size: 1rem; max-width: 700px; margin: 0 auto 1rem; }
+        .page-title .breadcrumbs { display: flex; justify-content: center; gap: 8px; font-size: 0.85rem; }
+        .page-title .breadcrumbs a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
         .page-title .breadcrumbs a:hover { color: var(--gold); }
         .page-title .breadcrumbs .current { color: var(--gold); }
         .page-title .breadcrumbs .separator { color: rgba(255,255,255,0.4); }
 
-        /* ===== TERMS CONTENT ===== */
-        .terms-content {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .terms-content .section-block {
-            margin-bottom: 2.5rem;
-        }
-        .terms-content .section-block:last-child { margin-bottom: 0; }
-        .terms-content .section-block h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.3rem;
-            border-bottom: 2px solid var(--gold);
-        }
-        .terms-content .section-block h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--black);
-            margin: 1rem 0 0.3rem;
-        }
-        .terms-content .section-block p {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 0.5rem;
-        }
-        .terms-content .section-block ul {
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .terms-content .section-block ul li {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.8;
-        }
-        .terms-content .last-updated {
-            font-size: 0.85rem;
-            color: #888;
+        .giving-card-custom {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px 20px;
             text-align: center;
-            margin-bottom: 2rem;
-            padding: 10px;
-            background: var(--light-gray);
-            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border-bottom: 3px solid var(--gold);
         }
+        .giving-card-custom:hover { transform: translateY(-5px); box-shadow: 0 10px 35px rgba(0,0,0,0.08); }
+        .giving-card-custom .giving-icon { font-size: 2.2rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+        .giving-card-custom h3 { font-size: 1.1rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; }
+        .giving-card-custom p { font-size: 0.85rem; color: #555; line-height: 1.6; margin-bottom: 0.5rem; }
+        .giving-card-custom .btn-giving-card { padding: 6px 20px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; background: var(--gold); color: var(--black); text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 4px; }
+        .giving-card-custom .btn-giving-card:hover { background: var(--gold-dark); color: var(--black); }
+
+        .giving-form-wrapper {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
+        .giving-form-wrapper h2 { font-size: 1.6rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; }
+        .giving-form-wrapper .form-subtitle { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
+        .giving-form-wrapper .form-group { margin-bottom: 1rem; }
+        .giving-form-wrapper .form-group label { font-weight: 600; color: var(--black); font-size: 0.8rem; margin-bottom: 0.3rem; }
+        .giving-form-wrapper .form-group label .required { color: #e74c3c; }
+        .giving-form-wrapper .input-with-icon { position: relative; }
+        .giving-form-wrapper .input-with-icon i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 0.95rem; z-index: 2; }
+        .giving-form-wrapper .input-with-icon .form-control { padding: 10px 14px 10px 42px; border: 2px solid #e8e8e8; border-radius: 8px; font-size: 0.85rem; transition: border-color 0.3s ease, box-shadow 0.3s ease; background: var(--white); color: var(--black); }
+        .giving-form-wrapper .input-with-icon .form-control:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,0.1); outline: none; }
+        .giving-form-wrapper .input-with-icon .form-control::placeholder { color: #aaa; font-size: 0.8rem; }
+        .giving-form-wrapper .btn-submit { background: var(--gold); border: none; color: var(--black); padding: 12px 40px; font-size: 0.9rem; font-weight: 700; border-radius: 50px; transition: all 0.3s ease; letter-spacing: 1px; box-shadow: 0 6px 20px rgba(201,168,76,0.25); }
+        .giving-form-wrapper .btn-submit:hover { background: var(--gold-dark); color: var(--black); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,168,76,0.3); }
+        .giving-form-wrapper .btn-submit i { margin-right: 6px; }
+
+        .amount-btn { padding: 8px 16px; border-radius: 8px; border: 2px solid #e8e8e8; background: transparent; font-size: 0.85rem; font-weight: 600; transition: all 0.3s ease; cursor: pointer; }
+        .amount-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .amount-btn.active { background: var(--gold); border-color: var(--gold); color: var(--black); }
 
         @media (max-width: 992px) {
             .page-title h1 { font-size: 2rem; }
+            .giving-form-wrapper { padding: 25px 20px; }
+            .giving-form-wrapper h2 { font-size: 1.4rem; }
         }
         @media (max-width: 768px) {
             .page-title { padding: 120px 0 50px 0; }
@@ -181,12 +141,14 @@
             .page-title p { font-size: 0.9rem; }
             #preloader .loader-logo { width: 80px; height: 80px; }
             #preloader .loader-ring-container { width: 150px; height: 150px; }
-            .terms-content .section-block h2 { font-size: 1.1rem; }
-            .terms-content .section-block p { font-size: 0.85rem; }
-            .terms-content .section-block ul li { font-size: 0.85rem; }
+            .giving-form-wrapper { padding: 20px 15px; }
+            .giving-form-wrapper h2 { font-size: 1.2rem; }
+            .giving-form-wrapper .btn-submit { padding: 10px 25px; font-size: 0.8rem; width: 100%; }
+            .amount-btn { padding: 6px 12px; font-size: 0.75rem; }
         }
         @media (max-width: 576px) {
             .page-title h1 { font-size: 1.4rem; }
+            .giving-card-custom { padding: 20px 15px; }
         }
 
         .scroll-top { background-color: var(--gold); }
@@ -197,9 +159,8 @@
     </style>
 </head>
 
-<body class="terms-page">
+<body class="giving-page">
 
-    <!-- ===== PRELOADER ===== -->
     <div id="preloader">
         <div class="loader-wrapper">
             <div class="loader-ring-container">
@@ -217,7 +178,6 @@
         </div>
     </div>
 
-    <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
@@ -234,7 +194,7 @@
                     <li><a href="events.html">Events</a></li>
                     <li><a href="prayer.html">Prayer</a></li>
                     <li><a href="media.html">Media</a></li>
-                    <li><a href="giving.html">Giving</a></li>
+                    <li><a href="giving.html" class="active">Giving</a></li>
                     <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="blog.html">Blog / News</a></li>
@@ -243,7 +203,6 @@
                             <li><a href="radio.html">Radio</a></li>
                             <li><a href="contact.html">Contact</a></li>
                             <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms-of-service.html" class="active">Terms of Service</a></li>
                         </ul>
                     </li>
                     <li><a href="contact.html">Contact</a></li>
@@ -256,116 +215,148 @@
 
     <main class="main">
 
-        <!-- ======= Page Title ======= -->
         <div class="page-title dark-background" style="background-image: url(assets/img/go59.jpg);">
             <div class="container position-relative text-center">
-                <h1>Terms of Service</h1>
-                <p>Please read these terms carefully before using the Gateway of Life and Miracle Ministries International website.</p>
+                <h1>Online Giving</h1>
+                <p>Honor the Lord with your tithes, offerings, and seeds. Your giving helps us reach more souls and expand the Kingdom of God.</p>
                 <nav class="breadcrumbs">
                     <a href="index.html">Home</a>
                     <span class="separator">/</span>
-                    <span class="current">Terms of Service</span>
+                    <span class="current">Giving</span>
                 </nav>
             </div>
         </div>
 
-        <!-- ======= Terms Content ======= -->
         <section class="section" style="padding-top: 40px;">
             <div class="container">
 
-                <div class="terms-content" data-aos="fade-up">
+                <div class="row g-4 mb-5">
 
-                    <div class="last-updated">
-                        <i class="bi bi-clock" style="color: var(--gold);"></i> Last Updated: August 10, 2026
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="giving-card-custom">
+                            <span class="giving-icon"><i class="bi bi-cash-stack"></i></span>
+                            <h3>Tithes &amp; Offerings</h3>
+                            <p>Bring the full tithe into the storehouse and honor the Lord with your first fruits.</p>
+                            <a href="#" class="btn-giving-card"><i class="bi bi-arrow-right"></i> Give Now</a>
+                        </div>
                     </div>
 
-                    <div class="section-block">
-                        <h2>1. Acceptance of Terms</h2>
-                        <p>By accessing and using the Gateway of Life and Miracle Ministries International ("GOLAMMI", "we", "us", or "our") website and services, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our website or services.</p>
-                        <p>These Terms of Service apply to all users of the GOLAMMI website, including but not limited to visitors, members, donors, and content contributors.</p>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="giving-card-custom">
+                            <span class="giving-icon"><i class="bi bi-seedling"></i></span>
+                            <h3>Prophetic Seeds</h3>
+                            <p>Sow a prophetic seed into the ministry and watch God multiply your harvest.</p>
+                            <a href="#" class="btn-giving-card"><i class="bi bi-arrow-right"></i> Sow a Seed</a>
+                        </div>
                     </div>
 
-                    <div class="section-block">
-                        <h2>2. Use of Website</h2>
-                        <p>You agree to use the GOLAMMI website for lawful purposes only. You shall not:</p>
-                        <ul>
-                            <li>Use the website in any way that violates applicable laws or regulations</li>
-                            <li>Post or transmit any harmful, offensive, or inappropriate content</li>
-                            <li>Attempt to gain unauthorized access to any part of the website</li>
-                            <li>Interfere with the proper functioning of the website</li>
-                            <li>Use the website to distribute spam or malicious software</li>
-                        </ul>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="giving-card-custom">
+                            <span class="giving-icon"><i class="bi bi-building"></i></span>
+                            <h3>Building Fund</h3>
+                            <p>Partner with us in expanding the Kingdom through our building and expansion projects.</p>
+                            <a href="#" class="btn-giving-card"><i class="bi bi-arrow-right"></i> Give Now</a>
+                        </div>
                     </div>
 
-                    <div class="section-block">
-                        <h2>3. Intellectual Property</h2>
-                        <p>All content on this website, including but not limited to text, graphics, logos, images, audio, video, and software, is the property of Gateway of Life and Miracle Ministries International or its content suppliers and is protected by copyright and other intellectual property laws.</p>
-                        <p>You may not reproduce, distribute, modify, or create derivative works of any content without our express written permission. However, you may share content for personal, non-commercial purposes provided you give appropriate credit to GOLAMMI.</p>
-                    </div>
+                </div>
 
-                    <div class="section-block">
-                        <h2>4. User Accounts</h2>
-                        <p>Some features of our website may require you to create an account. You are responsible for:</p>
-                        <ul>
-                            <li>Maintaining the confidentiality of your account credentials</li>
-                            <li>All activities that occur under your account</li>
-                            <li>Notifying us immediately of any unauthorized use of your account</li>
-                        </ul>
-                        <p>We reserve the right to terminate accounts that violate these terms or are inactive for an extended period.</p>
-                    </div>
+                <div class="row justify-content-center" data-aos="fade-up">
+                    <div class="col-lg-8">
+                        <div class="giving-form-wrapper">
+                            <h2 class="text-center">Make a Donation</h2>
+                            <p class="form-subtitle">Choose an amount or enter a custom amount to give.</p>
 
-                    <div class="section-block">
-                        <h2>5. Donations and Giving</h2>
-                        <p>All donations and giving made through our website are voluntary and non-refundable. By making a donation, you acknowledge that:</p>
-                        <ul>
-                            <li>You are authorized to make the donation using the payment method provided</li>
-                            <li>The donation will be used for the ministry's operations and programs</li>
-                            <li>We may provide receipts for tax purposes where applicable</li>
-                        </ul>
+                            <form>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Full Name <span class="required">*</span></label>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-person"></i>
+                                                <input type="text" class="form-control" placeholder="Enter your full name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email Address <span class="required">*</span></label>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-envelope"></i>
+                                                <input type="email" class="form-control" placeholder="Enter your email" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-telephone"></i>
+                                                <input type="tel" class="form-control" placeholder="Enter your phone number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Giving Type <span class="required">*</span></label>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-tag"></i>
+                                                <select class="form-control" required>
+                                                    <option value="">Select a type...</option>
+                                                    <option value="tithe">Tithe</option>
+                                                    <option value="offering">Offering</option>
+                                                    <option value="seed">Prophetic Seed</option>
+                                                    <option value="building">Building Fund</option>
+                                                    <option value="missions">Missions / Outreach</option>
+                                                    <option value="general">General Donation</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Amount <span class="required">*</span></label>
+                                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                                <button type="button" class="amount-btn active" data-amount="10">₦10</button>
+                                                <button type="button" class="amount-btn" data-amount="25">₦25</button>
+                                                <button type="button" class="amount-btn" data-amount="50">₦50</button>
+                                                <button type="button" class="amount-btn" data-amount="100">₦100</button>
+                                                <button type="button" class="amount-btn" data-amount="250">₦250</button>
+                                                <button type="button" class="amount-btn" data-amount="500">₦500</button>
+                                            </div>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-currency-dollar"></i>
+                                                <input type="number" class="form-control" placeholder="Enter custom amount" id="customAmount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Message / Prayer Request</label>
+                                            <div class="input-with-icon">
+                                                <i class="bi bi-chat-dots message-icon"></i>
+                                                <textarea class="form-control" placeholder="Include any prayer request or message..." style="min-height: 80px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check" style="margin-bottom: 0.5rem;">
+                                            <input class="form-check-input" type="checkbox" id="anonymous">
+                                            <label class="form-check-label" for="anonymous" style="font-size: 0.8rem; color: #666;">Give anonymously</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-submit">
+                                            <i class="bi bi-credit-card"></i> Make Payment
+                                        </button>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <p style="font-size: 0.75rem; color: #888;"><i class="bi bi-shield-check" style="color: var(--gold);"></i> Your payment is secure and encrypted.</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <div class="section-block">
-                        <h2>6. Prayer Requests and Testimonies</h2>
-                        <p>When submitting prayer requests or testimonies to our website, you agree that:</p>
-                        <ul>
-                            <li>You have the right to share the information provided</li>
-                            <li>We may pray for your request and share it with our prayer team</li>
-                            <li>We may use your testimony for promotional purposes with your consent</li>
-                            <li>We will not share your personal contact information without your permission</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>7. Third-Party Links</h2>
-                        <p>Our website may contain links to third-party websites. These links are provided for your convenience and do not constitute our endorsement of those websites. We are not responsible for the content, privacy policies, or practices of any third-party websites.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>8. Limitation of Liability</h2>
-                        <p>GOLAMMI provides this website "as is" without warranties of any kind. We do not guarantee that the website will be uninterrupted, secure, or error-free. We are not liable for any damages arising from your use of the website, including but not limited to direct, indirect, incidental, or consequential damages.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>9. Changes to Terms</h2>
-                        <p>We reserve the right to update these Terms of Service at any time. We will notify you of significant changes by posting a notice on our website. Your continued use of the website after such changes constitutes your acceptance of the new terms.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>10. Governing Law</h2>
-                        <p>These Terms of Service shall be governed by and construed in accordance with the laws of the jurisdiction in which GOLAMMI operates, without regard to its conflict of law provisions.</p>
-                    </div>
-
-                    <div class="section-block">
-                        <h2>11. Contact Information</h2>
-                        <p>If you have any questions about these Terms of Service, please contact us at:</p>
-                        <p style="margin-top: 0.5rem;">
-                            <strong>Gateway of Life and Miracle Ministries International</strong><br>
-                            <strong>Golammi Worship Center</strong><br>
-                            Email: <a href="mailto:info@golammi.org" style="color: var(--gold);">info@golammi.org</a><br>
-                            Phone: +234 800 000 0000
-                        </p>
-                    </div>
-
                 </div>
 
             </div>
@@ -373,7 +364,6 @@
 
     </main>
 
-    <!-- ======= Footer ======= -->
     <footer id="footer" class="footer position-relative dark-background">
         <div class="container footer-top">
             <div class="row gy-4">
@@ -434,7 +424,7 @@
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="active">Terms of Service</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
                         <li><a href="#">Cookie Policy</a></li>
                     </ul>
                 </div>
@@ -447,10 +437,8 @@
         </div>
     </footer>
 
-    <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="assets/vendor/aos/aos.js"></script>
@@ -472,6 +460,14 @@
             const preloader = document.getElementById('preloader');
             if (preloader && !preloader.classList.contains('hidden')) { preloader.classList.add('hidden'); }
         }, 5000);
+
+        document.querySelectorAll('.amount-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.amount-btn').forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                document.getElementById('customAmount').value = this.dataset.amount;
+            });
+        });
     </script>
 
 </body>

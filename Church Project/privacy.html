@@ -2,345 +2,504 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Privacy - NiceSchool Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Privacy Policy | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
+    <meta name="description" content="Privacy Policy for Gateway of Life and Miracle Ministries International - Golammi Worship Center website.">
+    <meta name="keywords" content="Golammi Worship Center, GWC, privacy policy, privacy, data protection">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceSchool
-  * Template URL: https://bootstrapmade.com/nice-school-bootstrap-education-template/
-  * Updated: May 10 2025 with Bootstrap v5.3.6
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-dark: #a8892e;
+            --gold-light: #e8d5a3;
+            --black: #1a1a1a;
+            --dark-gray: #2d2d2d;
+            --light-gray: #f8f6f0;
+            --white: #ffffff;
+        }
+
+        .my_logo { width: 5rem; height: 5rem; }
+
+        /* ===== PRELOADER ===== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        #preloader .loader-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        #preloader .loader-logo { width: 120px; height: 120px; object-fit: contain; animation: logoPulse 1.8s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.3)); }
+        @keyframes logoPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.5)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2)); }
+        }
+        #preloader .loader-ring-container { position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; }
+        #preloader .loader-ring { position: absolute; border-radius: 50%; border: 3px solid transparent; animation: spin 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+        #preloader .loader-ring:nth-child(1) { width: 100%; height: 100%; border-top-color: var(--gold); border-right-color: var(--gold); animation-duration: 1.5s; }
+        #preloader .loader-ring:nth-child(2) { width: 75%; height: 75%; border-bottom-color: var(--gold-light); border-left-color: var(--gold-light); animation-duration: 1.8s; animation-direction: reverse; }
+        #preloader .loader-ring:nth-child(3) { width: 50%; height: 50%; border-top-color: var(--gold-dark); border-right-color: var(--gold-dark); animation-duration: 2.1s; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #preloader .loader-text { color: var(--gold); font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-top: 0.5rem; animation: textPulse 1.5s ease-in-out infinite; }
+        @keyframes textPulse { 0%, 100% { opacity: 0.6; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+        #preloader .loader-dots { display: flex; gap: 8px; margin-top: 0.5rem; }
+        #preloader .loader-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); animation: dotBounce 1.4s ease-in-out infinite both; }
+        #preloader .loader-dots span:nth-child(1) { animation-delay: -0.32s; }
+        #preloader .loader-dots span:nth-child(2) { animation-delay: -0.16s; }
+        #preloader .loader-dots span:nth-child(3) { animation-delay: 0; }
+        @keyframes dotBounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; } }
+
+        .navmenu li:hover>a, .navmenu .active, .navmenu .active:focus { color: var(--gold) !important; }
+        .scrolled .header { --background-color: rgba(0, 0, 0, 0.9); }
+
+        /* ===== PAGE TITLE ===== */
+        .page-title {
+            padding: 150px 0 70px 0;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        .page-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+        .page-title .container { position: relative; z-index: 2; }
+        .page-title h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .page-title p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto 1rem;
+        }
+        .page-title .breadcrumbs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        .page-title .breadcrumbs a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .page-title .breadcrumbs a:hover { color: var(--gold); }
+        .page-title .breadcrumbs .current { color: var(--gold); }
+        .page-title .breadcrumbs .separator { color: rgba(255,255,255,0.4); }
+
+        /* ===== PRIVACY CONTENT ===== */
+        .privacy-content {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .privacy-content .section-block {
+            margin-bottom: 2.5rem;
+        }
+        .privacy-content .section-block:last-child { margin-bottom: 0; }
+        .privacy-content .section-block h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--gold);
+        }
+        .privacy-content .section-block h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin: 1rem 0 0.3rem;
+        }
+        .privacy-content .section-block p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+        .privacy-content .section-block ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .privacy-content .section-block ul li {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .privacy-content .last-updated {
+            font-size: 0.85rem;
+            color: #888;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 10px;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 992px) {
+            .page-title h1 { font-size: 2rem; }
+        }
+        @media (max-width: 768px) {
+            .page-title { padding: 120px 0 50px 0; }
+            .page-title h1 { font-size: 1.6rem; }
+            .page-title p { font-size: 0.9rem; }
+            #preloader .loader-logo { width: 80px; height: 80px; }
+            #preloader .loader-ring-container { width: 150px; height: 150px; }
+            .privacy-content .section-block h2 { font-size: 1.1rem; }
+            .privacy-content .section-block p { font-size: 0.85rem; }
+            .privacy-content .section-block ul li { font-size: 0.85rem; }
+        }
+        @media (max-width: 576px) {
+            .page-title h1 { font-size: 1.4rem; }
+        }
+
+        .scroll-top { background-color: var(--gold); }
+        .scroll-top i { color: var(--black); }
+        .scroll-top:hover { background-color: var(--gold-dark); }
+        .btn-primary { background-color: var(--gold) !important; border-color: var(--gold) !important; color: var(--black) !important; }
+        .btn-primary:hover { background-color: var(--gold-dark) !important; border-color: var(--gold-dark) !important; color: var(--black) !important; }
+    </style>
 </head>
 
 <body class="privacy-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+    <!-- ===== PRELOADER ===== -->
+    <div id="preloader">
+        <div class="loader-wrapper">
+            <div class="loader-ring-container">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="loader-logo">
+            </div>
+            <span class="loader-text">Gateway of Life</span>
+            <div class="loader-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
 
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <i class="bi bi-buildings"></i>
-        <h1 class="sitename">NiceSchool</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li class="dropdown"><a href="about.html"><span>About</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="admissions.html">Admissions</a></li>
-              <li><a href="academics.html">Academics</a></li>
-              <li><a href="faculty-staff.html">Faculty &amp; Staff</a></li>
-              <li><a href="campus-facilities.html">Campus &amp; Facilities</a></li>
-            </ul>
-          </li>
-
-          <li><a href="students-life.html">Students Life</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="alumni.html">Alumni</a></li>
-          <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="news-details.html">News Details</a></li>
-              <li><a href="event-details.html">Event Details</a></li>
-              <li><a href="privacy.html" class="active">Privacy</a></li>
-              <li><a href="terms-of-service.html">Terms of Service</a></li>
-              <li><a href="404.html">Error 404</a></li>
-              <li><a href="starter-page.html">Starter Page</a></li>
-            </ul>
-          </li>
-
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <i class="bi bi-church" style="font-size: 24px; color: var(--gold);"></i>
+                <div>
+                    <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="my_logo">
+                </div>
+            </a>
+            <nav id="navmenu" class="navmenu">
                 <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown"><a href="about.html"><span>About Us</span></a></li>
+                    <li><a href="sermons.html">Sermons</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="prayer.html">Prayer</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="giving.html">Giving</a></li>
+                    <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="blog.html">Blog / News</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="radio.html">Radio</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="privacy.html" class="active">Privacy Policy</a></li>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25); font-size: 0.7rem;">Login</a></li>
                 </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
 
-    </div>
-  </header>
+    <main class="main">
 
-  <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title dark-background" style="background-image: url(assets/img/education/showcase-1.webp);">
-      <div class="container position-relative">
-        <h1>Privacy</h1>
-        <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Privacy</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Privacy Section -->
-    <section id="privacy" class="privacy section">
-
-      <div class="container" data-aos="fade-up">
-        <!-- Header -->
-        <div class="privacy-header" data-aos="fade-up">
-          <div class="header-content">
-            <div class="last-updated">Effective Date: February 27, 2025</div>
-            <h1>Privacy Policy</h1>
-            <p class="intro-text">This Privacy Policy describes how we collect, use, process, and disclose your information, including personal information, in conjunction with your access to and use of our services.</p>
-          </div>
+        <!-- ======= Page Title ======= -->
+        <div class="page-title dark-background" style="background-image: url(assets/img/go8.jpg);">
+            <div class="container position-relative text-center">
+                <h1>Privacy Policy</h1>
+                <p>We are committed to protecting your privacy. Learn how we collect, use, and safeguard your personal information.</p>
+                <nav class="breadcrumbs">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <span class="current">Privacy Policy</span>
+                </nav>
+            </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="privacy-content" data-aos="fade-up">
-          <!-- Introduction -->
-          <div class="content-section">
-            <h2>1. Introduction</h2>
-            <p>When you use our services, you're trusting us with your information. We understand this is a big responsibility and work hard to protect your information and put you in control.</p>
-            <p>This Privacy Policy is meant to help you understand what information we collect, why we collect it, and how you can update, manage, export, and delete your information.</p>
-          </div>
+        <!-- ======= Privacy Content ======= -->
+        <section class="section" style="padding-top: 40px;">
+            <div class="container">
 
-          <!-- Information Collection -->
-          <div class="content-section">
-            <h2>2. Information We Collect</h2>
-            <p>We collect information to provide better services to our users. The types of information we collect include:</p>
+                <div class="privacy-content" data-aos="fade-up">
 
-            <h3>2.1 Information You Provide</h3>
-            <p>When you create an account or use our services, you provide us with personal information that includes:</p>
-            <ul>
-              <li>Your name and contact information</li>
-              <li>Account credentials</li>
-              <li>Payment information when required</li>
-              <li>Communication preferences</li>
-            </ul>
+                    <div class="last-updated">
+                        <i class="bi bi-clock" style="color: var(--gold);"></i> Last Updated: August 10, 2026
+                    </div>
 
-            <h3>2.2 Automatic Information</h3>
-            <p>We automatically collect and store certain information when you use our services:</p>
-            <ul>
-              <li>Device information and identifiers</li>
-              <li>Log information and usage statistics</li>
-              <li>Location information when enabled</li>
-              <li>Browser type and settings</li>
-            </ul>
-          </div>
+                    <div class="section-block">
+                        <h2>1. Introduction</h2>
+                        <p>Gateway of Life and Miracle Ministries International ("GOLAMMI", "we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you visit our website or interact with our ministry.</p>
+                        <p>By using our website and services, you agree to the collection and use of information in accordance with this policy. We value your trust and are dedicated to maintaining the confidentiality and security of your personal information.</p>
+                    </div>
 
-          <!-- Use of Information -->
-          <div class="content-section">
-            <h2>3. How We Use Your Information</h2>
-            <p>We use the information we collect to provide, maintain, and improve our services. Specifically, we use your information to:</p>
-            <ul>
-              <li>Provide and personalize our services</li>
-              <li>Process transactions and send related information</li>
-              <li>Send notifications and updates about our services</li>
-              <li>Maintain security and verify identity</li>
-              <li>Analyze and improve our services</li>
-            </ul>
-          </div>
+                    <div class="section-block">
+                        <h2>2. Information We Collect</h2>
+                        <p>We may collect the following types of information:</p>
+                        <h3>Personal Information You Provide:</h3>
+                        <ul>
+                            <li>Name, email address, phone number, and contact details</li>
+                            <li>Prayer requests and testimonies you submit</li>
+                            <li>Donation and giving information</li>
+                            <li>Event registrations and volunteer applications</li>
+                            <li>Messages sent through our contact forms</li>
+                        </ul>
+                        <h3>Automatically Collected Information:</h3>
+                        <ul>
+                            <li>IP address and browser information</li>
+                            <li>Device type and operating system</li>
+                            <li>Pages visited and time spent on our website</li>
+                            <li>Referring website or search terms</li>
+                        </ul>
+                    </div>
 
-          <!-- Information Sharing -->
-          <div class="content-section">
-            <h2>4. Information Sharing and Disclosure</h2>
-            <p>We do not share personal information with companies, organizations, or individuals outside of our company except in the following cases:</p>
+                    <div class="section-block">
+                        <h2>3. How We Use Your Information</h2>
+                        <p>We use the information we collect for the following purposes:</p>
+                        <ul>
+                            <li>To provide and maintain our services</li>
+                            <li>To process donations and send receipts</li>
+                            <li>To respond to your prayer requests and messages</li>
+                            <li>To send you newsletters and updates about the ministry</li>
+                            <li>To improve our website and services</li>
+                            <li>To share testimonies and prayer requests (with your consent)</li>
+                            <li>To comply with legal obligations</li>
+                        </ul>
+                    </div>
 
-            <h3>4.1 With Your Consent</h3>
-            <p>We will share personal information with companies, organizations, or individuals outside of our company when we have your consent to do so.</p>
+                    <div class="section-block">
+                        <h2>4. Information Sharing</h2>
+                        <p>We respect your privacy and do not sell, trade, or rent your personal information to third parties. However, we may share your information in the following circumstances:</p>
+                        <ul>
+                            <li>With our prayer team to pray for your requests (personal information kept confidential)</li>
+                            <li>With service providers who assist us in operating our website</li>
+                            <li>When required by law or to protect the rights and safety of GOLAMMI</li>
+                            <li>With your explicit consent</li>
+                        </ul>
+                    </div>
 
-            <h3>4.2 For Legal Reasons</h3>
-            <p>We will share personal information if we have a good-faith belief that access, use, preservation, or disclosure of the information is reasonably necessary to:</p>
-            <ul>
-              <li>Meet any applicable law, regulation, legal process, or enforceable governmental request</li>
-              <li>Enforce applicable Terms of Service</li>
-              <li>Detect, prevent, or otherwise address fraud, security, or technical issues</li>
-              <li>Protect against harm to the rights, property, or safety of our users</li>
-            </ul>
-          </div>
+                    <div class="section-block">
+                        <h2>5. Data Security</h2>
+                        <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. This includes:</p>
+                        <ul>
+                            <li>SSL encryption for data transmission</li>
+                            <li>Secure storage of personal information</li>
+                            <li>Limited access to personal data by authorized personnel</li>
+                            <li>Regular security assessments and updates</li>
+                        </ul>
+                        <p>While we strive to protect your information, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+                    </div>
 
-          <!-- Data Security -->
-          <div class="content-section">
-            <h2>5. Data Security</h2>
-            <p>We work hard to protect our users from unauthorized access to or unauthorized alteration, disclosure, or destruction of information we hold. In particular:</p>
-            <ul>
-              <li>We encrypt our services using SSL</li>
-              <li>We review our information collection, storage, and processing practices</li>
-              <li>We restrict access to personal information to employees who need that information</li>
-            </ul>
-          </div>
+                    <div class="section-block">
+                        <h2>6. Cookies and Tracking Technologies</h2>
+                        <p>We use cookies and similar tracking technologies to enhance your browsing experience, analyze website traffic, and personalize content. You can control cookie preferences through your browser settings.</p>
+                        <p>We use the following types of cookies:</p>
+                        <ul>
+                            <li><strong>Essential Cookies:</strong> Necessary for website functionality</li>
+                            <li><strong>Performance Cookies:</strong> To analyze website usage and improve performance</li>
+                            <li><strong>Functional Cookies:</strong> To remember your preferences</li>
+                        </ul>
+                    </div>
 
-          <!-- Your Rights -->
-          <div class="content-section">
-            <h2>6. Your Rights and Choices</h2>
-            <p>You have certain rights regarding your personal information, including:</p>
-            <ul>
-              <li>The right to access your personal information</li>
-              <li>The right to correct inaccurate information</li>
-              <li>The right to request deletion of your information</li>
-              <li>The right to restrict or object to our processing of your information</li>
-            </ul>
-          </div>
+                    <div class="section-block">
+                        <h2>7. Third-Party Links</h2>
+                        <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to review their privacy policies before providing any personal information.</p>
+                    </div>
 
-          <!-- Policy Updates -->
-          <div class="content-section">
-            <h2>7. Changes to This Policy</h2>
-            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the effective date at the top.</p>
-            <p>Your continued use of our services after any changes to this Privacy Policy constitutes your acceptance of such changes.</p>
-          </div>
+                    <div class="section-block">
+                        <h2>8. Children's Privacy</h2>
+                        <p>GOLAMMI is committed to protecting the privacy of children. We do not knowingly collect personal information from children under 13 years of age. If you are a parent or guardian and believe your child has provided us with personal information, please contact us, and we will take steps to remove that information.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h2>9. Your Rights</h2>
+                        <p>You have the following rights regarding your personal information:</p>
+                        <ul>
+                            <li>Access and receive a copy of your personal data</li>
+                            <li>Request correction of inaccurate or incomplete data</li>
+                            <li>Request deletion of your personal data (subject to legal requirements)</li>
+                            <li>Opt out of receiving marketing communications</li>
+                            <li>Withdraw consent for data processing</li>
+                        </ul>
+                        <p>To exercise these rights, please contact us using the information provided below.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h2>10. Changes to This Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date. We encourage you to review this policy periodically for any changes.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h2>11. Contact Us</h2>
+                        <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at:</p>
+                        <p style="margin-top: 0.5rem;">
+                            <strong>Gateway of Life and Miracle Ministries International</strong><br>
+                            <strong>Golammi Worship Center</strong><br>
+                            Email: <a href="mailto:info@golammi.org" style="color: var(--gold);">info@golammi.org</a><br>
+                            Phone: +234 800 000 0000<br>
+                            Address: 123 Faith Avenue, City, State, Country
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer position-relative dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <i class="bi bi-church" style="font-size: 24px; color: var(--gold);"></i>
+                        <div>
+                            <span class="sitename" style="font-size: 1.2rem; font-weight: 700; color: var(--gold);">GWC</span>
+                            <span style="display: block; font-size: 0.6rem; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase; color: #fff;">Gateway of Life &amp; Miracle</span>
+                        </div>
+                    </a>
+                    <div class="footer-contact pt-2" style="font-size: 0.85rem;">
+                        <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
+                        <p><strong>Golammi Worship Center</strong></p>
+                        <p class="mt-2"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
+                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
+                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-3">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="sermons.html">Sermons</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Ministries</h4>
+                    <ul>
+                        <li><a href="#">Worship Team</a></li>
+                        <li><a href="#">Prayer Ministry</a></li>
+                        <li><a href="#">Youth Ministry</a></li>
+                        <li><a href="#">Outreach</a></li>
+                        <li><a href="#">Children's Church</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="media.html">Media</a></li>
+                        <li><a href="radio.html">Radio</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="giving.html">Giving</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html" class="active">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <!-- Contact Section -->
-        <div class="privacy-contact" data-aos="fade-up">
-          <h2>Contact Us</h2>
-          <p>If you have any questions about this Privacy Policy or our practices, please contact us:</p>
-          <div class="contact-details">
-            <p><strong>Email:</strong> privacy@example.com</p>
-            <p><strong>Address:</strong> 123 Privacy Street, Security City, 12345</p>
-          </div>
+        <div class="container copyright text-center mt-3">
+            <p style="font-size: 0.8rem;">© <span>Copyright</span> <strong class="px-1">Gateway of Life and Miracle Ministries International</strong> <span>All Rights Reserved</span></p>
+            <p style="font-size: 0.7rem; opacity: 0.6;">Golammi Worship Center — A Prophetic Ministry where God reconstructs anything the devil has destroyed.</p>
+            <div class="credits" style="font-size: 0.65rem;">Designed by <a href="#">GOLAMMI TECHNICAL DEPARTMENT</a></div>
         </div>
+    </footer>
 
-      </div>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    </section><!-- /Privacy Section -->
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/js/main.js"></script>
 
-  </main>
-
-  <footer id="footer" class="footer position-relative dark-background">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">NiceSchool</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Hic solutasetp</h4>
-          <ul>
-            <li><a href="#">Molestiae accusamus iure</a></li>
-            <li><a href="#">Excepturi dignissimos</a></li>
-            <li><a href="#">Suscipit distinctio</a></li>
-            <li><a href="#">Dilecta</a></li>
-            <li><a href="#">Sit quas consectetur</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Nobis illum</h4>
-          <ul>
-            <li><a href="#">Ipsam</a></li>
-            <li><a href="#">Laudantium dolorum</a></li>
-            <li><a href="#">Dinera</a></li>
-            <li><a href="#">Trodelas</a></li>
-            <li><a href="#">Flexo</a></li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">MyWebsite</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+    <script>
+        AOS.init({ duration: 500, once: true });
+        new PureCounter();
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) { setTimeout(function() { preloader.classList.add('hidden'); }, 800); }
+        });
+        setTimeout(function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader && !preloader.classList.contains('hidden')) { preloader.classList.add('hidden'); }
+        }, 5000);
+    </script>
 
 </body>
 

@@ -567,6 +567,111 @@
             color: var(--black);
         }
 
+        /* ===== SALVATION SECTION - GOLD THEME ===== */
+        .salvation-step {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 20px 18px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(201,168,76,0.08);
+            height: 100%;
+        }
+        .salvation-step:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(201,168,76,0.06);
+        }
+        .salvation-step .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .salvation-step h4 {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .salvation-step p {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        .salvation-step .step-icon {
+            font-size: 1.6rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .salvation-step .step-verse {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.35);
+            font-style: italic;
+            margin-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 0.5rem;
+        }
+
+        .salvation-prayer {
+            background: rgba(201,168,76,0.06);
+            border-radius: 12px;
+            padding: 25px 25px;
+            border: 1px solid rgba(201,168,76,0.1);
+            margin-top: 1.5rem;
+        }
+        .salvation-prayer h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .salvation-prayer p {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .salvation-prayer .prayer-text {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px 20px;
+            font-style: italic;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            border-left: 3px solid var(--gold);
+        }
+        .salvation-prayer .prayer-text p {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        .btn-salvation {
+            background: var(--gold);
+            color: var(--black);
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+        }
+        .btn-salvation:hover {
+            background: var(--gold-dark);
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201,168,76,0.25);
+        }
+
         /* ===== TESTIMONIALS - GOLD THEME ===== */
         .testimonials .testimonial-item.highlight .testimonial-content {
             background-color: rgba(201, 168, 76, 0.08);
@@ -826,6 +931,71 @@
                 width: 150px;
                 height: 150px;
             }
+            .salvation-step {
+                padding: 16px 14px;
+            }
+            .salvation-step h4 {
+                font-size: 0.85rem;
+            }
+            .salvation-step p {
+                font-size: 0.8rem;
+            }
+            .salvation-prayer {
+                padding: 20px 16px;
+            }
+            .salvation-prayer h3 {
+                font-size: 1rem;
+            }
+            .salvation-prayer .prayer-text {
+                padding: 12px 15px;
+                font-size: 0.85rem;
+            }
+            .salvation-prayer .prayer-text p {
+                font-size: 0.85rem;
+            }
+            .btn-salvation {
+                padding: 10px 25px;
+                font-size: 0.8rem;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .salvation-step .step-number {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem;
+            }
+            .salvation-step .step-icon {
+                font-size: 1.3rem;
+            }
+            .salvation-step h4 {
+                font-size: 0.8rem;
+            }
+            .salvation-step p {
+                font-size: 0.75rem;
+            }
+            .salvation-step .step-verse {
+                font-size: 0.6rem;
+            }
+            .salvation-prayer h3 {
+                font-size: 0.9rem;
+            }
+            .salvation-prayer p {
+                font-size: 0.8rem;
+            }
+            .salvation-prayer .prayer-text {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+            .salvation-prayer .prayer-text p {
+                font-size: 0.8rem;
+            }
+            .btn-salvation {
+                font-size: 0.75rem;
+                padding: 8px 20px;
+            }
         }
 
         /* ===== BUTTON OVERRIDES ===== */
@@ -858,17 +1028,9 @@
     <div id="preloader">
         <div class="loader-wrapper">
             <div class="loader-ring-container">
-<!--                <div class="loader-ring"></div>-->
-<!--                <div class="loader-ring"></div>-->
-<!--                <div class="loader-ring"></div>-->
                 <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="loader-logo">
             </div>
             <span class="loader-text">Golammi Worship Center</span>
-<!--            <div class="loader-dots">-->
-<!--                <span></span>-->
-<!--                <span></span>-->
-<!--                <span></span>-->
-<!--            </div>-->
         </div>
     </div>
 
@@ -887,7 +1049,6 @@
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
                     <li class="dropdown"><a href="about.html"><span>About Us</span></a>
-
                     </li>
                     <li><a href="sermons.html">Sermons</a></li>
                     <li><a href="events.html">Events</a></li>
@@ -1024,8 +1185,6 @@
                 </div>
 
             </div>
-
-
 
         </section>
         <!-- /Hero Section -->
@@ -1261,6 +1420,125 @@
                 </div>
             </div>
         </section>
+
+        <!-- ======= SALVATION CALL SECTION ======= -->
+        <section id="salvation" class="salvation-section section" style="background: linear-gradient(135deg, rgba(26,26,26,0.92), rgba(45,45,45,0.92)), url('assets/img/jesus1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 50px 0 40px; position: relative; overflow: hidden;">
+
+            <!-- Decorative Elements -->
+            <div style="position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgba(201,168,76,0.04); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: -100px; left: -100px; width: 350px; height: 350px; border-radius: 50%; background: rgba(201,168,76,0.03); pointer-events: none;"></div>
+
+            <!-- Cross Icon Decoration -->
+            <div style="position: absolute; top: 20px; right: 30px; font-size: 4rem; color: rgba(201,168,76,0.06); pointer-events: none; transform: rotate(15deg);">
+                <i class="bi bi-cross"></i>
+            </div>
+
+            <div class="container" data-aos="fade-up">
+
+                <!-- Section Header -->
+                <div class="text-center mb-3" data-aos="fade-up">
+                    <span style="display: inline-block; background: rgba(201,168,76,0.15); color: var(--gold); padding: 4px 16px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.3rem;">God Loves You</span>
+                    <h2 style="color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem;">
+                        Give Your Life to <span style="color: var(--gold);">Christ</span>
+                    </h2>
+                    <p style="color: rgba(255,255,255,0.65); font-size: 0.9rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                        God has a plan for your life. No matter what you've done, His arms are open wide to receive you.
+                    </p>
+                </div>
+
+                <!-- Scripture -->
+                <div class="row justify-content-center mb-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-10">
+                        <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px 20px; border: 1px solid rgba(201,168,76,0.06); text-align: center;">
+                            <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem; margin-bottom: 0; line-height: 1.6;">
+                                <span style="color: var(--gold); font-weight: 600;">"For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life."</span>
+                                <br><span style="color: rgba(255,255,255,0.4); font-size: 0.75rem;">— John 3:16</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Steps to Salvation -->
+                <div class="row g-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="salvation-step">
+                            <span class="step-number">1</span>
+                            <span class="step-icon"><i class="bi bi-heart-fill"></i></span>
+                            <h4>Acknowledge Your Need</h4>
+                            <p>Admit you are a sinner in need of a Savior.</p>
+                            <div class="step-verse">Romans 3:23</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="salvation-step">
+                            <span class="step-number">2</span>
+                            <span class="step-icon"><i class="bi bi-arrow-repeat"></i></span>
+                            <h4>Repent of Your Sins</h4>
+                            <p>Turn away from sin and follow God's path.</p>
+                            <div class="step-verse">Acts 3:19</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="salvation-step">
+                            <span class="step-number">3</span>
+                            <span class="step-icon"><i class="bi bi-check-circle-fill"></i></span>
+                            <h4>Confess Jesus as Lord</h4>
+                            <p>Believe and confess Jesus as your Lord and Savior.</p>
+                            <div class="step-verse">Romans 10:9</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="salvation-step">
+                            <span class="step-number">4</span>
+                            <span class="step-icon"><i class="bi bi-person-plus-fill"></i></span>
+                            <h4>Follow Jesus Daily</h4>
+                            <p>Commit to following Jesus every day.</p>
+                            <div class="step-verse">Luke 9:23</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sinner's Prayer -->
+                <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="col-lg-10">
+                        <div class="salvation-prayer">
+                            <div style="text-align: center; margin-bottom: 1rem;">
+                                <span style="display: inline-block; background: rgba(201,168,76,0.2); color: var(--gold); padding: 3px 14px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">A Prayer for Salvation</span>
+                            </div>
+                            <h3 style="text-align: center; font-size: 1.1rem;">Do You Want to Receive Jesus Today?</h3>
+                            <p style="text-align: center; font-size: 0.85rem;">If you're ready, pray this prayer with all your heart:</p>
+
+                            <div class="prayer-text">
+                                <p style="margin-bottom: 0.3rem; font-weight: 600; color: #fff; font-size: 0.9rem;">Heavenly Father,</p>
+                                <p style="margin-bottom: 0.3rem; font-size: 0.9rem;">I come to You just as I am. I acknowledge that I am a sinner and I need Your forgiveness. I believe that Jesus Christ died on the cross for my sins and rose again. I confess with my mouth that Jesus is Lord. I invite You, Lord Jesus, to come into my heart and be my Lord and Savior.</p>
+                                <p style="margin-bottom: 0.3rem; font-size: 0.9rem;">I repent of all my sins and turn away from my old ways. I ask You to forgive me, cleanse me, and make me new. I am ready to follow You for the rest of my life.</p>
+                                <p style="margin-bottom: 0; font-size: 0.9rem;">Thank You for loving me and saving me. I am a child of God. In Jesus' name, <strong>Amen.</strong></p>
+                            </div>
+
+                            <div style="text-align: center; margin-top: 1.2rem;">
+                                <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 0.8rem;">
+                                    <i class="bi bi-check-circle-fill" style="color: var(--gold);"></i>
+                                    If you prayed this prayer, <strong style="color: #fff;">you are now a child of God!</strong>
+                                </p>
+                                <div class="d-flex flex-wrap justify-content-center gap-2">
+                                    <a href="#" class="btn-salvation"><i class="bi bi-envelope me-1"></i> Get Resources</a>
+                                    <a href="contact.html" class="btn-salvation" style="background: transparent; border: 2px solid var(--gold); color: var(--gold);">
+                                        <i class="bi bi-chat-dots me-1"></i> Contact Us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- /Salvation Call Section -->
 
         <!-- ======= Testimonials Section ======= -->
         <section id="testimonials" class="testimonials section" style="background: #fff;">
@@ -1836,9 +2114,7 @@
         // ===== PRELOADER HIDE ON LOAD =====
         window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
-            // Ensure preloader exists before trying to hide it
             if (preloader) {
-                // Add a small delay for smoother transition
                 setTimeout(function() {
                     preloader.classList.add('hidden');
                 }, 800);

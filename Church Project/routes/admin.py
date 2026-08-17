@@ -1004,84 +1004,176 @@ def delete_prayer(request_id):
 
 
 # ===================== CHURCH ANALYTICS =====================
-
 @admin_bp.route('/analytics')
 @login_required
 @admin_required
 def analytics():
     """Church analytics dashboard"""
-    try:
-        from models.church_stats import ChurchStats, FinancialRecord, MemberGrowth
-    except ImportError:
-        # If models don't exist yet, create dummy data
-        return render_template('admin/analytics.html',
-                               stats={
-                                   'total_members': 0,
-                                   'total_men': 0,
-                                   'total_women': 0,
-                                   'total_children': 0
-                               },
-                               growth_data=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                               total_tithes=0,
-                               total_offerings=0,
-                               total_donations=0,
-                               total_income=0,
-                               finance_labels=[],
-                               finance_data=[],
-                               today=datetime.utcnow().strftime('%Y-%m-%d'))
-
-    # Get church stats
-    stats = ChurchStats.query.first()
-    if not stats:
-        stats = ChurchStats(
-            total_members=0,
-            total_men=0,
-            total_women=0,
-            total_children=0
-        )
-        db.session.add(stats)
-        db.session.commit()
-
-    # Get growth data
-    growth_records = MemberGrowth.query.order_by(MemberGrowth.year, MemberGrowth.month).limit(12).all()
-    growth_data = [record.total_members for record in growth_records]
-    if len(growth_data) < 12:
-        # Pad with zeros if not enough data
-        growth_data = [0] * (12 - len(growth_data)) + growth_data
-
-    # Get financial data (super admin only)
+    stats = None
+    growth_data = [0] * 12
     total_tithes = 0
     total_offerings = 0
     total_donations = 0
     total_income = 0
     finance_labels = []
     finance_data = []
+    member_growth_percent = 0
+    records = None
 
-    if current_user.is_super_admin():
-        total_tithes = db.session.query(func.sum(FinancialRecord.amount)).filter_by(type='tithe').scalar() or 0
-        total_offerings = db.session.query(func.sum(FinancialRecord.amount)).filter_by(type='offering').scalar() or 0
-        total_donations = db.session.query(func.sum(FinancialRecord.amount)).filter_by(type='donation').scalar() or 0
-        total_income = total_tithes + total_offerings + total_donations
+    try:
+        from models.church_stats import ChurchStats, FinancialRecord, MemberGrowth
 
-        # Monthly financial data - last 6 months
-        monthly_data = db.session.query(
-            func.strftime('%m', FinancialRecord.date).label('month'),
-            func.sum(FinancialRecord.amount).label('total')
-        ).group_by('month').order_by('month').limit(6).all()
+        # Get church stats
+        stats = ChurchStats.query.first()
+        if not stats:
+            stats = ChurchStats(
+                total_members=0,
+                total_men=0,
+                total_women=0,
+                total_children=0
+            )
+            db.session.add(stats)
+            db.session.commit()
 
-        finance_labels = [f'Month {d[0]}' for d in monthly_data]
-        finance_data = [float(d[1]) for d in monthly_data]
+        # Calculate member growth percentage
+        if stats.total_members > 0:
+            prev_month = MemberGrowth.query.order_by(
+                MemberGrowth.year.desc(),
+                MemberGrowth.month.desc()
+            ).limit(2).all()
+            if len(prev_month) >= 2:
+                prev_total = prev_month[1].total_members
+                if prev_total > 0:
+                    member_growth_percent = round(((stats.total_members - prev_total) / prev_total) * 100, 1)
+
+        # Get growth data - last 12 months (descending order - newest first)
+        growth_records = MemberGrowth.query.order_by(
+            MemberGrowth.year.desc(),
+            MemberGrowth.month.desc()
+        ).limit(12).all()
+
+        # Reverse to show chronological order (oldest to newest) for the chart
+        growth_records = growth_records[::-1]
+
+        if growth_records:
+            growth_data = [record.total_members for record in growth_records]
+            if len(growth_data) < 12:
+                growth_data = [0] * (12 - len(growth_data)) + growth_data
+        else:
+            growth_data = [stats.total_members] + [0] * 11
+
+        # Get financial data (super admin only)
+        if current_user.is_super_admin():
+            # Get page number
+            page = request.args.get('page', 1, type=int)
+            per_page = 7
+
+            # Get paginated financial records - descending order (newest first)
+            records_paginated = FinancialRecord.query.order_by(
+                FinancialRecord.date.desc(),
+                FinancialRecord.id.desc()  # Secondary ordering by ID for consistency
+            ).paginate(page=page, per_page=per_page, error_out=False)
+
+            # Add user info
+            for record in records_paginated.items:
+                if record.created_by:
+                    record.creator = User.query.get(record.created_by)
+
+            records = records_paginated
+
+            # Get totals
+            total_tithes = db.session.query(func.sum(FinancialRecord.amount)).filter_by(type='tithe').scalar() or 0
+            total_offerings = db.session.query(func.sum(FinancialRecord.amount)).filter_by(
+                type='offering').scalar() or 0
+            total_donations = db.session.query(func.sum(FinancialRecord.amount)).filter_by(
+                type='donation').scalar() or 0
+            total_income = total_tithes + total_offerings + total_donations
+
+            # Monthly financial data - descending order (most recent first)
+            from sqlalchemy import extract
+            monthly_data = db.session.query(
+                extract('year', FinancialRecord.date).label('year'),
+                extract('month', FinancialRecord.date).label('month'),
+                func.sum(FinancialRecord.amount).label('total')
+            ).group_by('year', 'month').order_by(
+                extract('year', FinancialRecord.date).desc(),
+                extract('month', FinancialRecord.date).desc()
+            ).limit(6).all()
+
+            # Reverse to show chronological order for the chart
+            monthly_data = monthly_data[::-1]
+
+            month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+            if monthly_data:
+                # Create labels with month and year for clarity
+                finance_labels = [f"{month_names[int(m[1]) - 1]} {int(m[0])}" for m in monthly_data]
+                finance_data = [float(m[2]) for m in monthly_data]
+            else:
+                finance_labels = ['No Data']
+                finance_data = [0]
+
+    except Exception as e:
+        print(f"Analytics error: {e}")  # For debugging
+        flash('Database tables not ready. Please run migrations.', 'warning')
+        stats = {
+            'total_members': 0,
+            'total_men': 0,
+            'total_women': 0,
+            'total_children': 0
+        }
+        member_growth_percent = 0
+
+        # Create empty pagination object
+        class EmptyPagination:
+            items = []
+            total = 0
+            page = 1
+            pages = 1
+            has_prev = False
+            has_next = False
+            prev_num = None
+            next_num = None
+
+            def iter_pages(self, *args, **kwargs):
+                return []
+
+        records = EmptyPagination()
 
     return render_template('admin/analytics.html',
                            stats=stats,
                            growth_data=growth_data,
-                           total_tithes=total_tithes,
-                           total_offerings=total_offerings,
-                           total_donations=total_donations,
-                           total_income=total_income,
-                           finance_labels=finance_labels,
-                           finance_data=finance_data,
+                           total_tithes=total_tithes if current_user.is_super_admin() else 0,
+                           total_offerings=total_offerings if current_user.is_super_admin() else 0,
+                           total_donations=total_donations if current_user.is_super_admin() else 0,
+                           total_income=total_income if current_user.is_super_admin() else 0,
+                           finance_labels=finance_labels if current_user.is_super_admin() else [],
+                           finance_data=finance_data if current_user.is_super_admin() else [],
+                           records=records if current_user.is_super_admin() else None,
+                           member_growth_percent=member_growth_percent,
                            today=datetime.utcnow().strftime('%Y-%m-%d'))
+
+
+# @admin_bp.route('/analytics/delete-financial/<int:record_id>', methods=['POST'])
+# @login_required
+# @super_admin_required
+# def delete_financial(record_id):
+#     """Delete a financial record"""
+#     try:
+#         from models.church_stats import FinancialRecord
+#         record = FinancialRecord.query.get_or_404(record_id)
+#
+#         # Store info for flash message
+#         record_info = f"{record.type.title()} of ₦{record.amount:,.2f} on {record.date.strftime('%b %d, %Y')}"
+#
+#         db.session.delete(record)
+#         db.session.commit()
+#         flash(f'✅ Financial record deleted: {record_info}', 'success')
+#     except Exception as e:
+#         flash(f'❌ Error deleting record: {str(e)}', 'danger')
+#
+#     return redirect(url_for('admin.analytics'))
 
 
 @admin_bp.route('/analytics/update-members', methods=['POST'])
@@ -1098,6 +1190,11 @@ def update_members():
     men = request.form.get('men', 0, type=int)
     women = request.form.get('women', 0, type=int)
     children = request.form.get('children', 0, type=int)
+
+    # Validate input
+    if men < 0 or women < 0 or children < 0:
+        flash('Please enter valid numbers (0 or greater).', 'danger')
+        return redirect(url_for('admin.analytics'))
 
     stats = ChurchStats.query.first()
     if not stats:
@@ -1121,7 +1218,9 @@ def update_members():
     db.session.add(growth)
 
     db.session.commit()
-    flash('Member counts updated successfully!', 'success')
+    flash(
+        f' Number of members updated successfully! Total: {stats.total_members:,} (Men: {men:,}, Women: {women:,}, Children: {children:,})',
+        'success')
     return redirect(url_for('admin.analytics'))
 
 
@@ -1140,20 +1239,30 @@ def add_financial():
     amount = request.form.get('amount', 0, type=float)
     finance_date = request.form.get('finance_date')
 
-    if not finance_type or amount <= 0:
-        flash('Please provide valid financial data.', 'danger')
+    if not finance_type:
+        flash('Please select a financial type.', 'danger')
         return redirect(url_for('admin.analytics'))
+
+    if amount <= 0:
+        flash('Please enter a valid amount greater than 0.', 'danger')
+        return redirect(url_for('admin.analytics'))
+
+    try:
+        record_date = datetime.strptime(finance_date, '%Y-%m-%d') if finance_date else datetime.utcnow()
+    except ValueError:
+        record_date = datetime.utcnow()
 
     record = FinancialRecord(
         type=finance_type,
         amount=amount,
-        date=datetime.strptime(finance_date, '%Y-%m-%d') if finance_date else datetime.utcnow(),
+        date=record_date,
         created_by=current_user.id
     )
     db.session.add(record)
     db.session.commit()
 
-    flash(f'{finance_type.title()} of ${amount:.2f} recorded successfully!', 'success')
+    flash(f' {finance_type.title()} of ₦{amount:,.2f} recorded successfully for {record_date.strftime("%b %d, %Y")}!',
+          'success')
     return redirect(url_for('admin.analytics'))
 
 
@@ -1170,28 +1279,173 @@ def analytics_data():
     period = request.args.get('period', 'yearly')
 
     if period == 'weekly':
-        # Get last 7 weeks of data
-        records = MemberGrowth.query.order_by(MemberGrowth.year.desc(), MemberGrowth.month.desc()).limit(7).all()
-        labels = [f'Week {i + 1}' for i in range(len(records))]
+        # Get last 7 weeks of data (descending)
+        records = MemberGrowth.query.order_by(
+            MemberGrowth.year.desc(),
+            MemberGrowth.month.desc()
+        ).limit(7).all()
+        # Reverse for chronological order
+        records = records[::-1]
+        labels = [f"Wk {i + 1}" for i in range(len(records))]
         values = [r.total_members for r in records]
+
     elif period == 'monthly':
-        # Get last 12 months
-        records = MemberGrowth.query.order_by(MemberGrowth.year.desc(), MemberGrowth.month.desc()).limit(12).all()
-        labels = [f'{r.month}/{r.year}' for r in records]
+        # Get last 12 months (descending)
+        records = MemberGrowth.query.order_by(
+            MemberGrowth.year.desc(),
+            MemberGrowth.month.desc()
+        ).limit(12).all()
+        # Reverse for chronological order
+        records = records[::-1]
+        labels = [f"{r.month}/{r.year}" for r in records]
         values = [r.total_members for r in records]
+
     else:
-        # Yearly - get last 5 years
+        # Yearly - get last 5 years (descending)
         records = db.session.query(
             MemberGrowth.year,
             func.avg(MemberGrowth.total_members).label('avg_members')
-        ).group_by(MemberGrowth.year).order_by(MemberGrowth.year.desc()).limit(5).all()
+        ).group_by(MemberGrowth.year).order_by(
+            MemberGrowth.year.desc()
+        ).limit(5).all()
+        # Reverse for chronological order
+        records = records[::-1]
         labels = [str(r[0]) for r in records]
         values = [float(r[1]) for r in records]
 
     return jsonify({
-        'labels': labels[::-1],
-        'values': values[::-1]
+        'labels': labels,
+        'values': values
     })
+
+
+@admin_bp.route('/analytics/delete-financial/<int:record_id>', methods=['POST'])
+@login_required
+@super_admin_required
+def delete_financial(record_id):
+    """Delete a financial record"""
+    try:
+        from models.church_stats import FinancialRecord
+        record = FinancialRecord.query.get_or_404(record_id)
+        db.session.delete(record)
+        db.session.commit()
+        flash('Financial record deleted successfully!', 'success')
+    except Exception as e:
+        flash('Error deleting record: ' + str(e), 'danger')
+
+    return redirect(url_for('admin.analytics'))
+
+
+
+
+# @admin_bp.route('/analytics/update-members', methods=['POST'])
+# @login_required
+# @admin_required
+# def update_members():
+#     """Update church member counts"""
+#     try:
+#         from models.church_stats import ChurchStats, MemberGrowth
+#     except ImportError:
+#         flash('Church stats models not available. Please run database migrations.', 'danger')
+#         return redirect(url_for('admin.analytics'))
+#
+#     men = request.form.get('men', 0, type=int)
+#     women = request.form.get('women', 0, type=int)
+#     children = request.form.get('children', 0, type=int)
+#
+#     stats = ChurchStats.query.first()
+#     if not stats:
+#         stats = ChurchStats()
+#
+#     stats.total_men = men
+#     stats.total_women = women
+#     stats.total_children = children
+#     stats.total_members = men + women + children
+#     stats.updated_by = current_user.id
+#
+#     db.session.add(stats)
+#
+#     # Record growth history
+#     now = datetime.utcnow()
+#     growth = MemberGrowth(
+#         month=now.month,
+#         year=now.year,
+#         total_members=stats.total_members
+#     )
+#     db.session.add(growth)
+#
+#     db.session.commit()
+#     flash('Member counts updated successfully!', 'success')
+#     return redirect(url_for('admin.analytics'))
+#
+#
+# @admin_bp.route('/analytics/add-financial', methods=['POST'])
+# @login_required
+# @super_admin_required
+# def add_financial():
+#     """Add financial record"""
+#     try:
+#         from models.church_stats import FinancialRecord
+#     except ImportError:
+#         flash('Financial models not available. Please run database migrations.', 'danger')
+#         return redirect(url_for('admin.analytics'))
+#
+#     finance_type = request.form.get('finance_type')
+#     amount = request.form.get('amount', 0, type=float)
+#     finance_date = request.form.get('finance_date')
+#
+#     if not finance_type or amount <= 0:
+#         flash('Please provide valid financial data.', 'danger')
+#         return redirect(url_for('admin.analytics'))
+#
+#     record = FinancialRecord(
+#         type=finance_type,
+#         amount=amount,
+#         date=datetime.strptime(finance_date, '%Y-%m-%d') if finance_date else datetime.utcnow(),
+#         created_by=current_user.id
+#     )
+#     db.session.add(record)
+#     db.session.commit()
+#
+#     flash(f'{finance_type.title()} of ₦{amount:.2f} recorded successfully!', 'success')
+#     return redirect(url_for('admin.analytics'))
+
+#
+# @admin_bp.route('/analytics-data')
+# @login_required
+# @admin_required
+# def analytics_data():
+#     """Get analytics data for AJAX requests"""
+#     try:
+#         from models.church_stats import MemberGrowth
+#     except ImportError:
+#         return jsonify({'labels': [], 'values': []})
+#
+#     period = request.args.get('period', 'yearly')
+#
+#     if period == 'weekly':
+#         # Get last 7 weeks of data
+#         records = MemberGrowth.query.order_by(MemberGrowth.year.desc(), MemberGrowth.month.desc()).limit(7).all()
+#         labels = [f'Week {i + 1}' for i in range(len(records))]
+#         values = [r.total_members for r in records]
+#     elif period == 'monthly':
+#         # Get last 12 months
+#         records = MemberGrowth.query.order_by(MemberGrowth.year.desc(), MemberGrowth.month.desc()).limit(12).all()
+#         labels = [f'{r.month}/{r.year}' for r in records]
+#         values = [r.total_members for r in records]
+#     else:
+#         # Yearly - get last 5 years
+#         records = db.session.query(
+#             MemberGrowth.year,
+#             func.avg(MemberGrowth.total_members).label('avg_members')
+#         ).group_by(MemberGrowth.year).order_by(MemberGrowth.year.desc()).limit(5).all()
+#         labels = [str(r[0]) for r in records]
+#         values = [float(r[1]) for r in records]
+#
+#     return jsonify({
+#         'labels': labels[::-1],
+#         'values': values[::-1]
+#     })
 
 
 

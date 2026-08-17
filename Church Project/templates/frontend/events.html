@@ -1,772 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "frontend/base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Events | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
-    <meta name="description" content="Upcoming events at Gateway of Life and Miracle Ministries International - Golammi Worship Center. Join us for conferences, services, and programs.">
-    <meta name="keywords" content="Golammi Worship Center, GWC, events, conferences, services, programs">
+{% block title %}Events | Gateway of Life and Miracle Ministries International | Golammi Worship Center{% endblock %}
+{% block meta_description %}Upcoming events at Gateway of Life and Miracle Ministries International - Golammi Worship Center. Join us for conferences, services, and programs.{% endblock %}
+{% block meta_keywords %}Golammi Worship Center, GWC, events, conferences, services, programs{% endblock %}
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+{% block extra_css %}
+<style>
+    :root {
+        --gold: #c9a84c;
+        --gold-dark: #a8892e;
+        --gold-light: #e8d5a3;
+        --black: #1a1a1a;
+        --dark-gray: #2d2d2d;
+        --light-gray: #f8f6f0;
+        --white: #ffffff;
+    }
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    .my_logo { width: 5rem; height: 5rem; }
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    .event-card-custom {
+        background: var(--white);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    .event-card-custom:hover { transform: translateY(-5px); box-shadow: 0 10px 35px rgba(0,0,0,0.08); }
+    .event-card-custom .event-date-box {
+        background: var(--gold);
+        padding: 15px;
+        text-align: center;
+        min-width: 80px;
+        color: var(--black);
+    }
+    .event-card-custom .event-date-box .month { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .event-card-custom .event-date-box .day { font-size: 2rem; font-weight: 700; line-height: 1; }
+    .event-card-custom .event-content { padding: 18px 20px; flex: 1; }
+    .event-card-custom .event-content .event-tag {
+        display: inline-block;
+        padding: 2px 12px;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+    }
+    .event-card-custom .event-content .event-tag.worship { background: #e3f2fd; color: #0d47a1; }
+    .event-card-custom .event-content .event-tag.prayer { background: #e8f5e9; color: #2e7d32; }
+    .event-card-custom .event-content .event-tag.deliverance { background: #ffebee; color: #c62828; }
+    .event-card-custom .event-content .event-tag.conference { background: #fff3e0; color: #e65100; }
+    .event-card-custom .event-content .event-tag.youth { background: #f3e5f5; color: #6a1b9a; }
+    .event-card-custom .event-content .event-tag.outreach { background: #e0f7fa; color: #00695c; }
+    .event-card-custom .event-content .event-tag.worship { background: #e3f2fd; color: #0d47a1; }
+    .event-card-custom .event-content h3 { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; }
+    .event-card-custom .event-content p { font-size: 0.85rem; color: #555; line-height: 1.6; margin-bottom: 0.5rem; }
+    .event-card-custom .event-content .event-meta { font-size: 0.75rem; color: #888; margin-bottom: 0.5rem; }
+    .event-card-custom .event-content .event-meta i { color: var(--gold); margin-right: 4px; }
+    .event-card-custom .event-content .btn-event {
+        padding: 6px 18px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: var(--gold);
+        color: var(--black);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .event-card-custom .event-content .btn-event:hover { background: var(--gold-dark); color: var(--black); }
 
-    <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
+    .featured-event {
+        background: linear-gradient(135deg, var(--black), var(--dark-gray));
+        border-radius: 16px;
+        padding: 40px;
+        color: #fff;
+    }
+    .featured-event h2 { color: #fff; font-size: 1.8rem; font-weight: 700; }
+    .featured-event p { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7; }
+    .featured-event .event-meta { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+    .featured-event .event-meta i { color: var(--gold); }
+    .featured-event .btn-featured {
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        background: var(--gold);
+        color: var(--black);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .featured-event .btn-featured:hover { background: var(--gold-dark); color: var(--black); }
 
-    <style>
-        /* ===== GOLD, BLACK & WHITE THEME ===== */
-        :root {
-            --gold: #c9a84c;
-            --gold-dark: #a8892e;
-            --gold-light: #e8d5a3;
-            --black: #1a1a1a;
-            --dark-gray: #2d2d2d;
-            --light-gray: #f8f6f0;
-            --white: #ffffff;
-        }
+    @media (max-width: 992px) {
+        .featured-event { padding: 30px; }
+        .featured-event h2 { font-size: 1.5rem; }
+    }
+    @media (max-width: 768px) {
+        .event-card-custom .event-date-box .day { font-size: 1.5rem; }
+        .featured-event { padding: 20px; }
+        .featured-event h2 { font-size: 1.2rem; }
+    }
+    @media (max-width: 576px) {
+        .event-card-custom .event-date-box { min-width: 60px; padding: 10px; }
+        .event-card-custom .event-date-box .day { font-size: 1.2rem; }
+    }
 
-        .my_logo {
-            width: 5rem;
-            height: 5rem;
-        }
+    .scroll-top { background-color: var(--gold); }
+    .scroll-top i { color: var(--black); }
+    .scroll-top:hover { background-color: var(--gold-dark); }
+    .btn-primary { background-color: var(--gold) !important; border-color: var(--gold) !important; color: var(--black) !important; }
+    .btn-primary:hover { background-color: var(--gold-dark) !important; border-color: var(--gold-dark) !important; color: var(--black) !important; }
+</style>
+{% endblock %}
 
-        /* ===== PRELOADER ===== */
-        #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            background: var(--black);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-        #preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        #preloader .loader-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-        }
-        #preloader .loader-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            animation: logoPulse 1.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.3));
-        }
-        @keyframes logoPulse {
-            0% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
-            }
-            50% {
-                transform: scale(1.08);
-                filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.5));
-            }
-            100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
-            }
-        }
-        #preloader .loader-ring-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #preloader .loader-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            animation: spin 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-        #preloader .loader-ring:nth-child(1) {
-            width: 100%;
-            height: 100%;
-            border-top-color: var(--gold);
-            border-right-color: var(--gold);
-            animation-duration: 1.5s;
-        }
-        #preloader .loader-ring:nth-child(2) {
-            width: 75%;
-            height: 75%;
-            border-bottom-color: var(--gold-light);
-            border-left-color: var(--gold-light);
-            animation-duration: 1.8s;
-            animation-direction: reverse;
-        }
-        #preloader .loader-ring:nth-child(3) {
-            width: 50%;
-            height: 50%;
-            border-top-color: var(--gold-dark);
-            border-right-color: var(--gold-dark);
-            animation-duration: 2.1s;
-        }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        #preloader .loader-text {
-            color: var(--gold);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-            animation: textPulse 1.5s ease-in-out infinite;
-        }
-        @keyframes textPulse {
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-3px);
-            }
-        }
-        #preloader .loader-dots {
-            display: flex;
-            gap: 8px;
-            margin-top: 0.5rem;
-        }
-        #preloader .loader-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: dotBounce 1.4s ease-in-out infinite both;
-        }
-        #preloader .loader-dots span:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-        #preloader .loader-dots span:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-        #preloader .loader-dots span:nth-child(3) {
-            animation-delay: 0;
-        }
-        @keyframes dotBounce {
-            0%,
-            80%,
-            100% {
-                transform: scale(0);
-                opacity: 0.3;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+{% block content %}
+<!-- Page Title -->
+<div class="page-title dark-background" style="background-image: url({{ url_for('static', filename='assets/img/go59.jpg') }});">
+    <div class="container position-relative text-center">
+        <h1>Upcoming Events</h1>
+        <p>Join us at Gateway of Life and Miracle Ministries International for life-changing events and services.</p>
+        <nav class="breadcrumbs">
+            <a href="{{ url_for('frontend.index') }}">Home</a>
+            <span class="separator">/</span>
+            <span class="current">Events</span>
+        </nav>
+    </div>
+</div>
 
-        /* ===== NAV HOVER ===== */
-        .navmenu li:hover>a,
-        .navmenu .active,
-        .navmenu .active:focus {
-            color: var(--gold) !important;
-        }
-        .scrolled .header {
-            --background-color: rgba(0, 0, 0, 0.9);
-        }
-
-        /* ===== PAGE TITLE ===== */
-        .page-title {
-            padding: 150px 0 70px 0;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-        .page-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 100%);
-            z-index: 1;
-        }
-        .page-title .container {
-            position: relative;
-            z-index: 2;
-        }
-        .page-title h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-        .page-title p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-            max-width: 700px;
-            margin: 0 auto 1rem;
-        }
-        .page-title .breadcrumbs {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-        .page-title .breadcrumbs a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .page-title .breadcrumbs a:hover {
-            color: var(--gold);
-        }
-        .page-title .breadcrumbs .current {
-            color: var(--gold);
-        }
-        .page-title .breadcrumbs .separator {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* ===== EVENT CARDS ===== */
-        .event-card-custom {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .event-card-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-        }
-        .event-card-custom .event-date-box {
-            background: var(--gold);
-            padding: 15px;
-            text-align: center;
-            min-width: 80px;
-            color: var(--black);
-        }
-        .event-card-custom .event-date-box .month {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .event-card-custom .event-date-box .day {
-            font-size: 2rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-        .event-card-custom .event-content {
-            padding: 18px 20px;
-            flex: 1;
-        }
-        .event-card-custom .event-content .event-tag {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 0.3rem;
-        }
-        .event-card-custom .event-content .event-tag.worship { background: #e3f2fd; color: #0d47a1; }
-        .event-card-custom .event-content .event-tag.prayer { background: #e8f5e9; color: #2e7d32; }
-        .event-card-custom .event-content .event-tag.deliverance { background: #ffebee; color: #c62828; }
-        .event-card-custom .event-content .event-tag.conference { background: #fff3e0; color: #e65100; }
-        .event-card-custom .event-content h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--black);
-            margin-bottom: 0.3rem;
-        }
-        .event-card-custom .event-content p {
-            font-size: 0.85rem;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
-        }
-        .event-card-custom .event-content .event-meta {
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 0.5rem;
-        }
-        .event-card-custom .event-content .event-meta i {
-            color: var(--gold);
-            margin-right: 4px;
-        }
-        .event-card-custom .event-content .btn-event {
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--gold);
-            color: var(--black);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .event-card-custom .event-content .btn-event:hover {
-            background: var(--gold-dark);
-            color: var(--black);
-        }
-
-        /* ===== FEATURED EVENT ===== */
-        .featured-event {
-            background: linear-gradient(135deg, var(--black), var(--dark-gray));
-            border-radius: 16px;
-            padding: 40px;
-            color: #fff;
-        }
-        .featured-event h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        .featured-event p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        .featured-event .event-meta {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-        }
-        .featured-event .event-meta i {
-            color: var(--gold);
-        }
-        .featured-event .btn-featured {
-            padding: 10px 30px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background: var(--gold);
-            color: var(--black);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .featured-event .btn-featured:hover {
-            background: var(--gold-dark);
-            color: var(--black);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .page-title h1 { font-size: 2rem; }
-            .featured-event { padding: 30px; }
-            .featured-event h2 { font-size: 1.5rem; }
-        }
-        @media (max-width: 768px) {
-            .page-title { padding: 120px 0 50px 0; }
-            .page-title h1 { font-size: 1.6rem; }
-            .page-title p { font-size: 0.9rem; }
-            #preloader .loader-logo { width: 80px; height: 80px; }
-            #preloader .loader-ring-container { width: 150px; height: 150px; }
-            .event-card-custom .event-date-box .day { font-size: 1.5rem; }
-            .featured-event { padding: 20px; }
-            .featured-event h2 { font-size: 1.2rem; }
-        }
-        @media (max-width: 576px) {
-            .page-title h1 { font-size: 1.4rem; }
-            .event-card-custom .event-date-box { min-width: 60px; padding: 10px; }
-            .event-card-custom .event-date-box .day { font-size: 1.2rem; }
-        }
-
-        /* ===== SCROLL TOP ===== */
-        .scroll-top {
-            background-color: var(--gold);
-        }
-        .scroll-top i {
-            color: var(--black);
-        }
-        .scroll-top:hover {
-            background-color: var(--gold-dark);
-        }
-        .btn-primary {
-            background-color: var(--gold) !important;
-            border-color: var(--gold) !important;
-            color: var(--black) !important;
-        }
-        .btn-primary:hover {
-            background-color: var(--gold-dark) !important;
-            border-color: var(--gold-dark) !important;
-            color: var(--black) !important;
-        }
-    </style>
-</head>
-
-<body class="events-page">
-
-    <!-- ===== PRELOADER ===== -->
-    <div id="preloader">
-        <div class="loader-wrapper">
-            <div class="loader-ring-container">
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="loader-logo">
-            </div>
-            <span class="loader-text">Gateway of Life</span>
-            <div class="loader-dots">
-                <span></span>
-                <span></span>
-                <span></span>
+<!-- Featured Event -->
+{% if featured_event %}
+<section class="section" style="padding: 40px 0 30px;">
+    <div class="container">
+        <div class="featured-event" data-aos="fade-up">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span style="color: var(--gold); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Featured Event</span>
+                    <h2>{{ featured_event.title }}</h2>
+                    <p>{{ featured_event.short_description or featured_event.description|truncate(200) }}</p>
+                    <div class="event-meta">
+                        <span><i class="bi bi-calendar3"></i> 
+                            {% if featured_event.start_date and featured_event.end_date %}
+                                {{ featured_event.start_date.strftime('%B %d') }} - {{ featured_event.end_date.strftime('%d, %Y') }}
+                            {% else %}
+                                {{ featured_event.start_date.strftime('%B %d, %Y') }}
+                            {% endif %}
+                        </span>
+                        {% if featured_event.start_time %}
+                        <span class="ms-3"><i class="bi bi-clock"></i> {{ featured_event.start_time }}{% if featured_event.end_time %} - {{ featured_event.end_time }}{% endif %}</span>
+                        {% endif %}
+                        <span class="ms-3"><i class="bi bi-geo-alt"></i> {{ featured_event.venue or featured_event.location or 'Online' }}</span>
+                    </div>
+                    <div class="mt-3">
+                        {% if featured_event.registration_link %}
+                        <a href="{{ featured_event.registration_link }}" class="btn-featured"><i class="bi bi-calendar-plus"></i> Register Now</a>
+                        {% else %}
+                        <a href="{{ url_for('frontend.event_detail', slug=featured_event.slug) }}" class="btn-featured"><i class="bi bi-info-circle"></i> Learn More</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    {% if featured_event.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + featured_event.image) }}" alt="{{ featured_event.title }}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='assets/img/go21.jpg') }}" alt="Conference" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
+</section>
+{% endif %}
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
-                <i class="bi bi-church" style="font-size: 24px; color: var(--gold);"></i>
-                <div>
-                    <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="my_logo">
-                </div>
-            </a>
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li class="dropdown"><a href="about.html"><span>About Us</span></a></li>
-                    <li><a href="sermons.html">Sermons</a></li>
-                    <li><a href="events.html" class="active">Events</a></li>
-                    <li><a href="prayer.html">Prayer</a></li>
-                    <li><a href="media.html">Media</a></li>
-                    <li><a href="giving.html">Giving</a></li>
-                    <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="blog.html">Blog / News</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="radio.html">Radio</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25); font-size: 0.7rem;">Login</a></li>
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
-        </div>
-    </header>
-
-    <main class="main">
-
-        <!-- ======= Page Title ======= -->
-        <div class="page-title dark-background" style="background-image: url(assets/img/go59.jpg);">
-            <div class="container position-relative text-center">
-                <h1>Upcoming Events</h1>
-                <p>Join us at Gateway of Life and Miracle Ministries International for life-changing events and services.</p>
-                <nav class="breadcrumbs">
-                    <a href="index.html">Home</a>
-                    <span class="separator">/</span>
-                    <span class="current">Events</span>
-                </nav>
-            </div>
-        </div>
-
-        <!-- ======= Featured Event ======= -->
-        <section class="section" style="padding: 40px 0 30px;">
-            <div class="container">
-                <div class="featured-event" data-aos="fade-up">
-                    <div class="row align-items-center">
-                        <div class="col-lg-8">
-                            <span style="color: var(--gold); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Featured Event</span>
-                            <h2>Annual Prophetic Conference 2026</h2>
-                            <p>Join us for a powerful 3-day prophetic conference with Prophet James Elinissi and guest ministers. Experience prophetic worship, life-changing teachings, and divine encounters that will transform your life and destiny.</p>
-                            <div class="event-meta">
-                                <span><i class="bi bi-calendar3"></i> April 5-7, 2026</span>
-                                <span class="ms-3"><i class="bi bi-clock"></i> 9:00 AM - 6:00 PM Daily</span>
-                                <span class="ms-3"><i class="bi bi-geo-alt"></i> Golammi Worship Center</span>
-                            </div>
-                            <div class="mt-3">
-                                <a href="#" class="btn-featured"><i class="bi bi-calendar-plus"></i> Register Now</a>
-                            </div>
+<!-- Events List -->
+<section class="section" style="padding-top: 0; padding-bottom: 40px;">
+    <div class="container">
+        {% if events.items %}
+        <div class="row g-4">
+            {% for event in events.items %}
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="event-card-custom d-flex flex-column flex-sm-row">
+                    <div class="event-date-box">
+                        <div class="month">{{ event.start_date.strftime('%b').upper() }}</div>
+                        <div class="day">{{ event.start_date.strftime('%d') }}</div>
+                        <div style="font-size: 0.6rem; font-weight: 600;">{{ event.start_date.strftime('%Y') }}</div>
+                    </div>
+                    <div class="event-content">
+                        <span class="event-tag {{ event.category }}">{{ event.category|title }}</span>
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.short_description or event.description|truncate(100) }}</p>
+                        <div class="event-meta">
+                            <span><i class="bi bi-clock"></i> {{ event.start_time or 'All Day' }}</span>
+                            <span class="ms-2"><i class="bi bi-geo-alt"></i> {{ event.venue or event.location or 'Online' }}</span>
                         </div>
-                        <div class="col-lg-4 text-center">
-                            <img src="assets/img/go21.jpg" alt="Conference" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
-                        </div>
+                        <a href="{{ url_for('frontend.event_detail', slug=event.slug) }}" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- ======= Events List ======= -->
-        <section class="section" style="padding-top: 0; padding-bottom: 40px;">
-            <div class="container">
-
-                <div class="row g-4">
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">MAR</div>
-                                <div class="day">15</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag worship">Worship</span>
-                                <h3>Sunday Prophetic Worship Service</h3>
-                                <p>Join us for a powerful time of prophetic worship, prayer, and the Word as we celebrate the goodness of God.</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 9:00 AM - 12:00 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Sanctuary</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">MAR</div>
-                                <div class="day">19</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag prayer">Prayer</span>
-                                <h3>Midweek Prayer &amp; Bible Study</h3>
-                                <p>Dive deep into the Word of God and experience the power of corporate prayer and intercession.</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 6:30 PM - 8:30 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Sanctuary</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">MAR</div>
-                                <div class="day">21</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag deliverance">Deliverance</span>
-                                <h3>Friday Night Prayer &amp; Deliverance</h3>
-                                <p>Experience freedom and breakthrough through powerful deliverance prayer and prophetic declarations.</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 6:00 PM - 10:00 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Sanctuary</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">APR</div>
-                                <div class="day">5</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag conference">Conference</span>
-                                <h3>Annual Prophetic Conference 2026</h3>
-                                <p>A 3-day prophetic conference with Prophet James and guest ministers. Come and receive your miracle!</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 9:00 AM - 6:00 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Sanctuary</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">APR</div>
-                                <div class="day">12</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag worship">Worship</span>
-                                <h3>Youth &amp; Young Adults Service</h3>
-                                <p>A dynamic service for the next generation featuring praise, worship, and a powerful message from the Word.</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 4:00 PM - 6:00 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Youth Center</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="event-card-custom d-flex flex-column flex-sm-row">
-                            <div class="event-date-box">
-                                <div class="month">APR</div>
-                                <div class="day">19</div>
-                                <div style="font-size: 0.6rem; font-weight: 600;">2026</div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-tag prayer">Prayer</span>
-                                <h3>Community Prayer &amp; Fasting</h3>
-                                <p>Join the entire church for a day of prayer and fasting as we seek God's face for our community and nation.</p>
-                                <div class="event-meta">
-                                    <span><i class="bi bi-clock"></i> 7:00 AM - 7:00 PM</span>
-                                    <span class="ms-2"><i class="bi bi-geo-alt"></i> GWC Sanctuary</span>
-                                </div>
-                                <a href="#" class="btn-event"><i class="bi bi-info-circle"></i> Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="#" class="btn btn-primary" style="padding: 12px 35px; border-radius: 50px; font-weight: 600; font-size: 0.9rem;">View All Events</a>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer position-relative dark-background">
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <i class="bi bi-church" style="font-size: 24px; color: var(--gold);"></i>
-                        <div>
-                            <span class="sitename" style="font-size: 1.2rem; font-weight: 700; color: var(--gold);">GWC</span>
-                            <span style="display: block; font-size: 0.6rem; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase; color: #fff;">Gateway of Life &amp; Miracle</span>
-                        </div>
-                    </a>
-                    <div class="footer-contact pt-2" style="font-size: 0.85rem;">
-                        <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
-                        <p><strong>Golammi Worship Center</strong></p>
-                        <p class="mt-2"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
-                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
-                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State</span></p>
-                    </div>
-                    <div class="social-links d-flex mt-3">
-                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
-                        <a href="#"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="sermons.html">Sermons</a></li>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Ministries</h4>
-                    <ul>
-                        <li><a href="#">Worship Team</a></li>
-                        <li><a href="#">Prayer Ministry</a></li>
-                        <li><a href="#">Youth Ministry</a></li>
-                        <li><a href="#">Outreach</a></li>
-                        <li><a href="#">Children's Church</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="media.html">Media</a></li>
-                        <li><a href="radio.html">Radio</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="giving.html">Giving</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        <div class="container copyright text-center mt-3">
-            <p style="font-size: 0.8rem;">© <span>Copyright</span> <strong class="px-1">Gateway of Life and Miracle Ministries International</strong> <span>All Rights Reserved</span></p>
-            <p style="font-size: 0.7rem; opacity: 0.6;">Golammi Worship Center — A Prophetic Ministry where God reconstructs anything the devil has destroyed.</p>
-            <div class="credits" style="font-size: 0.65rem;">Designed by <a href="#">GOLAMMI TECHNICAL DEPARTMENT</a></div>
+
+        <!-- Pagination -->
+        {% if events.pages > 1 %}
+        <div class="pagination-custom mt-4" data-aos="fade-up">
+            {% if events.has_prev %}
+            <a href="{{ url_for('frontend.events', page=events.prev_num, category=category) }}"><i class="bi bi-chevron-left"></i></a>
+            {% else %}
+            <span class="disabled"><i class="bi bi-chevron-left"></i></span>
+            {% endif %}
+            
+            {% for page_num in events.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    {% if events.page == page_num %}
+                    <a href="#" class="active">{{ page_num }}</a>
+                    {% else %}
+                    <a href="{{ url_for('frontend.events', page=page_num, category=category) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    <span class="disabled">…</span>
+                {% endif %}
+            {% endfor %}
+            
+            {% if events.has_next %}
+            <a href="{{ url_for('frontend.events', page=events.next_num, category=category) }}"><i class="bi bi-chevron-right"></i></a>
+            {% else %}
+            <span class="disabled"><i class="bi bi-chevron-right"></i></span>
+            {% endif %}
         </div>
-    </footer>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-event" style="font-size: 3rem; color: var(--gold);"></i>
+            <h4 class="mt-3">No Upcoming Events</h4>
+            <p class="text-muted">Check back later for upcoming events.</p>
+        </div>
+        {% endif %}
 
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-    <script>
-        AOS.init({ duration: 500, once: true });
-        new PureCounter();
-
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                setTimeout(function() { preloader.classList.add('hidden'); }, 800);
-            }
-        });
-        setTimeout(function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader && !preloader.classList.contains('hidden')) {
-                preloader.classList.add('hidden');
-            }
-        }, 5000);
-    </script>
-
-</body>
-
-</html>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('frontend.events') }}" class="btn btn-primary" style="padding: 12px 35px; border-radius: 50px; font-weight: 600; font-size: 0.9rem;">View All Events</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

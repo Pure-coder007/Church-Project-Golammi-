@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %}Gateway of Life and Miracle Ministries International | Golammi Worship Center{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Gateway of Life and Miracle Ministries International - Golammi Worship Center. A Prophetic Ministry where God reconstructs anything the devil has destroyed in the life of people.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, prophetic ministry, church, worship, prayer, miracles{% endblock %}">
+
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-dark: #a8892e;
+            --gold-light: #e8d5a3;
+            --black: #1a1a1a;
+            --dark-gray: #2d2d2d;
+            --light-gray: #f8f6f0;
+            --white: #ffffff;
+        }
+
+        .my_logo {
+            width: 5rem;
+            height: 5rem;
+        }
+
+        /* ======================================================
+           PRELOADER WITH LOGO - GOLD THEME
+        ====================================================== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #preloader .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        #preloader .loader-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            animation: logoPulse 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.3));
+        }
+
+        @keyframes logoPulse {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
+            }
+            50% {
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.5));
+            }
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
+            }
+        }
+
+        #preloader .loader-ring-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #preloader .loader-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            animation: spin 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+
+        #preloader .loader-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            border-top-color: var(--gold);
+            border-right-color: var(--gold);
+            animation-duration: 1.5s;
+        }
+
+        #preloader .loader-ring:nth-child(2) {
+            width: 75%;
+            height: 75%;
+            border-bottom-color: var(--gold-light);
+            border-left-color: var(--gold-light);
+            animation-duration: 1.8s;
+            animation-direction: reverse;
+        }
+
+        #preloader .loader-ring:nth-child(3) {
+            width: 50%;
+            height: 50%;
+            border-top-color: var(--gold-dark);
+            border-right-color: var(--gold-dark);
+            animation-duration: 2.1s;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #preloader .loader-text {
+            color: var(--gold);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            animation: textPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        #preloader .loader-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+
+        #preloader .loader-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: dotBounce 1.4s ease-in-out infinite both;
+        }
+
+        #preloader .loader-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+        #preloader .loader-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+        #preloader .loader-dots span:nth-child(3) {
+            animation-delay: 0;
+        }
+
+        @keyframes dotBounce {
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.3;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ===== NAV HOVER - GOLD THEME ===== */
+        .navmenu li:hover>a,
+        .navmenu .active,
+        .navmenu .active:focus {
+            color: var(--gold) !important;
+        }
+
+        /* ===== SCROLLED HEADER - GOLD THEME ===== */
+        .scrolled .header {
+            --background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* ===== SCROLL TOP - GOLD THEME ===== */
+        .scroll-top {
+            background-color: var(--gold);
+        }
+        .scroll-top i {
+            color: var(--black);
+        }
+        .scroll-top:hover {
+            background-color: var(--gold-dark);
+        }
+
+        /* ===== BUTTON OVERRIDES ===== */
+        .btn-primary {
+            background-color: var(--gold) !important;
+            border-color: var(--gold) !important;
+            color: var(--black) !important;
+        }
+        .btn-primary:hover {
+            background-color: var(--gold-dark) !important;
+            border-color: var(--gold-dark) !important;
+            color: var(--black) !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            #preloader .loader-logo {
+                width: 80px;
+                height: 80px;
+            }
+            #preloader .loader-ring-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+    <!-- ======================================================
+    PRELOADER WITH LOGO
+    ====================================================== -->
+    <div id="preloader">
+        <div class="loader-wrapper">
+            <div class="loader-ring-container">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="loader-logo">
+            </div>
+            <span class="loader-text">Gateway of Life</span>
+            <div class="loader-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="{{ url_for('frontend.index') }}" class="logo d-flex align-items-center">
+                <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="my_logo">
+                </div>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{{ url_for('frontend.index') }}" class="{% if request.endpoint == 'frontend.index' %}active{% endif %}">Home</a></li>
+                    <li class="dropdown"><a href="{{ url_for('frontend.about') }}"><span>About Us</span></a></li>
+                    <li><a href="{{ url_for('frontend.sermons') }}" class="{% if request.endpoint == 'frontend.sermons' %}active{% endif %}">Sermons</a></li>
+                    <li><a href="{{ url_for('frontend.events') }}" class="{% if request.endpoint == 'frontend.events' %}active{% endif %}">Events</a></li>
+                    <li><a href="{{ url_for('frontend.prayer') }}" class="{% if request.endpoint == 'frontend.prayer' %}active{% endif %}">Prayer</a></li>
+                    <li><a href="{{ url_for('frontend.media') }}" class="{% if request.endpoint == 'frontend.media' %}active{% endif %}">Media</a></li>
+                    <li><a href="{{ url_for('frontend.giving') }}" class="{% if request.endpoint == 'frontend.giving' %}active{% endif %}">Giving</a></li>
+                    <li><a href="{{ url_for('frontend.school_of_prophets') }}" class="{% if request.endpoint == 'frontend.school_of_prophets' %}active{% endif %}">Prophetic School</a></li>
+                    <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="{{ url_for('frontend.blog') }}" class="{% if request.endpoint == 'frontend.blog' %}active{% endif %}">Blog / News</a></li>
+                            <li><a href="{{ url_for('frontend.gallery') }}" class="{% if request.endpoint == 'frontend.gallery' %}active{% endif %}">Gallery</a></li>
+                            <li><a href="{{ url_for('frontend.faq') }}" class="{% if request.endpoint == 'frontend.faq' %}active{% endif %}">FAQ</a></li>
+                            <li><a href="{{ url_for('frontend.radio') }}" class="{% if request.endpoint == 'frontend.radio' %}active{% endif %}">Radio</a></li>
+                            <li><a href="{{ url_for('frontend.contact') }}" class="{% if request.endpoint == 'frontend.contact' %}active{% endif %}">Contact</a></li>
+                            <li><a href="{{ url_for('frontend.privacy') }}" class="{% if request.endpoint == 'frontend.privacy' %}active{% endif %}">Privacy Policy</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url_for('frontend.contact') }}" class="{% if request.endpoint == 'frontend.contact' %}active{% endif %}">Contact</a></li>
+                    <li><a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25);">Login</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer position-relative dark-background">
+
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="{{ url_for('frontend.index') }}" class="logo d-flex align-items-center">
+                        <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
+                        <div>
+                            <span class="sitename" style="font-size: 22px; font-weight: 700; color: var(--gold);">GWC</span>
+                            <span style="display: block; font-size: 11px; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase; color: #fff;">Gateway of Life &amp; Miracle</span>
+                        </div>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
+                        <p><strong>Golammi Worship Center</strong></p>
+                        <p class="mt-3"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
+                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
+                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State, Country</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                        <li><a href="{{ url_for('frontend.about') }}">About Us</a></li>
+                        <li><a href="{{ url_for('frontend.sermons') }}">Sermons</a></li>
+                        <li><a href="{{ url_for('frontend.events') }}">Events</a></li>
+                        <li><a href="{{ url_for('frontend.contact') }}">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Ministries</h4>
+                    <ul>
+                        <li><a href="#">Worship Team</a></li>
+                        <li><a href="#">Prayer Ministry</a></li>
+                        <li><a href="#">Youth Ministry</a></li>
+                        <li><a href="#">Outreach</a></li>
+                        <li><a href="#">Children's Church</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="{{ url_for('frontend.blog') }}">Blog</a></li>
+                        <li><a href="{{ url_for('frontend.media') }}">Media</a></li>
+                        <li><a href="{{ url_for('frontend.radio') }}">Radio</a></li>
+                        <li><a href="{{ url_for('frontend.faq') }}">FAQ</a></li>
+                        <li><a href="{{ url_for('frontend.giving') }}">Giving</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="{{ url_for('frontend.privacy') }}">Privacy Policy</a></li>
+                        <li><a href="{{ url_for('frontend.terms') }}">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">Gateway of Life and Miracle Ministries International</strong> <span>All Rights Reserved</span></p>
+            <p class="text-muted" style="font-size: 13px;">Golammi Worship Center — A Prophetic Ministry where God reconstructs anything the devil has destroyed.</p>
+            <div class="credits">
+                Designed by <a href="#">GOLAMMI TECHNICAL DEPARTMENT</a>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+
+    <!-- Main JS File -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 600,
+            once: true
+        });
+
+        // Initialize PureCounter
+        if (typeof PureCounter !== 'undefined') {
+            new PureCounter();
+        }
+
+        // ===== PRELOADER HIDE ON LOAD =====
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(function() {
+                    preloader.classList.add('hidden');
+                }, 800);
+            }
+        });
+
+        // Backup: Hide preloader after 5 seconds if load event doesn't fire
+        setTimeout(function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader && !preloader.classList.contains('hidden')) {
+                preloader.classList.add('hidden');
+            }
+        }, 5000);
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

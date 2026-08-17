@@ -1,1368 +1,848 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>About Us | Gateway of Life and Miracle Ministries International | Golammi Worship Center</title>
-    <meta name="description" content="Learn about Gateway of Life and Miracle Ministries International - Golammi Worship Center. Discover our history, mission, vision, beliefs, and leadership.">
-    <meta name="keywords" content="Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, about us, history, mission, vision, leadership">
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
-    <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-
-    <style>
-        /* ===== GOLD, BLACK & WHITE THEME - Custom Styles ===== */
-        :root {
-            --gold: #c9a84c;
-            --gold-dark: #a8892e;
-            --gold-light: #e8d5a3;
-            --black: #1a1a1a;
-            --dark-gray: #2d2d2d;
-            --light-gray: #f8f6f0;
-            --white: #ffffff;
-        }
-
-        .my_logo {
-            width: 5rem;
-            height: 5rem;
-        }
-
-        /* ======================================================
-                   PRELOADER WITH LOGO
-                ====================================================== */
-        #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            background: var(--black);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        #preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #preloader .loader-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        #preloader .loader-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            animation: logoPulse 1.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.3));
-        }
-
-        @keyframes logoPulse {
-            0% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
-            }
-            50% {
-                transform: scale(1.08);
-                filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.5));
-            }
-            100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
-            }
-        }
-
-        #preloader .loader-ring-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #preloader .loader-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            animation: spin 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-
-        #preloader .loader-ring:nth-child(1) {
-            width: 100%;
-            height: 100%;
-            border-top-color: var(--gold);
-            border-right-color: var(--gold);
-            animation-duration: 1.5s;
-        }
-
-        #preloader .loader-ring:nth-child(2) {
-            width: 75%;
-            height: 75%;
-            border-bottom-color: var(--gold-light);
-            border-left-color: var(--gold-light);
-            animation-duration: 1.8s;
-            animation-direction: reverse;
-        }
-
-        #preloader .loader-ring:nth-child(3) {
-            width: 50%;
-            height: 50%;
-            border-top-color: var(--gold-dark);
-            border-right-color: var(--gold-dark);
-            animation-duration: 2.1s;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        #preloader .loader-text {
-            color: var(--gold);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-            animation: textPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes textPulse {
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-3px);
-            }
-        }
-
-        #preloader .loader-dots {
-            display: flex;
-            gap: 8px;
-            margin-top: 0.5rem;
-        }
-
-        #preloader .loader-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: dotBounce 1.4s ease-in-out infinite both;
-        }
-
-        #preloader .loader-dots span:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-        #preloader .loader-dots span:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-        #preloader .loader-dots span:nth-child(3) {
-            animation-delay: 0;
-        }
-
-        @keyframes dotBounce {
-            0%,
-            80%,
-            100% {
-                transform: scale(0);
-                opacity: 0.3;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* ===== NAV HOVER - GOLD THEME ===== */
-        .navmenu li:hover>a,
-        .navmenu .active,
-        .navmenu .active:focus {
-            color: var(--gold) !important;
-        }
-
-        /* ===== SCROLLED HEADER - GOLD THEME ===== */
-        .scrolled .header {
-            --background-color: rgba(0, 0, 0, 0.9);
-        }
-
-        /* ===== PAGE TITLE - GOLD THEME ===== */
-        .page-title {
-            padding: 180px 0 100px 0;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .page-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 100%);
-            z-index: 1;
-        }
-
-        .page-title .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-title h1 {
-            color: #fff;
-            font-size: 3.5rem;
-            font-weight: 800;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .page-title p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .page-title .breadcrumbs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-
-        .page-title .breadcrumbs a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .page-title .breadcrumbs a:hover {
-            color: var(--gold);
-        }
-
-        .page-title .breadcrumbs .current {
-            color: var(--gold);
-        }
-
-        .page-title .breadcrumbs .separator {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* ===== SECTION TITLES - GOLD THEME ===== */
-        .section-title h2:before,
-        .section-title h2:after {
-            background: var(--gold);
-        }
-
-        .section-title h2 {
-            color: var(--black);
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .section-title p {
-            color: #666;
-            font-size: 1.05rem;
-        }
-
-        /* ===== HISTORY SECTION - GOLD THEME ===== */
-        .history-section .history-content h3 {
-            color: var(--gold);
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .history-section .history-content h2 {
-            color: var(--black);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .history-section .history-content p {
-            color: #555;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .history-section .founder-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            border-left: 4px solid var(--gold);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 2rem;
-        }
-
-        .history-section .founder-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .history-section .founder-card .founder-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--gold);
-        }
-
-        .history-section .founder-card h4 {
-            color: var(--black);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .history-section .founder-card .founder-title {
-            color: var(--gold);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .history-section .founder-card p {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        /* ===== TIMELINE - GOLD THEME ===== */
-        .timeline-wrapper {
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .timeline-wrapper::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gold);
-            opacity: 0.3;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2.5rem;
-            padding-left: 20px;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -33px;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--gold);
-            border: 3px solid var(--white);
-            box-shadow: 0 0 0 3px var(--gold);
-        }
-
-        .timeline-item .year {
-            color: var(--gold);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .timeline-item h4 {
-            color: var(--black);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item p {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        /* ===== MISSION VISION VALUES - GOLD THEME ===== */
-        .mission-vision-section .mv-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 35px 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            border-bottom: 4px solid var(--gold);
-        }
-
-        .mission-vision-section .mv-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .mission-vision-section .mv-card .mv-icon {
-            font-size: 3rem;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .mission-vision-section .mv-card h3 {
-            color: var(--black);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .mission-vision-section .mv-card p {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        /* ===== BELIEFS - GOLD THEME ===== */
-        .beliefs-section .belief-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 25px 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            border-left: 3px solid var(--gold);
-        }
-
-        .beliefs-section .belief-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .beliefs-section .belief-card .belief-icon {
-            font-size: 2rem;
-            color: var(--gold);
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .beliefs-section .belief-card h4 {
-            color: var(--black);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .beliefs-section .belief-card p {
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-
-        /* ===== STATS - GOLD THEME ===== */
-        .about-stats .stats-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-            height: 100%;
-            border-top: 3px solid var(--gold);
-        }
-
-        .about-stats .stats-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .about-stats .stats-card .stats-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            display: block;
-            line-height: 1.2;
-        }
-
-        .about-stats .stats-card .stats-label {
-            font-size: 0.95rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        /* ===== LEADERSHIP - GOLD THEME ===== */
-        .leadership-section .leader-card {
-            background: var(--white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-
-        .leadership-section .leader-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
-        }
-
-        .leadership-section .leader-card .leader-image {
-            position: relative;
-            overflow: hidden;
-            height: 280px;
-        }
-
-        .leadership-section .leader-card .leader-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .leadership-section .leader-card:hover .leader-image img {
-            transform: scale(1.05);
-        }
-
-        .leadership-section .leader-card .leader-image .social-links {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-            padding: 20px 15px 15px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .leadership-section .leader-card:hover .leader-image .social-links {
-            opacity: 1;
-        }
-
-        .leadership-section .leader-card .leader-image .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            font-size: 0.9rem;
-            transition: background 0.3s ease;
-            text-decoration: none;
-        }
-
-        .leadership-section .leader-card .leader-image .social-links a:hover {
-            background: var(--gold);
-            color: var(--black);
-        }
-
-        .leadership-section .leader-card .leader-info {
-            padding: 20px 25px 25px;
-            text-align: center;
-        }
-
-        .leadership-section .leader-card .leader-info h4 {
-            color: var(--black);
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .leadership-section .leader-card .leader-info .position {
-            color: var(--gold);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .leadership-section .leader-card .leader-info p {
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .page-title h1 {
-                font-size: 2.5rem;
-            }
-            .history-section .history-content h2 {
-                font-size: 2rem;
-            }
-            .section-title h2 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-title {
-                padding: 150px 0 70px 0;
-            }
-            .page-title h1 {
-                font-size: 2rem;
-            }
-            .page-title p {
-                font-size: 1rem;
-            }
-            .history-section .history-content h2 {
-                font-size: 1.7rem;
-            }
-            .section-title h2 {
-                font-size: 1.7rem;
-            }
-            .history-section .founder-card .founder-image {
-                width: 100px;
-                height: 100px;
-            }
-            .timeline-wrapper {
-                padding-left: 25px;
-            }
-            .timeline-wrapper::before {
-                left: 8px;
-            }
-            .timeline-item::before {
-                left: -25px;
-                width: 12px;
-                height: 12px;
-            }
-            #preloader .loader-logo {
-                width: 80px;
-                height: 80px;
-            }
-            #preloader .loader-ring-container {
-                width: 150px;
-                height: 150px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .page-title h1 {
-                font-size: 1.6rem;
-            }
-            .history-section .history-content h2 {
-                font-size: 1.4rem;
-            }
-            .section-title h2 {
-                font-size: 1.4rem;
-            }
-            .mission-vision-section .mv-card {
-                padding: 25px 20px;
-            }
-            .about-stats .stats-card .stats-number {
-                font-size: 2rem;
-            }
-            .leadership-section .leader-card .leader-image {
-                height: 220px;
-            }
-        }
-
-        /* ===== SCROLL TOP - GOLD THEME ===== */
-        .scroll-top {
-            background-color: var(--gold);
-        }
-        .scroll-top i {
-            color: var(--black);
-        }
-        .scroll-top:hover {
-            background-color: var(--gold-dark);
-        }
-
-        /* ===== BUTTON OVERRIDES ===== */
-        .btn-primary {
-            background-color: var(--gold) !important;
-            border-color: var(--gold) !important;
-            color: var(--black) !important;
-        }
-        .btn-primary:hover {
-            background-color: var(--gold-dark) !important;
-            border-color: var(--gold-dark) !important;
-            color: var(--black) !important;
-        }
-        .btn-outline {
-            border-color: var(--gold) !important;
-            color: var(--gold) !important;
-        }
-        .btn-outline:hover {
-            background-color: var(--gold) !important;
-            color: var(--black) !important;
-        }
-    </style>
-</head>
-
-<body class="about-page">
-
-    <!-- ======================================================
-    PRELOADER WITH LOGO
-    ====================================================== -->
-    <div id="preloader">
-        <div class="loader-wrapper">
-            <div class="loader-ring-container">
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="loader-logo">
+{% extends "frontend/base.html" %}
+
+{% block title %}About Us | Gateway of Life and Miracle Ministries International | Golammi Worship Center{% endblock %}
+{% block meta_description %}Learn about Gateway of Life and Miracle Ministries International - Golammi Worship Center. Discover our history, mission, vision, beliefs, and leadership.{% endblock %}
+{% block meta_keywords %}Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, about us, history, mission, vision, leadership{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== PAGE TITLE - GOLD THEME ===== */
+    .page-title {
+        padding: 180px 0 100px 0;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .page-title::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 100%);
+        z-index: 1;
+    }
+
+    .page-title .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-title h1 {
+        color: #fff;
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .page-title p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+    }
+
+    .page-title .breadcrumbs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.95rem;
+    }
+
+    .page-title .breadcrumbs a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .page-title .breadcrumbs a:hover {
+        color: var(--gold);
+    }
+
+    .page-title .breadcrumbs .current {
+        color: var(--gold);
+    }
+
+    .page-title .breadcrumbs .separator {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ===== HISTORY SECTION - GOLD THEME ===== */
+    .history-section .history-content h3 {
+        color: var(--gold);
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .history-section .history-content h2 {
+        color: var(--black);
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .history-section .history-content p {
+        color: #555;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    .history-section .founder-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        border-left: 4px solid var(--gold);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-top: 2rem;
+    }
+
+    .history-section .founder-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    .history-section .founder-card .founder-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--gold);
+    }
+
+    .history-section .founder-card h4 {
+        color: var(--black);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .history-section .founder-card .founder-title {
+        color: var(--gold);
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .history-section .founder-card p {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* ===== TIMELINE - GOLD THEME ===== */
+    .timeline-wrapper {
+        position: relative;
+        padding-left: 40px;
+    }
+
+    .timeline-wrapper::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--gold);
+        opacity: 0.3;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2.5rem;
+        padding-left: 20px;
+    }
+
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -33px;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--gold);
+        border: 3px solid var(--white);
+        box-shadow: 0 0 0 3px var(--gold);
+    }
+
+    .timeline-item .year {
+        color: var(--gold);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+    }
+
+    .timeline-item h4 {
+        color: var(--black);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-item p {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* ===== MISSION VISION VALUES - GOLD THEME ===== */
+    .mission-vision-section .mv-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 35px 30px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        border-bottom: 4px solid var(--gold);
+    }
+
+    .mission-vision-section .mv-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    .mission-vision-section .mv-card .mv-icon {
+        font-size: 3rem;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .mission-vision-section .mv-card h3 {
+        color: var(--black);
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .mission-vision-section .mv-card p {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* ===== BELIEFS - GOLD THEME ===== */
+    .beliefs-section .belief-card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 25px 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        border-left: 3px solid var(--gold);
+    }
+
+    .beliefs-section .belief-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .beliefs-section .belief-card .belief-icon {
+        font-size: 2rem;
+        color: var(--gold);
+        margin-bottom: 0.75rem;
+        display: block;
+    }
+
+    .beliefs-section .belief-card h4 {
+        color: var(--black);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .beliefs-section .belief-card p {
+        color: #555;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 0;
+    }
+
+    /* ===== STATS - GOLD THEME ===== */
+    .about-stats .stats-card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        height: 100%;
+        border-top: 3px solid var(--gold);
+    }
+
+    .about-stats .stats-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .about-stats .stats-card .stats-number {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--gold);
+        display: block;
+        line-height: 1.2;
+    }
+
+    .about-stats .stats-card .stats-label {
+        font-size: 0.95rem;
+        color: #666;
+        font-weight: 500;
+    }
+
+    /* ===== LEADERSHIP - GOLD THEME ===== */
+    .leadership-section .leader-card {
+        background: var(--white);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+
+    .leadership-section .leader-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    .leadership-section .leader-card .leader-image {
+        position: relative;
+        overflow: hidden;
+        height: 280px;
+    }
+
+    .leadership-section .leader-card .leader-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .leadership-section .leader-card:hover .leader-image img {
+        transform: scale(1.05);
+    }
+
+    .leadership-section .leader-card .leader-image .social-links {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        padding: 20px 15px 15px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .leadership-section .leader-card:hover .leader-image .social-links {
+        opacity: 1;
+    }
+
+    .leadership-section .leader-card .leader-image .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+        text-decoration: none;
+    }
+
+    .leadership-section .leader-card .leader-image .social-links a:hover {
+        background: var(--gold);
+        color: var(--black);
+    }
+
+    .leadership-section .leader-card .leader-info {
+        padding: 20px 25px 25px;
+        text-align: center;
+    }
+
+    .leadership-section .leader-card .leader-info h4 {
+        color: var(--black);
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .leadership-section .leader-card .leader-info .position {
+        color: var(--gold);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .leadership-section .leader-card .leader-info p {
+        color: #555;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+        .page-title h1 { font-size: 2.5rem; }
+        .history-section .history-content h2 { font-size: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+        .page-title { padding: 150px 0 70px 0; }
+        .page-title h1 { font-size: 2rem; }
+        .page-title p { font-size: 1rem; }
+        .history-section .history-content h2 { font-size: 1.7rem; }
+        .history-section .founder-card .founder-image { width: 100px; height: 100px; }
+        .timeline-wrapper { padding-left: 25px; }
+        .timeline-wrapper::before { left: 8px; }
+        .timeline-item::before { left: -25px; width: 12px; height: 12px; }
+    }
+
+    @media (max-width: 576px) {
+        .page-title h1 { font-size: 1.6rem; }
+        .history-section .history-content h2 { font-size: 1.4rem; }
+        .mission-vision-section .mv-card { padding: 25px 20px; }
+        .about-stats .stats-card .stats-number { font-size: 2rem; }
+        .leadership-section .leader-card .leader-image { height: 220px; }
+    }
+
+    .btn-outline {
+        border-color: var(--gold) !important;
+        color: var(--gold) !important;
+    }
+    .btn-outline:hover {
+        background-color: var(--gold) !important;
+        color: var(--black) !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ======= Page Title ======= -->
+<div class="page-title dark-background" style="background-image: url({{ url_for('static', filename='assets/img/go59.jpg') }});">
+    <div class="container position-relative text-center">
+        <h1>About Us</h1>
+        <p>Gateway of Life and Miracle Ministries International — A Prophetic Ministry where God reconstructs anything the devil has destroyed in the life of people.</p>
+        <nav class="breadcrumbs">
+            <a href="{{ url_for('frontend.index') }}">Home</a>
+            <span class="separator">/</span>
+            <span class="current">About Us</span>
+        </nav>
+    </div>
+</div>
+
+<!-- ======= History Section ======= -->
+<section id="history" class="history-section section">
+    <div class="container" data-aos="fade-up">
+        <div class="row g-5">
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="history-content">
+                    <h3>Our Story</h3>
+                    <h2>Gateway of Life and Miracle Ministries International</h2>
+
+                    <p><strong>Gateway of Life and Miracle Ministries International</strong>, popularly known as <strong>Golammi Worship Center (GWC)</strong>, is a prophetic ministry birthed by divine mandate to bring hope, healing, and restoration to a broken world. The ministry was founded by <strong>Prophet (Dr.) James Elinissi Iferemilekun</strong>, affectionately called the <em>"Lion of Jesus,"</em> a man of God with a burning passion for souls and a deep prophetic mantle.</p>
+
+                    <p>The journey of GOLAMMI began over 25 years ago when God spoke to Prophet James in a vision, commissioning him to go forth and <strong>"reconstruct everything the devil has destroyed in the life of people."</strong> What started as a small prayer gathering in a humble home has now grown into a global ministry with thousands of members, multiple outreach programs, and countless testimonies of miracles, healing, deliverance, and transformation.</p>
+
+                    <p>The name <strong>"GOLAMMI"</strong> is an acronym that represents the heart of the ministry: <strong>G</strong>ateway of <strong>O</strong>pportunity, <strong>L</strong>ife, and <strong>A</strong>bundance through <strong>M</strong>iracle <strong>M</strong>inistries <strong>I</strong>nternational. It is a prophetic declaration that every person who walks through the doors of GOLAMMI will experience a divine shift—a reconstruction of their destiny, health, finances, and relationships.</p>
+
+                    <p>Over the years, GOLAMMI has become a beacon of light and hope, known for its powerful prophetic worship, life-changing prayer sessions, and unwavering commitment to the Word of God. The ministry has established itself as a place where the lost find their way, the broken find healing, and the hopeless find a reason to believe again.</p>
+
+                    <!-- Founder Card -->
+                    <div class="founder-card">
+                        <div class="row align-items-center">
+                            <div class="col-sm-3 text-center text-sm-start">
+                                <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet James Elinissi Iferemilekun" class="founder-image">
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
+                                <p class="founder-title">Founder &amp; General Overseer — The Lion of Jesus</p>
+                                <p>Prophet James is a dynamic speaker, prolific teacher of the Word, and a prophetic voice to this generation. He is married to his beautiful wife, Pastor (Mrs.) Esther Iferemilekun, and they are blessed with wonderful children. His passion for souls and his unwavering faith in God's power to restore has touched thousands of lives across the globe.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="mt-5" style="color: var(--gold);">The Journey of Faith</h3>
+                    <p>What began as a humble prayer group in the living room of Prophet James and his wife has blossomed into a vibrant, multi-cultural congregation that spans across nations. The ministry has witnessed:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Thousands of souls won for Christ through evangelistic crusades and outreach programs</li>
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Countless testimonies of healing from terminal diseases, including cancer, HIV/AIDS, and heart conditions</li>
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Deliverance from demonic oppression, addiction, and generational curses</li>
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Financial breakthroughs and career advancements through prophetic prayers</li>
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Restored marriages, reconciled families, and transformed relationships</li>
+                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> The raising of next-generation leaders through the youth and children's ministries</li>
+                    </ul>
+                </div>
             </div>
-            <span class="loader-text">Gateway of Life</span>
-            <div class="loader-dots">
-                <span></span>
-                <span></span>
-                <span></span>
+
+            <div class="col-lg-5" data-aos="fade-left">
+                <h3 style="color: var(--gold); margin-bottom: 2rem;">Our History Timeline</h3>
+                <div class="timeline-wrapper">
+                    <div class="timeline-item">
+                        <div class="year">2001</div>
+                        <h4>The Birth of GOLAMMI</h4>
+                        <p>Prophet James receives the divine mandate to establish a prophetic ministry focused on reconstructing broken lives. The first prayer meeting is held in their home with just 5 people.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2003</div>
+                        <h4>First Crusade &amp; Growth</h4>
+                        <p>The first open-air crusade is held with over 200 people attending. Many give their lives to Christ, and the first miracle of healing is recorded.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2005</div>
+                        <h4>Establishment of GOLAMMI Worship Center</h4>
+                        <p>The ministry acquires its first permanent worship center, officially named Golammi Worship Center. Membership grows to over 500.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2010</div>
+                        <h4>International Reach</h4>
+                        <p>GOLAMMI expands internationally with branches established in multiple countries. The ministry's radio broadcast begins, reaching thousands of listeners.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2015</div>
+                        <h4>Prophetic Conference Launch</h4>
+                        <p>The inaugural Annual Prophetic Conference is launched, attracting thousands of attendees from around the world for a week of prayer, worship, and prophetic impartation.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2020</div>
+                        <h4>Digital Expansion</h4>
+                        <p>GOLAMMI embraces digital platforms, launching live streaming services, online prayer sessions, and a robust social media presence to reach a global audience.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year">2024</div>
+                        <h4>2024 &amp; Beyond</h4>
+                        <p>GOLAMMI continues to grow, expanding its outreach programs, establishing new branches, and impacting lives across the continents with the message of hope and reconstruction.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+<!-- ======= Mission, Vision & Values Section ======= -->
+<section id="mission" class="mission-vision-section section" style="background: var(--light-gray);">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Our Mission, Vision &amp; Values</h2>
+        <p>Guided by the Holy Spirit, we are committed to fulfilling God's purpose for this generation.</p>
+    </div>
 
-            <a href="index.html" class="logo d-flex align-items-center">
-                <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
-                <div>
-                    <img src="assets/img/logo_2.png" alt="Golammi Worship Center" class="my_logo">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="mv-card">
+                    <span class="mv-icon"><i class="bi bi-rocket-takeoff"></i></span>
+                    <h3>Our Mission</h3>
+                    <p>To reconstruct broken lives, restore destinies, and bring people into their God-given purpose through the prophetic word, prayer, and the power of the Holy Spirit. We are committed to winning souls, building disciples, and demonstrating the love of Christ to the world.</p>
                 </div>
-            </a>
+            </div>
 
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li class="dropdown"><a href="about.html" class="active"><span>About</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="about.html" class="active">About Us</a></li>
-                            <li><a href="about.html#history">Our History</a></li>
-                            <li><a href="about.html#mission">Mission &amp; Vision</a></li>
-                            <li><a href="about.html#beliefs">What We Believe</a></li>
-                            <li><a href="about.html#leadership">Leadership</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="sermons.html">Sermons</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="prayer.html">Prayer</a></li>
-                    <li><a href="media.html">Media</a></li>
-                    <li><a href="giving.html">Giving</a></li>
-                    <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="blog.html">Blog / News</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="radio.html">Radio</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html" class="btn btn-outline-light btn-sm px-3 py-1 rounded-pill" style="border-color: rgba(255,255,255,0.25);">Login</a></li>
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
+            <div class="col-md-4">
+                <div class="mv-card">
+                    <span class="mv-icon"><i class="bi bi-eye"></i></span>
+                    <h3>Our Vision</h3>
+                    <p>To be a global gateway of life and miracles, raising a generation of prophetic believers who will impact their world with the love and power of Jesus Christ. We envision a world where every person experiences the reconstruction of their destiny through the power of God.</p>
+                </div>
+            </div>
 
-        </div>
-    </header>
-
-    <main class="main">
-
-        <!-- ======= Page Title ======= -->
-        <div class="page-title dark-background" style="background-image: url(assets/img/go59.jpg);">
-            <div class="container position-relative text-center">
-                <h1>About Us</h1>
-                <p>Gateway of Life and Miracle Ministries International — A Prophetic Ministry where God reconstructs anything the devil has destroyed in the life of people.</p>
-                <nav class="breadcrumbs">
-                    <a href="index.html">Home</a>
-                    <span class="separator">/</span>
-                    <span class="current">About Us</span>
-                </nav>
+            <div class="col-md-4">
+                <div class="mv-card">
+                    <span class="mv-icon"><i class="bi bi-star"></i></span>
+                    <h3>Our Values</h3>
+                    <p><strong>Faith</strong> — Unwavering trust in God's Word.<br>
+                    <strong>Love</strong> — Genuine love for all people.<br>
+                    <strong>Prayer</strong> — A lifestyle of prayer and intercession.<br>
+                    <strong>Prophetic Worship</strong> — Worship that invites God's presence.<br>
+                    <strong>Community Impact</strong> — Serving our community with compassion.<br>
+                    <strong>Excellence</strong> — Doing everything with excellence for God's glory.</p>
+                </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- ======= History Section ======= -->
-        <section id="history" class="history-section section">
+<!-- ======= What We Believe Section ======= -->
+<section id="beliefs" class="beliefs-section section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>What We Believe</h2>
+        <p>Our foundational beliefs are rooted in the Word of God and the power of the Holy Spirit.</p>
+    </div>
 
-            <div class="container" data-aos="fade-up">
-
-                <div class="row g-5">
-                    <div class="col-lg-7" data-aos="fade-right">
-                        <div class="history-content">
-                            <h3>Our Story</h3>
-                            <h2>Gateway of Life and Miracle Ministries International</h2>
-
-                            <p><strong>Gateway of Life and Miracle Ministries International</strong>, popularly known as <strong>Golammi Worship Center (GWC)</strong>, is a prophetic ministry birthed by divine mandate to bring hope, healing, and restoration to a broken world. The ministry was founded by <strong>Prophet (Dr.) James Elinissi Iferemilekun</strong>, affectionately called the <em>"Lion of Jesus,"</em> a man of God with a burning passion for souls and a deep prophetic mantle.</p>
-
-                            <p>The journey of GOLAMMI began over 25 years ago when God spoke to Prophet James in a vision, commissioning him to go forth and <strong>"reconstruct everything the devil has destroyed in the life of people."</strong> What started as a small prayer gathering in a humble home has now grown into a global ministry with thousands of members, multiple outreach programs, and countless testimonies of miracles, healing, deliverance, and transformation.</p>
-
-                            <p>The name <strong>"GOLAMMI"</strong> is an acronym that represents the heart of the ministry: <strong>G</strong>ateway of <strong>O</strong>pportunity, <strong>L</strong>ife, and <strong>A</strong>bundance through <strong>M</strong>iracle <strong>M</strong>inistries <strong>I</strong>nternational. It is a prophetic declaration that every person who walks through the doors of GOLAMMI will experience a divine shift—a reconstruction of their destiny, health, finances, and relationships.</p>
-
-                            <p>Over the years, GOLAMMI has become a beacon of light and hope, known for its powerful prophetic worship, life-changing prayer sessions, and unwavering commitment to the Word of God. The ministry has established itself as a place where the lost find their way, the broken find healing, and the hopeless find a reason to believe again.</p>
-
-                            <!-- Founder Card -->
-                            <div class="founder-card">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-3 text-center text-sm-start">
-                                        <img src="assets/img/go40.jpg" alt="Prophet James Elinissi Iferemilekun" class="founder-image">
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
-                                        <p class="founder-title">Founder &amp; General Overseer — The Lion of Jesus</p>
-                                        <p>Prophet James is a dynamic speaker, prolific teacher of the Word, and a prophetic voice to this generation. He is married to his beautiful wife, Pastor (Mrs.) Esther Iferemilekun, and they are blessed with wonderful children. His passion for souls and his unwavering faith in God's power to restore has touched thousands of lives across the globe.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h3 class="mt-5" style="color: var(--gold);">The Journey of Faith</h3>
-                            <p>What began as a humble prayer group in the living room of Prophet James and his wife has blossomed into a vibrant, multi-cultural congregation that spans across nations. The ministry has witnessed:</p>
-                            <ul style="list-style: none; padding: 0;">
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Thousands of souls won for Christ through evangelistic crusades and outreach programs</li>
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Countless testimonies of healing from terminal diseases, including cancer, HIV/AIDS, and heart conditions</li>
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Deliverance from demonic oppression, addiction, and generational curses</li>
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Financial breakthroughs and career advancements through prophetic prayers</li>
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Restored marriages, reconciled families, and transformed relationships</li>
-                                <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> The raising of next-generation leaders through the youth and children's ministries</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-5" data-aos="fade-left">
-                        <!-- Timeline -->
-                        <h3 style="color: var(--gold); margin-bottom: 2rem;">Our History Timeline</h3>
-                        <div class="timeline-wrapper">
-                            <div class="timeline-item">
-                                <div class="year">2001</div>
-                                <h4>The Birth of GOLAMMI</h4>
-                                <p>Prophet James receives the divine mandate to establish a prophetic ministry focused on reconstructing broken lives. The first prayer meeting is held in their home with just 5 people.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2003</div>
-                                <h4>First Crusade &amp; Growth</h4>
-                                <p>The first open-air crusade is held with over 200 people attending. Many give their lives to Christ, and the first miracle of healing is recorded.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2005</div>
-                                <h4>Establishment of GOLAMMI Worship Center</h4>
-                                <p>The ministry acquires its first permanent worship center, officially named Golammi Worship Center. Membership grows to over 500.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2010</div>
-                                <h4>International Reach</h4>
-                                <p>GOLAMMI expands internationally with branches established in multiple countries. The ministry's radio broadcast begins, reaching thousands of listeners.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2015</div>
-                                <h4>Prophetic Conference Launch</h4>
-                                <p>The inaugural Annual Prophetic Conference is launched, attracting thousands of attendees from around the world for a week of prayer, worship, and prophetic impartation.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2020</div>
-                                <h4>Digital Expansion</h4>
-                                <p>GOLAMMI embraces digital platforms, launching live streaming services, online prayer sessions, and a robust social media presence to reach a global audience.</p>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="year">2024</div>
-                                <h4>2024 &amp; Beyond</h4>
-                                <p>GOLAMMI continues to grow, expanding its outreach programs, establishing new branches, and impacting lives across the continents with the message of hope and reconstruction.</p>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-book"></i></span>
+                    <h4>THE BIBLE</h4>
+                    <p>We believe in the divine inspiration and authority of the Holy Scriptures. The Bible is the Word of God, infallible, and the final authority for faith and practice.</p>
                 </div>
-
             </div>
 
-        </section>
-
-        <!-- ======= Mission, Vision & Values Section ======= -->
-        <section id="mission" class="mission-vision-section section" style="background: var(--light-gray);">
-
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Our Mission, Vision &amp; Values</h2>
-                <p>Guided by the Holy Spirit, we are committed to fulfilling God's purpose for this generation.</p>
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-person"></i></span>
+                    <h4>THE TRINITY</h4>
+                    <p>We believe in one God, eternally existing in three persons: God the Father, God the Son (Jesus Christ), and God the Holy Spirit. They are co-equal and co-eternal.</p>
+                </div>
             </div>
 
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="mv-card">
-                            <span class="mv-icon"><i class="bi bi-rocket-takeoff"></i></span>
-                            <h3>Our Mission</h3>
-                            <p>To reconstruct broken lives, restore destinies, and bring people into their God-given purpose through the prophetic word, prayer, and the power of the Holy Spirit. We are committed to winning souls, building disciples, and demonstrating the love of Christ to the world.</p>
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-heart-cross"></i></span>
+                    <h4>SALVATION</h4>
+                    <p>We believe that salvation is a free gift from God, received through faith in Jesus Christ. We are saved by grace through faith, and not by our own works.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-droplet"></i></span>
+                    <h4>BAPTISM</h4>
+                    <p>We believe in water baptism by immersion as a public declaration of faith in Jesus Christ. We also believe in the baptism of the Holy Spirit as a distinct experience after conversion.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-hand-thumbs-up"></i></span>
+                    <h4>HEALING &amp; MIRACLES</h4>
+                    <p>We believe in divine healing and the operation of the gifts of the Holy Spirit. Miracles, signs, and wonders are the inheritance of every believer and are active in the church today.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="belief-card">
+                    <span class="belief-icon"><i class="bi bi-gem"></i></span>
+                    <h4>THE SECOND COMING</h4>
+                    <p>We believe in the imminent return of Jesus Christ. We look forward to the resurrection of the dead and the final judgment, where God will establish His eternal kingdom.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======= Stats Section ======= -->
+<section class="about-stats section" style="background: var(--light-gray);">
+    <div class="container" data-aos="fade-up">
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
+                <div class="stats-card">
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2">25+</span>
+                    <span class="stats-label">Years of Ministry</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stats-card">
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2">1200+</span>
+                    <span class="stats-label">Members &amp; Counting</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stats-card">
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2">85+</span>
+                    <span class="stats-label">Miracles Reported</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stats-card">
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2">50+</span>
+                    <span class="stats-label">Outreach Programs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======= Leadership Section ======= -->
+<section id="leadership" class="leadership-section section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Our Leadership</h2>
+        <p>Meet the dedicated team of leaders guiding Gateway of Life and Miracle Ministries International.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet James Elinissi Iferemilekun">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-youtube"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="mv-card">
-                            <span class="mv-icon"><i class="bi bi-eye"></i></span>
-                            <h3>Our Vision</h3>
-                            <p>To be a global gateway of life and miracles, raising a generation of prophetic believers who will impact their world with the love and power of Jesus Christ. We envision a world where every person experiences the reconstruction of their destiny through the power of God.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="mv-card">
-                            <span class="mv-icon"><i class="bi bi-star"></i></span>
-                            <h3>Our Values</h3>
-                            <p><strong>Faith</strong> — Unwavering trust in God's Word.<br>
-                            <strong>Love</strong> — Genuine love for all people.<br>
-                            <strong>Prayer</strong> — A lifestyle of prayer and intercession.<br>
-                            <strong>Prophetic Worship</strong> — Worship that invites God's presence.<br>
-                            <strong>Community Impact</strong> — Serving our community with compassion.<br>
-                            <strong>Excellence</strong> — Doing everything with excellence for God's glory.</p>
-                        </div>
+                    <div class="leader-info">
+                        <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
+                        <p class="position">Founder &amp; General Overseer</p>
+                        <p>Called the "Lion of Jesus," Prophet James is a prophetic voice to this generation, known for his deep insight, powerful prayers, and unwavering faith.</p>
                     </div>
                 </div>
             </div>
 
-        </section>
-
-        <!-- ======= What We Believe Section ======= -->
-        <section id="beliefs" class="beliefs-section section">
-
-            <div class="container section-title" data-aos="fade-up">
-                <h2>What We Believe</h2>
-                <p>Our foundational beliefs are rooted in the Word of God and the power of the Holy Spirit.</p>
-            </div>
-
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-book"></i></span>
-                            <h4>THE BIBLE</h4>
-                            <p>We believe in the divine inspiration and authority of the Holy Scriptures. The Bible is the Word of God, infallible, and the final authority for faith and practice.</p>
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-7.webp') }}" alt="Pastor Esther Iferemilekun">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
                         </div>
                     </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-person"></i></span>
-                            <h4>THE TRINITY</h4>
-                            <p>We believe in one God, eternally existing in three persons: God the Father, God the Son (Jesus Christ), and God the Holy Spirit. They are co-equal and co-eternal.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-heart-cross"></i></span>
-                            <h4>SALVATION</h4>
-                            <p>We believe that salvation is a free gift from God, received through faith in Jesus Christ. We are saved by grace through faith, and not by our own works.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-droplet"></i></span>
-                            <h4>BAPTISM</h4>
-                            <p>We believe in water baptism by immersion as a public declaration of faith in Jesus Christ. We also believe in the baptism of the Holy Spirit as a distinct experience after conversion.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-hand-thumbs-up"></i></span>
-                            <h4>HEALING &amp; MIRACLES</h4>
-                            <p>We believe in divine healing and the operation of the gifts of the Holy Spirit. Miracles, signs, and wonders are the inheritance of every believer and are active in the church today.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="belief-card">
-                            <span class="belief-icon"><i class="bi bi-gem"></i></span>
-                            <h4>THE SECOND COMING</h4>
-                            <p>We believe in the imminent return of Jesus Christ. We look forward to the resurrection of the dead and the final judgment, where God will establish His eternal kingdom.</p>
-                        </div>
+                    <div class="leader-info">
+                        <h4>Pastor (Mrs.) Esther Iferemilekun</h4>
+                        <p class="position">Co-Founder &amp; Women's Ministry Leader</p>
+                        <p>A woman of faith and prayer, Pastor Esther co-founded the ministry and leads the women's ministry with grace, wisdom, and compassion.</p>
                     </div>
                 </div>
             </div>
 
-        </section>
-
-        <!-- ======= Stats Section ======= -->
-        <section class="about-stats section" style="background: var(--light-gray);">
-
-            <div class="container" data-aos="fade-up">
-                <div class="row g-4">
-                    <div class="col-6 col-md-3">
-                        <div class="stats-card">
-                            <span class="stats-number" data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2">25+</span>
-                            <span class="stats-label">Years of Ministry</span>
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-7.webp') }}" alt="Pastor Stephen Golammi">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
                         </div>
                     </div>
-
-                    <div class="col-6 col-md-3">
-                        <div class="stats-card">
-                            <span class="stats-number" data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2">1200+</span>
-                            <span class="stats-label">Members &amp; Counting</span>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-3">
-                        <div class="stats-card">
-                            <span class="stats-number" data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2">85+</span>
-                            <span class="stats-label">Miracles Reported</span>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-3">
-                        <div class="stats-card">
-                            <span class="stats-number" data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2">50+</span>
-                            <span class="stats-label">Outreach Programs</span>
-                        </div>
+                    <div class="leader-info">
+                        <h4>Pastor Stephen Golammi</h4>
+                        <p class="position">Associate Pastor</p>
+                        <p>Pastor Stephen is a passionate preacher and teacher of the Word with a deep burden for the youth and next generation. He oversees the youth and young adult ministries.</p>
                     </div>
                 </div>
             </div>
 
-        </section>
-
-        <!-- ======= Leadership Section ======= -->
-        <section id="leadership" class="leadership-section section">
-
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Our Leadership</h2>
-                <p>Meet the dedicated team of leaders guiding Gateway of Life and Miracle Ministries International.</p>
-            </div>
-
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/go40.jpg" alt="Prophet James Elinissi Iferemilekun">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-youtube"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
-                                <p class="position">Founder &amp; General Overseer</p>
-                                <p>Called the "Lion of Jesus," Prophet James is a prophetic voice to this generation, known for his deep insight, powerful prayers, and unwavering faith.</p>
-                            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-8.webp') }}" alt="Deaconess Mercy Johnson">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-whatsapp"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
                         </div>
                     </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-f-7.webp" alt="Pastor Esther Iferemilekun">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-instagram"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Pastor (Mrs.) Esther Iferemilekun</h4>
-                                <p class="position">Co-Founder &amp; Women's Ministry Leader</p>
-                                <p>A woman of faith and prayer, Pastor Esther co-founded the ministry and leads the women's ministry with grace, wisdom, and compassion.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-m-7.webp" alt="Pastor Stephen Golammi">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Pastor Stephen Golammi</h4>
-                                <p class="position">Associate Pastor</p>
-                                <p>Pastor Stephen is a passionate preacher and teacher of the Word with a deep burden for the youth and next generation. He oversees the youth and young adult ministries.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-f-8.webp" alt="Deaconess Mercy Johnson">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-whatsapp"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Deaconess Mercy Johnson</h4>
-                                <p class="position">Prayer Ministry Director</p>
-                                <p>Deaconess Mercy leads the intercessory prayer team with a powerful anointing for deliverance and spiritual warfare. She has a heart for those in need of breakthrough.</p>
-                            </div>
-                        </div>
+                    <div class="leader-info">
+                        <h4>Deaconess Mercy Johnson</h4>
+                        <p class="position">Prayer Ministry Director</p>
+                        <p>Deaconess Mercy leads the intercessory prayer team with a powerful anointing for deliverance and spiritual warfare. She has a heart for those in need of breakthrough.</p>
                     </div>
                 </div>
-
-                <div class="row g-4 mt-2">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-m-11.webp" alt="Brother David Okafor">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-instagram"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Brother David Okafor</h4>
-                                <p class="position">Worship Leader</p>
-                                <p>Brother David leads the praise and worship team with a prophetic anointing. His passion for worship creates an atmosphere where God's presence is tangible.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-f-12.webp" alt="Sister Grace Adebayo">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-instagram"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Sister Grace Adebayo</h4>
-                                <p class="position">Children's Ministry Coordinator</p>
-                                <p>Sister Grace has a heart for children and young families. She leads the children's church with creativity, love, and a desire to raise a godly generation.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-m-13.webp" alt="Brother Michael Chukwu">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Brother Michael Chukwu</h4>
-                                <p class="position">Outreach &amp; Missions Director</p>
-                                <p>Brother Michael oversees the outreach programs, organizing evangelistic crusades, community service initiatives, and missions to unreached areas.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="leader-card">
-                            <div class="leader-image">
-                                <img src="assets/img/person/person-f-10.webp" alt="Sister Joy Williams">
-                                <div class="social-links">
-                                    <a href="#"><i class="bi bi-facebook"></i></a>
-                                    <a href="#"><i class="bi bi-instagram"></i></a>
-                                    <a href="#"><i class="bi bi-envelope"></i></a>
-                                </div>
-                            </div>
-                            <div class="leader-info">
-                                <h4>Sister Joy Williams</h4>
-                                <p class="position">Media &amp; Communications</p>
-                                <p>Sister Joy manages the media and communications department, ensuring that the message of hope reaches the world through digital platforms, radio, and social media.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ======= Call to Action Section ======= -->
-        <section class="section" style="background: linear-gradient(135deg, var(--black), var(--dark-gray)); padding: 60px 0;">
-            <div class="container text-center" data-aos="fade-up">
-                <h2 style="color: #fff; font-weight: 700; margin-bottom: 1rem;">Join Us in Reconstructing Lives</h2>
-                <p style="color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.1rem;">Be part of what God is doing through Gateway of Life and Miracle Ministries International. Whether you're seeking prayer, want to give, or desire to serve, there's a place for you at GOLAMMI.</p>
-                <div>
-                    <a href="#" class="btn btn-primary" style="margin: 0 10px;">Plan a Visit</a>
-                    <a href="#" class="btn btn-outline-light" style="border-color: rgba(255,255,255,0.3); color: #fff;">Contact Us</a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer position-relative dark-background">
-
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <i class="bi bi-church" style="font-size: 28px; color: var(--gold);"></i>
-                        <div>
-                            <span class="sitename" style="font-size: 22px; font-weight: 700; color: var(--gold);">GWC</span>
-                            <span style="display: block; font-size: 11px; letter-spacing: 2px; opacity: 0.7; text-transform: uppercase; color: #fff;">Gateway of Life &amp; Miracle</span>
-                        </div>
-                    </a>
-                    <div class="footer-contact pt-3">
-                        <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
-                        <p><strong>Golammi Worship Center</strong></p>
-                        <p class="mt-3"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
-                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
-                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State, Country</span></p>
-                    </div>
-                    <div class="social-links d-flex mt-4">
-                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
-                        <a href="#"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="sermons.html">Sermons</a></li>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Ministries</h4>
-                    <ul>
-                        <li><a href="#">Worship Team</a></li>
-                        <li><a href="#">Prayer Ministry</a></li>
-                        <li><a href="#">Youth Ministry</a></li>
-                        <li><a href="#">Outreach</a></li>
-                        <li><a href="#">Children's Church</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="media.html">Media</a></li>
-                        <li><a href="radio.html">Radio</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="giving.html">Giving</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-
             </div>
         </div>
 
-        <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Gateway of Life and Miracle Ministries International</strong> <span>All Rights Reserved</span></p>
-            <p class="text-muted" style="font-size: 13px;">Golammi Worship Center — A Prophetic Ministry where God reconstructs anything the devil has destroyed.</p>
-            <div class="credits">
-                Designed by <a href="#">GOLAMMI TECHNICAL DEPARTMENT</a>
+        <div class="row g-4 mt-2">
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-11.webp') }}" alt="Brother David Okafor">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="leader-info">
+                        <h4>Brother David Okafor</h4>
+                        <p class="position">Worship Leader</p>
+                        <p>Brother David leads the praise and worship team with a prophetic anointing. His passion for worship creates an atmosphere where God's presence is tangible.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-12.webp') }}" alt="Sister Grace Adebayo">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="leader-info">
+                        <h4>Sister Grace Adebayo</h4>
+                        <p class="position">Children's Ministry Coordinator</p>
+                        <p>Sister Grace has a heart for children and young families. She leads the children's church with creativity, love, and a desire to raise a godly generation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-13.webp') }}" alt="Brother Michael Chukwu">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="leader-info">
+                        <h4>Brother Michael Chukwu</h4>
+                        <p class="position">Outreach &amp; Missions Director</p>
+                        <p>Brother Michael oversees the outreach programs, organizing evangelistic crusades, community service initiatives, and missions to unreached areas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-10.webp') }}" alt="Sister Joy Williams">
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="leader-info">
+                        <h4>Sister Joy Williams</h4>
+                        <p class="position">Media &amp; Communications</p>
+                        <p>Sister Joy manages the media and communications department, ensuring that the message of hope reaches the world through digital platforms, radio, and social media.</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</section>
 
-    </footer>
-
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 600,
-            once: true
-        });
-
-        // Initialize PureCounter
-        new PureCounter();
-
-        // ===== PRELOADER HIDE ON LOAD =====
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                setTimeout(function() {
-                    preloader.classList.add('hidden');
-                }, 800);
-            }
-        });
-
-        // Backup: Hide preloader after 5 seconds
-        setTimeout(function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader && !preloader.classList.contains('hidden')) {
-                preloader.classList.add('hidden');
-            }
-        }, 5000);
-    </script>
-
-</body>
-
-</html>
+<!-- ======= Call to Action Section ======= -->
+<section class="section" style="background: linear-gradient(135deg, var(--black), var(--dark-gray)); padding: 60px 0;">
+    <div class="container text-center" data-aos="fade-up">
+        <h2 style="color: #fff; font-weight: 700; margin-bottom: 1rem;">Join Us in Reconstructing Lives</h2>
+        <p style="color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.1rem;">Be part of what God is doing through Gateway of Life and Miracle Ministries International. Whether you're seeking prayer, want to give, or desire to serve, there's a place for you at GOLAMMI.</p>
+        <div>
+            <a href="#" class="btn btn-primary" style="margin: 0 10px;">Plan a Visit</a>
+            <a href="{{ url_for('frontend.contact') }}" class="btn btn-outline-light" style="border-color: rgba(255,255,255,0.3); color: #fff;">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

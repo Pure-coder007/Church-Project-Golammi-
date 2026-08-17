@@ -1,0 +1,129 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-people" style="color: var(--gold);"></i> {{ title }}</h1>
+    <div>
+        <a href="{{ url_for('admin.users') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Username <span class="text-danger">*</span></label>
+                            {{ form.username(class="form-control", placeholder="Enter username") }}
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                            {{ form.full_name(class="form-control", placeholder="Enter full name") }}
+                            {% if form.full_name.errors %}
+                                {% for error in form.full_name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                            {{ form.email(class="form-control", placeholder="Enter email address") }}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Role <span class="text-danger">*</span></label>
+                            {{ form.role(class="form-control") }}
+                            {% if form.role.errors %}
+                                {% for error in form.role.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Password {% if not user %}<span class="text-danger">*</span>{% endif %}</label>
+                            {{ form.password(class="form-control", placeholder="{% if user %}Leave blank to keep current{% else %}Enter password{% endif %}") }}
+                            {% if form.password.errors %}
+                                {% for error in form.password.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                            {% if user %}
+                            <small class="text-muted">Leave blank to keep current password</small>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">&nbsp;</label>
+                            <div class="form-check mt-2">
+                                {{ form.is_active(class="form-check-input") }}
+                                <label class="form-check-label">Active</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if user else 'Create' }} User
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Roles Explained</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <span class="badge bg-danger">Super Admin</span>
+                    <small class="d-block text-muted">Full access to everything, including user management</small>
+                </li>
+                <li class="mb-2">
+                    <span class="badge bg-warning text-dark">Admin</span>
+                    <small class="d-block text-muted">Can create/edit/delete all content except users</small>
+                </li>
+                <li class="mb-2">
+                    <span class="badge bg-secondary">Moderator</span>
+                    <small class="d-block text-muted">Can create/edit content, moderate comments</small>
+                </li>
+                <li class="mb-2">
+                    <span class="badge bg-info text-dark">Editor</span>
+                    <small class="d-block text-muted">Can create/edit own content only</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

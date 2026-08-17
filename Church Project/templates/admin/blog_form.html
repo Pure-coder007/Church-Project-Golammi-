@@ -1,0 +1,150 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-newspaper" style="color: var(--gold);"></i> {{ title }}</h1>
+    <div>
+        <a href="{{ url_for('admin.blog') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control", placeholder="Enter post title") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Content <span class="text-danger">*</span></label>
+                            {{ form.content(class="form-control", rows="8", placeholder="Write your blog post content here...") }}
+                            {% if form.content.errors %}
+                                {% for error in form.content.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Excerpt</label>
+                            {{ form.excerpt(class="form-control", rows="2", placeholder="Brief summary (max 300 chars)") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Author <span class="text-danger">*</span></label>
+                            {{ form.author(class="form-control", placeholder="Author name") }}
+                            {% if form.author.errors %}
+                                {% for error in form.author.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Featured Image</label>
+                            {{ form.featured_image(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 800x500)</small>
+                            {% if post and post.featured_image %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="Current image" style="width: 150px; height: 94px; object-fit: cover; border-radius: 6px;">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <h6 class="mt-3"><i class="bi bi-gear" style="color: var(--gold);"></i> SEO Settings</h6>
+                        <hr>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Meta Title</label>
+                            {{ form.meta_title(class="form-control", placeholder="SEO title (max 200 chars)") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Meta Description</label>
+                            {{ form.meta_description(class="form-control", rows="2", placeholder="SEO description (max 300 chars)") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Meta Keywords</label>
+                            {{ form.meta_keywords(class="form-control", placeholder="Keywords separated by commas") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured Post</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_published(class="form-check-input") }}
+                                    <label class="form-check-label">Published</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if post else 'Create' }} Post
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Title, Content, and Author are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Add a featured image for social sharing</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Use SEO fields for better search visibility</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Published" to make it live</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

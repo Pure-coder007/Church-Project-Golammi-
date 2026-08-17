@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Gallery | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-images" style="color: var(--gold);"></i> Gallery</h1>
+    <div>
+        <a href="{{ url_for('admin.add_gallery') }}" class="btn btn-gold">
+            <i class="bi bi-plus-circle"></i> Add Image
+        </a>
+    </div>
+</div>
+
+<!-- Gallery Grid -->
+<div class="row g-4">
+    {% for image in images.items %}
+    <div class="col-lg-3 col-md-4 col-6">
+        <div class="admin-card" style="padding: 0; overflow: hidden; border-bottom: none;">
+            <div style="position: relative;">
+                <img src="{{ url_for('static', filename='uploads/' + image.thumbnail_path) }}" alt="{{ image.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="position: absolute; top: 10px; right: 10px;">
+                    {% if image.is_featured %}
+                    <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i></span>
+                    {% endif %}
+                </div>
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); padding: 20px 12px 12px;">
+                    <h6 style="color: #fff; margin: 0; font-size: 0.85rem;">{{ image.title|truncate(25) }}</h6>
+                    <span class="badge bg-secondary" style="font-size: 0.65rem;">{{ image.category|title }}</span>
+                    <span class="badge {% if image.is_published %}bg-success{% else %}bg-danger{% endif %}" style="font-size: 0.65rem;">
+                        {% if image.is_published %}Published{% else %}Draft{% endif %}
+                    </span>
+                </div>
+            </div>
+            <div style="padding: 10px 12px; background: var(--white);">
+                <div class="btn-group btn-group-sm w-100">
+                    <form action="{{ url_for('admin.delete_gallery', image_id=image.id) }}" method="POST" style="display: inline; width: 100%;" onsubmit="return confirm('Are you sure you want to delete this image?');">
+                        <button type="submit" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if images.pages > 1 %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if images.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('admin.gallery', page=images.prev_num) }}">&laquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+
+        {% for page_num in images.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+                {% if images.page == page_num %}
+                <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.gallery', page=page_num) }}">{{ page_num }}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if images.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('admin.gallery', page=images.next_num) }}">&raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-radio" style="color: var(--gold);"></i> {{ title }}</h1>
+    <div>
+        <a href="{{ url_for('admin.radio') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Station Name <span class="text-danger">*</span></label>
+                            {{ form.name(class="form-control", placeholder="Enter station name") }}
+                            {% if form.name.errors %}
+                                {% for error in form.name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Description</label>
+                            {{ form.description(class="form-control", rows="3", placeholder="Station description") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Stream URL <span class="text-danger">*</span></label>
+                            {{ form.stream_url(class="form-control", placeholder="https://example.com/stream.mp3") }}
+                            <small class="text-muted">Direct audio stream URL (MP3, AAC, etc.)</small>
+                            {% if form.stream_url.errors %}
+                                {% for error in form.stream_url.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Backup URL</label>
+                            {{ form.backup_url(class="form-control", placeholder="Backup stream URL") }}
+                            <small class="text-muted">Optional backup stream URL</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Cover Image</label>
+                            {{ form.cover_image(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 400x400)</small>
+                            {% if station and station.cover_image %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/' + station.cover_image) }}" alt="Current image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Schedule (Optional)</label>
+                            {{ form.schedule(class="form-control", rows="4", placeholder="Example:\nMonday-Friday: 6:00 AM - 10:00 PM\nSaturday: 8:00 AM - 8:00 PM\nSunday: 6:00 AM - 10:00 PM") }}
+                            <small class="text-muted">Enter your broadcast schedule</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_active(class="form-check-input") }}
+                                    <label class="form-check-label">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if station else 'Create' }} Station
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Station Name and Stream URL are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Use direct audio stream URLs</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Add a cover image for visual identity</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Active" to make the station live</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

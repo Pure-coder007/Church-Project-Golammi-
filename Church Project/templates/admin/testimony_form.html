@@ -1,0 +1,182 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">{% if testimony %}Edit testimony details{% else %}Add a new testimony{% endif %}</p>
+    </div>
+    <div>
+        <a href="{{ url_for('admin.testimonies') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control", placeholder="Enter testimony title") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Content <span class="text-danger">*</span></label>
+                            {{ form.content(class="form-control", rows="6", placeholder="Share the testimony in detail...") }}
+                            {% if form.content.errors %}
+                                {% for error in form.content.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Author Name <span class="text-danger">*</span></label>
+                            {{ form.author_name(class="form-control", placeholder="Full name") }}
+                            {% if form.author_name.errors %}
+                                {% for error in form.author_name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                            {% if form.category.errors %}
+                                {% for error in form.category.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            {{ form.author_email(class="form-control", placeholder="Email address") }}
+                            {% if form.author_email.errors %}
+                                {% for error in form.author_email.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            {{ form.author_phone(class="form-control", placeholder="Phone number") }}
+                            {% if form.author_phone.errors %}
+                                {% for error in form.author_phone.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Image</label>
+                            {{ form.image(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 400x400)</small>
+                            {% if form.image.errors %}
+                                {% for error in form.image.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                            {% if testimony and testimony.image %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/' + testimony.image) }}" alt="Current image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                                <br><small class="text-muted">Current image</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_approved(class="form-check-input") }}
+                                    <label class="form-check-label">Approved</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_published(class="form-check-input") }}
+                                    <label class="form-check-label">Published</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if testimony else 'Create' }} Testimony
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Title, Content, and Author Name are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Approved" to verify the testimony</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Published" to show on the frontend</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Featured testimonies appear prominently</li>
+            </ul>
+        </div>
+
+        {% if testimony %}
+        <div class="admin-card mt-3">
+            <h5 class="mb-3"><i class="bi bi-stats" style="color: var(--gold);"></i> Testimony Info</h5>
+            <ul class="list-unstyled">
+                <li><i class="bi bi-calendar"></i> Created: {{ testimony.created_at.strftime('%b %d, %Y') }}</li>
+                <li><i class="bi bi-person"></i> Author: {{ testimony.author_name }}</li>
+                {% if testimony.is_approved %}
+                <li><i class="bi bi-check-circle text-success"></i> Approved</li>
+                {% else %}
+                <li><i class="bi bi-clock text-warning"></i> Pending Approval</li>
+                {% endif %}
+                {% if testimony.is_published %}
+                <li><i class="bi bi-globe text-success"></i> Published</li>
+                {% else %}
+                <li><i class="bi bi-eye-slash text-muted"></i> Not Published</li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

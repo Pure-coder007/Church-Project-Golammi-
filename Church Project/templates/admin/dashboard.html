@@ -1,0 +1,231 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard | GOLAMMI Admin{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_sermons }}</div>
+                    <div class="card-label">Sermons</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-mic"></i></div>
+            </div>
+            <div class="mt-2">
+                <span class="status-badge live"><i class="bi bi-broadcast"></i> {{ stats.live_sermons or 0 }} Live</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_events }}</div>
+                    <div class="card-label">Events</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-calendar-event"></i></div>
+            </div>
+            <div class="mt-2">
+                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.upcoming_events or 0 }} Upcoming</span>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Add this to the dashboard -->
+    <div class="row g-4 mt-2">
+        <div class="col-12">
+            <div class="admin-card">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0"><i class="bi bi-graph-up" style="color: var(--gold);"></i> Church Growth</h5>
+                        <small class="text-muted">Total Members: {{ stats.total_members or 0 }}</small>
+                    </div>
+                    <a href="{{ url_for('admin.analytics') }}" class="btn btn-gold btn-sm">View Analytics <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_blog_posts }}</div>
+                    <div class="card-label">Blog Posts</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-newspaper"></i></div>
+            </div>
+            <div class="mt-2">
+                <span class="status-badge active"><i class="bi bi-check-circle"></i> {{ stats.published_posts or 0 }} Published</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_gallery_images }}</div>
+                    <div class="card-label">Gallery Images</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-images"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_testimonies }}</div>
+                    <div class="card-label">Testimonies</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-chat-quote"></i></div>
+            </div>
+            <div class="mt-2">
+                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.pending_testimonies or 0 }} Pending</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_prayer_requests }}</div>
+                    <div class="card-label">Prayer Requests</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-hand-praying"></i></div>
+            </div>
+            <div class="mt-2">
+                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.pending_prayer_requests or 0 }} Pending</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_users }}</div>
+                    <div class="card-label">Users</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-people"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="card-number">{{ stats.total_radio_stations or 0 }}</div>
+                    <div class="card-label">Radio Stations</div>
+                </div>
+                <div class="card-icon"><i class="bi bi-radio"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-mic" style="color: var(--gold);"></i> Recent Sermons</h5>
+            <div class="list-group list-group-flush">
+                {% for sermon in stats.recent_sermons %}
+                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div class="d-flex align-items-center">
+                        <div style="width: 40px; height: 40px; background: var(--gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; margin-right: 12px;">
+                            <i class="bi bi-mic"></i>
+                        </div>
+                        <div>
+                            <strong>{{ sermon.title|truncate(30) }}</strong>
+                            <br><small class="text-muted">{{ sermon.speaker }} · {{ sermon.date_preached.strftime('%b %d, %Y') }}</small>
+                        </div>
+                    </div>
+                    <span class="status-badge {% if sermon.is_live %}live{% else %}active{% endif %}">
+                        {% if sermon.is_live %}<i class="bi bi-broadcast"></i> LIVE{% else %}{{ sermon.category|title }}{% endif %}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-3 text-end">
+                <a href="{{ url_for('admin.sermons') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-calendar-event" style="color: var(--gold);"></i> Upcoming Events</h5>
+            <div class="list-group list-group-flush">
+                {% for event in stats.recent_events %}
+                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div class="d-flex align-items-center">
+                        <div style="width: 40px; height: 40px; background: var(--gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; margin-right: 12px;">
+                            <i class="bi bi-calendar"></i>
+                        </div>
+                        <div>
+                            <strong>{{ event.title|truncate(30) }}</strong>
+                            <br><small class="text-muted">{{ event.start_date.strftime('%b %d, %Y') }} · {{ event.location or 'Online' }}</small>
+                        </div>
+                    </div>
+                    <span class="status-badge active">{{ event.category|title }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-3 text-end">
+                <a href="{{ url_for('admin.events') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-2">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-newspaper" style="color: var(--gold);"></i> Latest Blog Posts</h5>
+            <div class="list-group list-group-flush">
+                {% for post in stats.recent_blog_posts %}
+                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <strong>{{ post.title|truncate(35) }}</strong>
+                        <br><small class="text-muted">{{ post.author }} · {{ post.created_at.strftime('%b %d, %Y') }}</small>
+                    </div>
+                    <span class="status-badge {% if post.is_published %}active{% else %}inactive{% endif %}">
+                        {% if post.is_published %}Published{% else %}Draft{% endif %}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-3 text-end">
+                <a href="{{ url_for('admin.blog') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-hand-praying" style="color: var(--gold);"></i> Recent Prayer Requests</h5>
+            <div class="list-group list-group-flush">
+                {% for prayer in stats.recent_prayer_requests %}
+                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <strong>{{ prayer.full_name }}</strong>
+                        <br><small class="text-muted">{{ prayer.category|title }} · {{ prayer.created_at.strftime('%b %d, %Y') }}</small>
+                    </div>
+                    <span class="status-badge {% if prayer.is_prayed_for %}active{% else %}pending{% endif %}">
+                        {% if prayer.is_prayed_for %}Prayed For{% else %}Pending{% endif %}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-3 text-end">
+                <a href="{{ url_for('admin.prayer_requests') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">Add a new prayer request from admin</p>
+    </div>
+    <div>
+        <a href="{{ url_for('admin.prayer_requests') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                            {{ form.full_name(class="form-control", placeholder="Enter full name", id="fullNameField") }}
+                            {% if form.full_name.errors %}
+                                {% for error in form.full_name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            {{ form.email(class="form-control", placeholder="Email address", id="emailField") }}
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            {{ form.phone(class="form-control", placeholder="Phone number", id="phoneField") }}
+                            {% if form.phone.errors %}
+                                {% for error in form.phone.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                            {% if form.category.errors %}
+                                {% for error in form.category.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Prayer Request <span class="text-danger">*</span></label>
+                            {{ form.request(class="form-control", rows="6", placeholder="Share the prayer request in detail...") }}
+                            {% if form.request.errors %}
+                                {% for error in form.request.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            {{ form.is_anonymous(class="form-check-input", id="anonymousCheck") }}
+                            <label class="form-check-label" for="anonymousCheck">Submit Anonymously</label>
+                            <br><small class="text-muted">The name will be shown as "Anonymous" on the frontend. Email and phone will be hidden.</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-send"></i> Submit Prayer Request
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Full Name, Category, and Request are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Email and Phone are optional but helpful</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Check "Anonymous" to hide name, email, and phone</li>
+            </ul>
+        </div>
+
+        <div class="admin-card mt-3">
+            <h5 class="mb-3"><i class="bi bi-chat-quote" style="color: var(--gold);"></i> Prayer Categories</h5>
+            <ul class="list-unstyled">
+                <li><span class="badge bg-secondary">Healing</span> - Health and healing</li>
+                <li><span class="badge bg-secondary">Deliverance</span> - Freedom and deliverance</li>
+                <li><span class="badge bg-secondary">Financial</span> - Financial breakthrough</li>
+                <li><span class="badge bg-secondary">Family</span> - Family and marriage</li>
+                <li><span class="badge bg-secondary">Career</span> - Career and business</li>
+                <li><span class="badge bg-secondary">Salvation</span> - Salvation and soul winning</li>
+                <li><span class="badge bg-secondary">General</span> - General requests</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const anonymousCheck = document.getElementById('anonymousCheck');
+    const fullNameField = document.getElementById('fullNameField');
+    const emailField = document.getElementById('emailField');
+    const phoneField = document.getElementById('phoneField');
+
+    function toggleFields() {
+        if (anonymousCheck.checked) {
+            fullNameField.disabled = true;
+            fullNameField.value = 'Anonymous';
+            emailField.disabled = true;
+            emailField.value = '';
+            phoneField.disabled = true;
+            phoneField.value = '';
+            fullNameField.style.opacity = '0.6';
+            emailField.style.opacity = '0.6';
+            phoneField.style.opacity = '0.6';
+        } else {
+            fullNameField.disabled = false;
+            fullNameField.value = '';
+            emailField.disabled = false;
+            phoneField.disabled = false;
+            fullNameField.style.opacity = '1';
+            emailField.style.opacity = '1';
+            phoneField.style.opacity = '1';
+        }
+    }
+
+    anonymousCheck.addEventListener('change', toggleFields);
+    toggleFields();
+});
+</script>
+{% endblock %}

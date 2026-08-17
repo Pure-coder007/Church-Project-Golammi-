@@ -1,0 +1,151 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Settings | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-gear" style="color: var(--gold);"></i> Site Settings</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <h6 class="border-bottom pb-2"><i class="bi bi-globe" style="color: var(--gold);"></i> General Settings</h6>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Site Name <span class="text-danger">*</span></label>
+                            {{ form.site_name(class="form-control", placeholder="Enter site name") }}
+                            {% if form.site_name.errors %}
+                                {% for error in form.site_name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Site Description</label>
+                            {{ form.site_description(class="form-control", rows="3", placeholder="Brief site description") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Admin Email <span class="text-danger">*</span></label>
+                            {{ form.admin_email(class="form-control", placeholder="admin@example.com") }}
+                            {% if form.admin_email.errors %}
+                                {% for error in form.admin_email.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h6 class="border-bottom pb-2"><i class="bi bi-share" style="color: var(--gold);"></i> Social Media Links</h6>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Facebook URL</label>
+                            {{ form.facebook_url(class="form-control", placeholder="https://facebook.com/...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Twitter URL</label>
+                            {{ form.twitter_url(class="form-control", placeholder="https://twitter.com/...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Instagram URL</label>
+                            {{ form.instagram_url(class="form-control", placeholder="https://instagram.com/...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">YouTube URL</label>
+                            {{ form.youtube_url(class="form-control", placeholder="https://youtube.com/...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">WhatsApp URL</label>
+                            {{ form.whatsapp_url(class="form-control", placeholder="https://wa.me/...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h6 class="border-bottom pb-2"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Contact Information</h6>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Phone</label>
+                            {{ form.phone(class="form-control", placeholder="+234 800 000 0000") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Address</label>
+                            {{ form.address(class="form-control", rows="2", placeholder="Church address") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h6 class="border-bottom pb-2"><i class="bi bi-file-text" style="color: var(--gold);"></i> Footer</h6>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Footer Text</label>
+                            {{ form.footer_text(class="form-control", rows="3", placeholder="Footer copyright text") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> Save Settings
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Site Name and Admin Email are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Social media links appear in the footer</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Footer text appears at the bottom of every page</li>
+            </ul>
+        </div>
+
+        <div class="admin-card mt-3">
+            <h5 class="mb-3"><i class="bi bi-database" style="color: var(--gold);"></i> System Info</h5>
+            <ul class="list-unstyled small">
+                <li><strong>Flask Version:</strong> 2.3.3</li>
+                <li><strong>Database:</strong> SQLite</li>
+                <li><strong>Upload Limit:</strong> 50 MB</li>
+                <li><strong>Environment:</strong> Development</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-images" style="color: var(--gold);"></i> {{ title }}</h1>
+    <div>
+        <a href="{{ url_for('admin.gallery') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control", placeholder="Enter image title") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Description</label>
+                            {{ form.description(class="form-control", placeholder="Brief description") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                            {% if form.category.errors %}
+                                {% for error in form.category.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Image <span class="text-danger">*</span></label>
+                            {{ form.image(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 800x800)</small>
+                            {% if form.image.errors %}
+                                {% for error in form.image.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.is_published(class="form-check-input") }}
+                                    <label class="form-check-label">Published</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> Add Image
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Title, Category, and Image are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Upload high-quality images</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Images are automatically resized</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

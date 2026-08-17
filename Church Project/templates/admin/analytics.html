@@ -1,0 +1,243 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Analytics | GOLAMMI Admin{% endblock %}
+{% block page_title %}Church Analytics & Growth{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="bi bi-bar-chart" style="color: var(--gold);"></i> Church Growth Dashboard</h5>
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="updateChart('weekly')">Weekly</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="updateChart('monthly')">Monthly</button>
+                    <button class="btn btn-outline-gold btn-sm" onclick="updateChart('yearly')">Yearly</button>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: var(--gold-light); border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Total Members</h6>
+                        <h2 class="mb-0" style="color: var(--black);">{{ stats.total_members or 0 }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #e8f5e9; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Men</h6>
+                        <h2 class="mb-0" style="color: #2e7d32;">{{ stats.total_men or 0 }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #fce4ec; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Women</h6>
+                        <h2 class="mb-0" style="color: #c62828;">{{ stats.total_women or 0 }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #e3f2fd; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Children</h6>
+                        <h2 class="mb-0" style="color: #0d47a1;">{{ stats.total_children or 0 }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Member Management -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-people" style="color: var(--gold);"></i> Update Members Count</h5>
+            <form method="POST" action="{{ url_for('admin.update_members') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Men</label>
+                            <input type="number" name="men" class="form-control" value="{{ stats.total_men or 0 }}" min="0">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Women</label>
+                            <input type="number" name="women" class="form-control" value="{{ stats.total_women or 0 }}" min="0">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Children</label>
+                            <input type="number" name="children" class="form-control" value="{{ stats.total_children or 0 }}" min="0">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-gold w-100">Update Member Count</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-graph-up" style="color: var(--gold);"></i> Growth Over Time</h5>
+            <canvas id="growthChart" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Analytics (Super Admin Only) -->
+{% if current_user.is_super_admin() %}
+<div class="row g-4">
+    <div class="col-12">
+        <div class="admin-card" style="border-bottom-color: #17a2b8;">
+            <h5 class="mb-3"><i class="bi bi-cash-stack" style="color: #17a2b8;"></i> Financial Analytics</h5>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #d1ecf1; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Total Tithes</h6>
+                        <h4 class="mb-0" style="color: #0c5460;">${{ "%.2f"|format(total_tithes or 0) }}</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #d4edda; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Total Offerings</h6>
+                        <h4 class="mb-0" style="color: #155724;">${{ "%.2f"|format(total_offerings or 0) }}</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #fff3cd; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Total Donations</h6>
+                        <h4 class="mb-0" style="color: #856404;">${{ "%.2f"|format(total_donations or 0) }}</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center p-3" style="background: #cce5ff; border-radius: 12px;">
+                        <h6 class="text-muted mb-1">Total Income</h6>
+                        <h4 class="mb-0" style="color: #004085;">${{ "%.2f"|format(total_income or 0) }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('admin.add_financial') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select name="finance_type" class="form-control">
+                                <option value="tithe">Tithe</option>
+                                <option value="offering">Offering</option>
+                                <option value="donation">Donation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Amount ($)</label>
+                            <input type="number" name="amount" class="form-control" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" name="finance_date" class="form-control" value="{{ today }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-gold w-100">Add Record</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="mt-3">
+                <canvas id="financeChart" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let growthChartInstance = null;
+let financeChartInstance = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Growth Chart
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    growthChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Members',
+                data: {{ growth_data|tojson }},
+                borderColor: '#c9a84c',
+                backgroundColor: 'rgba(201, 168, 76, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    {% if current_user.is_super_admin() %}
+    // Finance Chart
+    const financeCtx = document.getElementById('financeChart').getContext('2d');
+    financeChartInstance = new Chart(financeCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ finance_labels|tojson }},
+            datasets: [{
+                label: 'Income',
+                data: {{ finance_data|tojson }},
+                backgroundColor: '#c9a84c',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    {% endif %}
+});
+
+function updateChart(period) {
+    fetch(`/admin/analytics-data?period=${period}`)
+        .then(response => response.json())
+        .then(data => {
+            if (growthChartInstance) {
+                growthChartInstance.data.labels = data.labels;
+                growthChartInstance.data.datasets[0].data = data.values;
+                growthChartInstance.update();
+            }
+        })
+        .catch(error => console.error('Error updating chart:', error));
+}
+</script>
+{% endblock %}

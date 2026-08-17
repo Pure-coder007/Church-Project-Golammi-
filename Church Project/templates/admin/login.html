@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Admin Login | GOLAMMI</title>
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-dark: #a8892e;
+            --black: #1a1a1a;
+            --light-gray: #f8f6f0;
+            --white: #ffffff;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 45px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--gold);
+        }
+        .login-card .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-card .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+        .login-card .logo p {
+            color: #888;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        .login-card .form-control {
+            padding: 12px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            transition: border-color 0.3s;
+        }
+        .login-card .form-control:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201,168,76,0.1);
+        }
+        .login-card .input-group-text {
+            background: transparent;
+            border: 2px solid #e8e8e8;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            color: var(--gold);
+        }
+        .login-card .input-group .form-control {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+        .login-card .btn-login {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .login-card .btn-login:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201,168,76,0.3);
+        }
+        .login-card .form-check-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .login-card .forgot-link {
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-decoration: none;
+        }
+        .login-card .forgot-link:hover {
+            color: var(--gold-dark);
+        }
+        .alert {
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 576px) {
+            .login-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="logo">
+                <i class="bi bi-church" style="font-size: 2.5rem; color: var(--gold);"></i>
+                <h2>GOLAMMI Admin</h2>
+                <p>Gateway of Life and Miracle Ministries</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        {{ form.email(class="form-control", placeholder="Enter your email") }}
+                    </div>
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        {{ form.password(class="form-control", placeholder="Enter your password") }}
+                    </div>
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input") }}
+                        <label class="form-check-label" for="remember">Remember Me</label>
+                    </div>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                {{ form.next() }}
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-box-arrow-in-right"></i> Sign In
+                </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('frontend.index') }}" style="color: #888; text-decoration: none; font-size: 0.85rem;">
+                    <i class="bi bi-arrow-left"></i> Back to Site
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

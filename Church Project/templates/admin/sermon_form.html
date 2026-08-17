@@ -1,0 +1,172 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-mic" style="color: var(--gold);"></i> {{ title }}</h1>
+    <div>
+        <a href="{{ url_for('admin.sermons') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control", placeholder="Enter sermon title") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Description</label>
+                            {{ form.description(class="form-control", rows="4", placeholder="Enter sermon description") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Speaker <span class="text-danger">*</span></label>
+                            {{ form.speaker(class="form-control", placeholder="Enter speaker name") }}
+                            {% if form.speaker.errors %}
+                                {% for error in form.speaker.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                            {% if form.category.errors %}
+                                {% for error in form.category.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Date Preached</label>
+                            {{ form.date_preached(class="form-control", type="datetime-local") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Video URL</label>
+                            {{ form.video_url(class="form-control", placeholder="https://youtube.com/... or https://facebook.com/...") }}
+                            <small class="text-muted">YouTube, Vimeo, or Facebook Live URL</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Live Stream URL</label>
+                            {{ form.live_stream_url(class="form-control", placeholder="https://facebook.com/.../live") }}
+                            <small class="text-muted">URL for live stream (Facebook Live, YouTube Live, etc.)</small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Audio File</label>
+                            {{ form.audio_file(class="form-control") }}
+                            <small class="text-muted">MP3, WAV, OGG, M4A</small>
+                            {% if sermon and sermon.audio_file %}
+                            <div class="mt-2">
+                                <span class="badge bg-success"><i class="bi bi-file-music"></i> Current: {{ sermon.audio_file.split('/')[-1] }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Thumbnail Image</label>
+                            {{ form.thumbnail(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 400x225)</small>
+                            {% if sermon and sermon.thumbnail %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/' + sermon.thumbnail) }}" alt="Current thumbnail" style="width: 100px; height: 56px; object-fit: cover; border-radius: 6px;">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_live(class="form-check-input") }}
+                                    <label class="form-check-label">Live Stream</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_published(class="form-check-input") }}
+                                    <label class="form-check-label">Published</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if sermon else 'Create' }} Sermon
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Title and Speaker are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Upload audio for downloadable sermons</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Add video URL for YouTube/Vimeo</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Live URL for Facebook Live streaming</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Thumbnail for featured display</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Live" to show as live stream</li>
+            </ul>
+        </div>
+
+        {% if sermon %}
+        <div class="admin-card mt-3">
+            <h5 class="mb-3"><i class="bi bi-stats" style="color: var(--gold);"></i> Stats</h5>
+            <ul class="list-unstyled">
+                <li><i class="bi bi-eye"></i> Views: {{ sermon.view_count }}</li>
+                <li><i class="bi bi-download"></i> Downloads: {{ sermon.download_count }}</li>
+                <li><i class="bi bi-calendar"></i> Created: {{ sermon.created_at.strftime('%b %d, %Y') }}</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

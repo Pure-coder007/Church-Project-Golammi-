@@ -1,0 +1,122 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">Edit prayer request details</p>
+    </div>
+    <div>
+        <a href="{{ url_for('admin.prayer_requests') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                            {{ form.full_name(class="form-control", placeholder="Enter full name") }}
+                            {% if form.full_name.errors %}
+                                {% for error in form.full_name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            {{ form.email(class="form-control", placeholder="Email address") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            {{ form.phone(class="form-control", placeholder="Phone number") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Prayer Request <span class="text-danger">*</span></label>
+                            {{ form.request(class="form-control", rows="6", placeholder="Share the prayer request in detail...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            {{ form.is_anonymous(class="form-check-input") }}
+                            <label class="form-check-label">Submit Anonymously</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            {{ form.is_prayed_for(class="form-check-input") }}
+                            <label class="form-check-label">Prayed For</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            {{ form.is_answered(class="form-check-input") }}
+                            <label class="form-check-label">Answered</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> Update Prayer Request
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Prayer Info</h5>
+            <ul class="list-unstyled">
+                <li><i class="bi bi-calendar"></i> Created: {{ prayer.created_at.strftime('%b %d, %Y') }}</li>
+                <li><i class="bi bi-person"></i> From: {{ prayer.full_name }}</li>
+                <li><i class="bi bi-tag"></i> Category: {{ prayer.category|title }}</li>
+                {% if prayer.is_anonymous %}
+                <li><i class="bi bi-incognito"></i> Anonymous</li>
+                {% endif %}
+                {% if prayer.is_prayed_for %}
+                <li><i class="bi bi-check-circle text-success"></i> Prayed For</li>
+                {% else %}
+                <li><i class="bi bi-clock text-warning"></i> Pending</li>
+                {% endif %}
+                {% if prayer.is_answered %}
+                <li><i class="bi bi-check2-all text-info"></i> Answered</li>
+                {% endif %}
+                {% if prayer.response %}
+                <li class="mt-2"><strong>Response:</strong></li>
+                <li><small>{{ prayer.response|truncate(100) }}</small></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %}GOLAMMI Admin{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-dark: #a8892e;
+            --gold-light: #e8d5a3;
+            --black: #1a1a1a;
+            --dark-gray: #2d2d2d;
+            --light-gray: #f8f6f0;
+            --white: #ffffff;
+            --shadow: 0 2px 15px rgba(0,0,0,0.06);
+            --shadow-hover: 0 10px 35px rgba(0,0,0,0.1);
+            --radius: 14px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light-gray);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-dark);
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            min-height: 100vh;
+            background: var(--black);
+            color: #fff;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .sidebar .brand {
+            padding: 1.5rem 1.5rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .sidebar .brand .brand-icon {
+            font-size: 2.2rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .sidebar .brand h4 {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .sidebar .brand small {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar .nav {
+            padding: 1rem 0;
+        }
+
+        .sidebar .nav-item {
+            margin: 2px 0;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.55);
+            padding: 0.7rem 1.5rem;
+            border-radius: 0;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .sidebar .nav-link:hover {
+            color: var(--white);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .sidebar .nav-link.active {
+            color: var(--gold);
+            background: rgba(201,168,76,0.08);
+            border-left-color: var(--gold);
+        }
+
+        .sidebar .nav-link i {
+            width: 22px;
+            margin-right: 10px;
+            font-size: 1.1rem;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .sidebar .nav-link .badge {
+            float: right;
+            margin-top: 2px;
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .sidebar .nav-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.05);
+            margin: 0.5rem 1.5rem;
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            padding: 1.5rem 2rem;
+            min-height: 100vh;
+        }
+
+        /* ===== Cards ===== */
+        .admin-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-bottom: 3px solid var(--gold);
+            transition: var(--transition);
+        }
+
+        .admin-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .admin-card .card-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--black);
+            line-height: 1.2;
+        }
+
+        .admin-card .card-label {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .admin-card .card-icon {
+            font-size: 2.2rem;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--black);
+            box-shadow: 0 4px 15px rgba(201,168,76,0.25);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-dark);
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201,168,76,0.35);
+        }
+
+        .btn-gold:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-gold:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-outline-secondary {
+            background: transparent;
+            color: #888;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #f0f0f0;
+            color: var(--black);
+            border-color: #bbb;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-secondary:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+        }
+
+        .btn-success:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220,53,69,0.3);
+        }
+
+        .btn-danger:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(23,162,184,0.3);
+        }
+
+        .btn-info:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-lg {
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+        }
+
+        .btn-group .btn:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .btn-group .btn:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .btn-group .btn:only-child {
+            border-radius: 8px;
+        }
+
+        /* ===== Tables ===== */
+        .table-custom {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 0;
+        }
+
+        .table-custom thead {
+            background: var(--black);
+            color: #fff;
+        }
+
+        .table-custom thead th {
+            padding: 0.8rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        .table-custom tbody td {
+            padding: 0.8rem 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+        }
+
+        .table-custom tbody tr:hover {
+            background: rgba(201,168,76,0.04);
+        }
+
+        .table-custom tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== Status Badges ===== */
+        .status-badge {
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .status-badge.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.live {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-badge.answered {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* ===== Form Controls ===== */
+        .form-control {
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--black);
+            outline: none;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201,168,76,0.1);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--black);
+            margin-bottom: 0.3rem;
+        }
+
+        .form-check-input {
+            border: 2px solid #d0d0d0;
+            border-radius: 4px;
+            width: 1.1rem;
+            height: 1.1rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+        }
+
+        .form-check-label {
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+        }
+
+        /* ===== Pagination ===== */
+        .pagination .page-link {
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            color: #666;
+            font-weight: 500;
+            padding: 0.4rem 0.9rem;
+            transition: var(--transition);
+            margin: 0 2px;
+            background: var(--white);
+            font-size: 0.85rem;
+        }
+
+        .pagination .page-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .pagination .page-item.active .page-link {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ===== Modal ===== */
+        .modal-content {
+            border-radius: var(--radius);
+            border: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            border-bottom: 2px solid var(--gold);
+            padding: 1.2rem 1.5rem;
+        }
+
+        .modal-header .modal-title {
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #f0f0f0;
+            padding: 1rem 1.5rem;
+        }
+
+        /* ===== Alert ===== */
+        .alert {
+            border-radius: var(--radius);
+            border: none;
+            padding: 1rem 1.2rem;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow);
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .alert-info {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+            .sidebar {
+                min-height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-card .card-number {
+                font-size: 1.4rem;
+            }
+
+            .table-custom {
+                font-size: 0.75rem;
+            }
+
+            .btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+        }
+
+        /* ===== Utilities ===== */
+        .text-gold {
+            color: var(--gold);
+        }
+        .bg-gold {
+            background: var(--gold);
+        }
+        .bg-gold-light {
+            background: var(--gold-light);
+        }
+        .border-gold {
+            border-color: var(--gold);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="brand">
+                    <span class="brand-icon"><i class="bi bi-church"></i></span>
+                    <h4>GOLAMMI</h4>
+                    <small>Admin Panel</small>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}" href="{{ url_for('admin.dashboard') }}">
+                            <i class="bi bi-grid"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.sermons', 'admin.add_sermon', 'admin.edit_sermon'] %}active{% endif %}" href="{{ url_for('admin.sermons') }}">
+                            <i class="bi bi-mic"></i> Sermons
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'admin.analytics' %}active{% endif %}" href="{{ url_for('admin.analytics', _external=False) }}">
+                            <i class="bi bi-graph-up-arrow"></i> Analytics
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.events', 'admin.add_event', 'admin.edit_event'] %}active{% endif %}" href="{{ url_for('admin.events') }}">
+                            <i class="bi bi-calendar-event"></i> Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.blog', 'admin.add_blog', 'admin.edit_blog'] %}active{% endif %}" href="{{ url_for('admin.blog') }}">
+                            <i class="bi bi-newspaper"></i> Blog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.gallery', 'admin.add_gallery'] %}active{% endif %}" href="{{ url_for('admin.gallery') }}">
+                            <i class="bi bi-images"></i> Gallery
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.radio', 'admin.add_radio', 'admin.edit_radio'] %}active{% endif %}" href="{{ url_for('admin.radio') }}">
+                            <i class="bi bi-radio"></i> Radio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.testimonies', 'admin.add_testimony', 'admin.edit_testimony'] %}active{% endif %}" href="{{ url_for('admin.testimonies') }}">
+                            <i class="bi bi-chat-quote"></i> Testimonies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['admin.prayer_requests', 'admin.add_prayer_request', 'admin.edit_prayer_request'] %}active{% endif %}" href="{{ url_for('admin.prayer_requests') }}">
+                            <i class="bi bi-hand-praying"></i> Prayer Requests
+                            <span class="badge bg-danger">{{ prayer_pending_count or 0 }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-divider"></li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'admin.users' %}active{% endif %}" href="{{ url_for('admin.users') }}">
+                            <i class="bi bi-people"></i> Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'admin.settings' %}active{% endif %}" href="{{ url_for('admin.settings') }}">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-divider"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('frontend.index') }}" target="_blank">
+                            <i class="bi bi-globe"></i> View Site
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.profile') }}">
+                            <i class="bi bi-person-circle"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <!-- Top Bar -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h5 class="mb-0" style="font-weight: 600; color: var(--black);">
+                            {% block page_title %}Welcome{% endblock %}
+                        </h5>
+                        <small class="text-muted">{{ current_user.full_name }} · {{ current_user.role|title }}</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-muted small"><i class="bi bi-clock"></i> <span id="currentTime"></span></span>
+                    </div>
+                </div>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                <i class="bi bi-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Page Content -->
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 500, once: true, offset: 20 });
+
+        // Current time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Auto-dismiss alerts after 5 seconds
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            setTimeout(function() {
+                alert.classList.remove('show');
+                setTimeout(function() { alert.remove(); }, 300);
+            }, 5000);
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,182 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | GOLAMMI Admin{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">{% if event %}Edit event details{% else %}Add a new event{% endif %}</p>
+    </div>
+    <div>
+        <a href="{{ url_for('admin.events') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control", placeholder="Enter event title") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Description <span class="text-danger">*</span></label>
+                            {{ form.description(class="form-control", rows="4", placeholder="Enter event description") }}
+                            {% if form.description.errors %}
+                                {% for error in form.description.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Short Description</label>
+                            {{ form.short_description(class="form-control", placeholder="Brief description (max 300 chars)") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="text-danger">*</span></label>
+                            {{ form.category(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Event Image</label>
+                            {{ form.image(class="form-control") }}
+                            <small class="text-muted">JPG, PNG, WEBP (Recommended: 800x500)</small>
+                            {% if event and event.image %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/' + event.image) }}" alt="Current image" style="width: 150px; height: 94px; object-fit: cover; border-radius: 8px;">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                            {{ form.start_date(class="form-control", type="datetime-local") }}
+                            {% if form.start_date.errors %}
+                                {% for error in form.start_date.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">End Date</label>
+                            {{ form.end_date(class="form-control", type="datetime-local") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Start Time</label>
+                            {{ form.start_time(class="form-control", placeholder="9:00 AM") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">End Time</label>
+                            {{ form.end_time(class="form-control", placeholder="6:00 PM") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            {{ form.location(class="form-control", placeholder="City, State") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Venue</label>
+                            {{ form.venue(class="form-control", placeholder="Venue name") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Registration Link</label>
+                            {{ form.registration_link(class="form-control", placeholder="https://...") }}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_online(class="form-check-input") }}
+                                    <label class="form-check-label">Online Event</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.registration_required(class="form-check-input") }}
+                                    <label class="form-check-label">Registration Required</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input") }}
+                                    <label class="form-check-label">Featured</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    {{ form.is_published(class="form-check-input") }}
+                                    <label class="form-check-label">Published</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i> {{ 'Update' if event else 'Create' }} Event
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5 class="mb-3"><i class="bi bi-info-circle" style="color: var(--gold);"></i> Help</h5>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Title, Description, and Start Date are required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Add an image for featured display</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Set "Online" for virtual events</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Registration link for ticketed events</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

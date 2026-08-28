@@ -4,7 +4,437 @@
 {% block meta_description %}View photos and images from Gateway of Life and Miracle Ministries International - Golammi Worship Center events and services.{% endblock %}
 {% block meta_keywords %}Golammi Worship Center, GWC, gallery, photos, images, events, worship{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ===== GALLERY FILTERS ===== */
+    .gallery-filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 2.5rem;
+    }
+
+    .gallery-filters .filter-btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 2px solid #e8e8e8;
+        background: transparent;
+        color: #666;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+
+    .gallery-filters .filter-btn:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+    }
+
+    .gallery-filters .filter-btn.active {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--black);
+        box-shadow: 0 4px 15px rgba(201,168,76,0.25);
+    }
+
+    /* ===== GALLERY GRID ===== */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .gallery-grid .gallery-item {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        background: var(--white);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        aspect-ratio: 1 / 1;
+    }
+
+    .gallery-grid .gallery-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    .gallery-grid .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-grid .gallery-item:hover img {
+        transform: scale(1.06);
+    }
+
+    /* ===== GALLERY OVERLAY ===== */
+    .gallery-grid .gallery-item .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+        padding: 2.5rem 1.5rem 1.5rem;
+        transform: translateY(100%);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-grid .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+
+    .gallery-grid .gallery-item .gallery-overlay .gallery-icon {
+        position: absolute;
+        top: -20px;
+        right: 1.5rem;
+        background: var(--gold);
+        color: var(--black);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+    }
+
+    .gallery-grid .gallery-item:hover .gallery-overlay .gallery-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .gallery-grid .gallery-item .gallery-overlay h4 {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0 0 0.2rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .gallery-grid .gallery-item .gallery-overlay p {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.8rem;
+        margin: 0;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    /* ===== FEATURED ITEM ===== */
+    .gallery-grid .gallery-item.featured {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    .gallery-grid .gallery-item.featured .gallery-overlay h4 {
+        font-size: 1.2rem;
+    }
+
+    .gallery-grid .gallery-item.featured .gallery-overlay p {
+        font-size: 0.9rem;
+    }
+
+    .gallery-grid .gallery-item .category-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        color: #fff;
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(255,255,255,0.1);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .gallery-grid .gallery-item.featured .category-badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 1rem;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-gallery {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        grid-column: 1 / -1;
+    }
+
+    .empty-gallery .empty-icon {
+        font-size: 4rem;
+        color: #ddd;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .empty-gallery h4 {
+        color: var(--black);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-gallery p {
+        color: #888;
+        margin-bottom: 0;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination-custom {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 2.5rem;
+    }
+
+    .pagination-custom a,
+    .pagination-custom .disabled {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 10px;
+        border: 2px solid #e8e8e8;
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        background: var(--white);
+    }
+
+    .pagination-custom a:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .pagination-custom a.active {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--black);
+        box-shadow: 0 4px 15px rgba(201,168,76,0.25);
+    }
+
+    .pagination-custom .disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        padding: 20px;
+    }
+
+    .lightbox-overlay.active {
+        opacity: 1;
+    }
+
+    .lightbox-overlay .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lightbox-overlay .lightbox-content img {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        transform: scale(0.95);
+        transition: transform 0.4s ease;
+    }
+
+    .lightbox-overlay.active .lightbox-content img {
+        transform: scale(1);
+    }
+
+    .lightbox-overlay .lightbox-content .lightbox-caption {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 1rem;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .lightbox-overlay .lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: 300;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .lightbox-overlay .lightbox-close:hover {
+        transform: rotate(90deg);
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-grid .gallery-item.featured {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .gallery-grid .gallery-item.featured .gallery-overlay h4 {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .gallery-filters .filter-btn {
+            padding: 0.3rem 1rem;
+            font-size: 0.7rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay {
+            padding: 1.5rem 0.8rem 0.8rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay h4 {
+            font-size: 0.8rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay p {
+            font-size: 0.7rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay .gallery-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+            top: -16px;
+            right: 0.8rem;
+        }
+
+        .gallery-grid .gallery-item .category-badge {
+            font-size: 0.55rem;
+            padding: 0.15rem 0.6rem;
+            top: 0.6rem;
+            left: 0.6rem;
+        }
+
+        .lightbox-overlay .lightbox-close {
+            width: 40px;
+            height: 40px;
+            font-size: 2rem;
+            top: 5px;
+            right: 5px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+        }
+
+        .gallery-filters {
+            gap: 6px;
+        }
+
+        .gallery-filters .filter-btn {
+            padding: 0.2rem 0.8rem;
+            font-size: 0.65rem;
+            border-width: 1.5px;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay {
+            padding: 1rem 0.6rem 0.6rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay h4 {
+            font-size: 0.7rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay p {
+            font-size: 0.6rem;
+        }
+
+        .gallery-grid .gallery-item .gallery-overlay .gallery-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+            top: -14px;
+            right: 0.6rem;
+        }
+
+        .pagination-custom a,
+        .pagination-custom .disabled {
+            min-width: 34px;
+            height: 34px;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
+<!-- ======= Page Title ======= -->
 <div class="page-title dark-background" style="background-image: url({{ url_for('static', filename='assets/img/go29.jpg') }});">
     <div class="container position-relative text-center">
         <h1>Gallery</h1>
@@ -17,7 +447,8 @@
     </div>
 </div>
 
-<section class="section" style="padding-top: 40px;">
+<!-- ======= Gallery Section ======= -->
+<section class="section" style="padding-top: 40px; padding-bottom: 40px;">
     <div class="container">
         <!-- Filters -->
         <div class="gallery-filters" data-aos="fade-up">
@@ -33,8 +464,9 @@
         <div class="gallery-grid" id="galleryGrid" data-aos="fade-up" data-aos-delay="100">
             {% if images.items %}
                 {% for image in images.items %}
-                <div class="gallery-item {% if loop.first %}featured{% endif %}" data-category="{{ image.category }}">
-                    <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" alt="{{ image.title }}">
+                <div class="gallery-item {% if loop.first and images.items|length > 1 %}featured{% endif %}" data-category="{{ image.category }}">
+                    <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" alt="{{ image.title }}" loading="lazy">
+                    <span class="category-badge">{{ image.category|title }}</span>
                     <div class="gallery-overlay">
                         <span class="gallery-icon"><i class="bi bi-arrows-expand"></i></span>
                         <h4>{{ image.title }}</h4>
@@ -43,21 +475,23 @@
                 </div>
                 {% endfor %}
             {% else %}
-                <div class="col-12 text-center py-5">
-                    <i class="bi bi-images" style="font-size: 3rem; color: var(--gold);"></i>
-                    <h4 class="mt-3">No Gallery Images</h4>
-                    <p class="text-muted">Check back later for photos.</p>
+                <div class="empty-gallery">
+                    <span class="empty-icon"><i class="bi bi-images"></i></span>
+                    <h4>No Gallery Images</h4>
+                    <p>Check back later for photos from our services and events.</p>
                 </div>
             {% endif %}
         </div>
 
         <!-- Pagination -->
         {% if images and images.pages > 1 %}
-        <div class="pagination-custom mt-4" data-aos="fade-up">
+        <div class="pagination-custom" data-aos="fade-up">
             {% if images.has_prev %}
             <a href="{{ url_for('frontend.gallery', page=images.prev_num, category=category) }}"><i class="bi bi-chevron-left"></i></a>
+            {% else %}
+            <span class="disabled"><i class="bi bi-chevron-left"></i></span>
             {% endif %}
-            
+
             {% for page_num in images.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
                 {% if page_num %}
                     {% if images.page == page_num %}
@@ -69,9 +503,11 @@
                     <span class="disabled">…</span>
                 {% endif %}
             {% endfor %}
-            
+
             {% if images.has_next %}
             <a href="{{ url_for('frontend.gallery', page=images.next_num, category=category) }}"><i class="bi bi-chevron-right"></i></a>
+            {% else %}
+            <span class="disabled"><i class="bi bi-chevron-right"></i></span>
             {% endif %}
         </div>
         {% endif %}
@@ -79,76 +515,134 @@
 </section>
 
 <script>
-// Gallery Filter
-document.querySelectorAll('.gallery-filters .filter-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        document.querySelectorAll('.gallery-filters .filter-btn').forEach(function(b) {
-            b.classList.remove('active');
-        });
-        this.classList.add('active');
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== GALLERY FILTER =====
+    const filterButtons = document.querySelectorAll('.gallery-filters .filter-btn');
+    const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
 
-        const filter = this.dataset.filter;
-        document.querySelectorAll('#galleryGrid .gallery-item').forEach(function(item) {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
+    filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            // Update active state
+            filterButtons.forEach(function(b) {
+                b.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            // Filter items
+            const filter = this.dataset.filter;
+            galleryItems.forEach(function(item) {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeIn 0.4s ease';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
     });
-});
 
-// Lightbox for Gallery Images
-document.querySelectorAll('.gallery-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-        const img = this.querySelector('img');
-        const title = this.querySelector('.gallery-overlay h4')?.textContent || 'Gallery Image';
-        if (img) {
-            const lightbox = document.createElement('div');
-            lightbox.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.92); display: flex; align-items: center;
-                justify-content: center; z-index: 99999; cursor: pointer;
-                opacity: 0; transition: opacity 0.4s ease;
-            `;
-            const imgClone = document.createElement('img');
-            imgClone.src = img.src;
-            imgClone.style.cssText = `
-                max-width: 90%; max-height: 90%; object-fit: contain;
-                border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-                transform: scale(0.95); transition: transform 0.4s ease;
-            `;
-            const caption = document.createElement('div');
-            caption.style.cssText = `
-                position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-                color: #fff; font-size: 1rem; font-weight: 600; text-align: center;
-                background: rgba(0,0,0,0.6); padding: 10px 24px; border-radius: 8px;
-            `;
-            caption.textContent = title;
-            const closeBtn = document.createElement('span');
-            closeBtn.innerHTML = '×';
-            closeBtn.style.cssText = `
-                position: absolute; top: 20px; right: 30px; color: #fff;
-                font-size: 3rem; font-weight: 300; cursor: pointer;
-                transition: transform 0.3s ease;
-            `;
-            lightbox.appendChild(imgClone);
-            lightbox.appendChild(caption);
-            lightbox.appendChild(closeBtn);
-            document.body.appendChild(lightbox);
-            setTimeout(function() {
-                lightbox.style.opacity = '1';
-                imgClone.style.transform = 'scale(1)';
-            }, 50);
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox || e.target === closeBtn) {
-                    lightbox.style.opacity = '0';
-                    imgClone.style.transform = 'scale(0.95)';
-                    setTimeout(function() { lightbox.remove(); }, 400);
+    // ===== LIGHTBOX FOR GALLERY IMAGES =====
+    galleryItems.forEach(function(item) {
+        item.addEventListener('click', function(e) {
+            // Don't trigger if clicking on overlay (which has its own click handler)
+            if (e.target.closest('.gallery-overlay')) {
+                return;
+            }
+
+            const img = this.querySelector('img');
+            const title = this.querySelector('.gallery-overlay h4')?.textContent || 'Gallery Image';
+            const category = this.querySelector('.category-badge')?.textContent || '';
+
+            if (img) {
+                openLightbox(img.src, title, category);
+            }
+        });
+
+        // Also allow clicking on the overlay icon
+        const icon = item.querySelector('.gallery-icon');
+        if (icon) {
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const img = item.querySelector('img');
+                const title = item.querySelector('.gallery-overlay h4')?.textContent || 'Gallery Image';
+                const category = item.querySelector('.category-badge')?.textContent || '';
+                if (img) {
+                    openLightbox(img.src, title, category);
                 }
             });
         }
     });
+
+    // ===== LIGHTBOX FUNCTIONS =====
+    function openLightbox(imgSrc, title, category) {
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        overlay.id = 'lightboxOverlay';
+
+        // Content wrapper
+        const content = document.createElement('div');
+        content.className = 'lightbox-content';
+
+        // Image
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = title;
+
+        // Close button
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'lightbox-close';
+        closeBtn.innerHTML = '×';
+
+        // Caption
+        const caption = document.createElement('div');
+        caption.className = 'lightbox-caption';
+        caption.innerHTML = `${title} ${category ? '<span style="opacity:0.5;margin-left:8px;">·</span> <span style="opacity:0.6;">' + category + '</span>' : ''}`;
+
+        // Assemble
+        content.appendChild(img);
+        content.appendChild(closeBtn);
+        content.appendChild(caption);
+        overlay.appendChild(content);
+        document.body.appendChild(overlay);
+
+        // Trigger animation
+        requestAnimationFrame(function() {
+            overlay.classList.add('active');
+        });
+
+        // Close handlers
+        function closeLightbox() {
+            overlay.classList.remove('active');
+            setTimeout(function() {
+                overlay.remove();
+            }, 400);
+        }
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay || e.target === closeBtn) {
+                closeLightbox();
+            }
+        });
+
+        // Escape key
+        document.addEventListener('keydown', function escHandler(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                document.removeEventListener('keydown', escHandler);
+            }
+        });
+    }
+
+    // ===== ADD FADE IN ANIMATION =====
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
 });
 </script>
 {% endblock %}

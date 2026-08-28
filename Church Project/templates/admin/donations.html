@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Donation Submissions | GOLAMMI Admin{% endblock %}
+{% block page_title %}Donation Submissions{% endblock %}
+{% block page_subtitle %}Giving form details submitted by website visitors before they complete transfer payments.{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-title-wrap">
+        <span class="eyebrow"><i class="bi bi-bank"></i> Giving Records</span>
+        <h3>Donation Submissions</h3>
+        <p>Review names, contact details, giving type, amount, and messages captured from the public giving form.</p>
+    </div>
+</div>
+
+<div class="table-shell">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 px-4 pt-4">
+        <div class="text-muted small">
+            Showing <strong>{{ donations.items|length }}</strong> records on page <strong>{{ donations.page }}</strong> of <strong>{{ donations.pages or 1 }}</strong>.
+        </div>
+        <div class="text-muted small">
+            Total giving submissions: <strong>{{ donations.total }}</strong>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donation in donations.items %}
+                <tr>
+                    <td>
+                        <div class="fw-semibold">{{ donation.full_name }}</div>
+                        {% if donation.is_anonymous %}
+                        <small class="text-muted">Requested anonymous giving</small>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div>{{ donation.email }}</div>
+                        <small class="text-muted">{{ donation.phone or 'No phone number' }}</small>
+                    </td>
+                    <td>{{ donation.giving_type.replace('_', ' ').title() }}</td>
+                    <td>₦{{ "{:,.2f}".format(donation.amount) }}</td>
+                    <td>{{ donation.message or 'No message provided' }}</td>
+                    <td>{{ donation.created_at.strftime('%b %d, %Y %I:%M %p') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-5 text-muted">No donation submissions yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if donations.pages > 1 %}
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Donation pagination">
+        <ul class="pagination mb-0">
+            <li class="page-item {% if not donations.has_prev %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('admin.donations', page=donations.prev_num) if donations.has_prev else '#' }}">Previous</a>
+            </li>
+            {% for page_num in donations.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                <li class="page-item {% if page_num == donations.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin.donations', page=page_num) }}">{{ page_num }}</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            {% endfor %}
+            <li class="page-item {% if not donations.has_next %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('admin.donations', page=donations.next_num) if donations.has_next else '#' }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endblock %}

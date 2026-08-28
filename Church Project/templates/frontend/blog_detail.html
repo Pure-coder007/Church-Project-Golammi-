@@ -1,0 +1,43 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}{{ post.title }} | Blog | GOLAMMI{% endblock %}
+{% block meta_description %}{{ (post.excerpt or post.content)|truncate(155) }}{% endblock %}
+
+{% block content %}
+<div class="page-title dark-background" style="background-image: url({{ url_for('static', filename='assets/img/go59.jpg') }});">
+    <div class="container position-relative text-center">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.author }} • {{ post.created_at.strftime('%B %d, %Y') }}</p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                {% if post.featured_image %}
+                <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="{{ post.title }}" class="img-fluid rounded-4 mb-4">
+                {% endif %}
+                <div class="p-4 rounded-4 bg-white shadow-sm">
+                    <span class="badge text-bg-warning mb-3">{{ post.category }}</span>
+                    <h2 class="mb-3">{{ post.title }}</h2>
+                    <p>{{ post.content|replace('\n', '<br>')|safe }}</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="p-4 rounded-4 bg-light">
+                    <h4 class="mb-3">Recent Posts</h4>
+                    {% for recent in recent_posts %}
+                    <div class="border-bottom py-3">
+                        <a class="fw-bold d-block" href="{{ url_for('frontend.blog_detail', slug=recent.slug) }}">{{ recent.title }}</a>
+                        <small class="text-muted">{{ recent.created_at.strftime('%b %d, %Y') }}</small>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">No recent posts yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -52,12 +52,12 @@
             position: fixed;
             inset: 0;
             z-index: 999999;
-            background: var(--black);
+            background: rgba(255, 255, 255, 0.96);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         #preloader.hidden {
@@ -65,144 +65,25 @@
             visibility: hidden;
         }
 
-        #preloader .loader-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-        }
-
         #preloader .loader-logo {
-            width: 120px;
-            height: 120px;
+            width: clamp(72px, 10vw, 118px);
+            height: clamp(72px, 10vw, 118px);
             object-fit: contain;
-            animation: logoPulse 1.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.3));
+            animation: logoPulse 1.25s ease-in-out infinite;
         }
 
         @keyframes logoPulse {
             0% {
                 transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
+                opacity: 0.82;
             }
             50% {
-                transform: scale(1.08);
-                filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.5));
+                transform: scale(1.06);
+                opacity: 1;
             }
             100% {
                 transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.2));
-            }
-        }
-
-        #preloader .loader-ring-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #preloader .loader-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            animation: spin 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-
-        #preloader .loader-ring:nth-child(1) {
-            width: 100%;
-            height: 100%;
-            border-top-color: var(--gold);
-            border-right-color: var(--gold);
-            animation-duration: 1.5s;
-        }
-
-        #preloader .loader-ring:nth-child(2) {
-            width: 75%;
-            height: 75%;
-            border-bottom-color: var(--gold-light);
-            border-left-color: var(--gold-light);
-            animation-duration: 1.8s;
-            animation-direction: reverse;
-        }
-
-        #preloader .loader-ring:nth-child(3) {
-            width: 50%;
-            height: 50%;
-            border-top-color: var(--gold-dark);
-            border-right-color: var(--gold-dark);
-            animation-duration: 2.1s;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        #preloader .loader-text {
-            color: var(--gold);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-            animation: textPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes textPulse {
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-3px);
-            }
-        }
-
-        #preloader .loader-dots {
-            display: flex;
-            gap: 8px;
-            margin-top: 0.5rem;
-        }
-
-        #preloader .loader-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: dotBounce 1.4s ease-in-out infinite both;
-        }
-
-        #preloader .loader-dots span:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-        #preloader .loader-dots span:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-        #preloader .loader-dots span:nth-child(3) {
-            animation-delay: 0;
-        }
-
-        @keyframes dotBounce {
-            0%,
-            80%,
-            100% {
-                transform: scale(0);
-                opacity: 0.3;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
+                opacity: 0.82;
             }
         }
 
@@ -241,15 +122,100 @@
             color: var(--black) !important;
         }
 
+        .event-promo-modal .modal-dialog {
+            width: min(720px, calc(100vw - 2rem));
+            max-width: 720px;
+            margin: 1rem auto;
+        }
+
+        .event-promo-modal .modal-content {
+            border: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            background: transparent;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+        }
+
+        .event-promo-layout {
+            position: relative;
+        }
+
+        .event-promo-image-pane {
+            position: relative;
+            background: transparent;
+        }
+
+        .event-promo-image-pane img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 82vh;
+            object-fit: contain;
+        }
+
+        .event-promo-copy {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .event-promo-copy .btn-close {
+            font-size: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 50%;
+            opacity: 1;
+            padding: 0.45rem;
+        }
+
+        .event-promo-copy .btn-close:hover {
+            background-color: #fff;
+        }
+
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 991px) {
+            .event-promo-modal .modal-dialog {
+                width: min(620px, calc(100vw - 1.5rem));
+                max-width: 620px;
+            }
+        }
+
         @media (max-width: 768px) {
             #preloader .loader-logo {
-                width: 80px;
-                height: 80px;
+                width: 78px;
+                height: 78px;
             }
-            #preloader .loader-ring-container {
-                width: 150px;
-                height: 150px;
+
+            .event-promo-modal .modal-dialog {
+                width: min(92vw, calc(100vw - 1.25rem));
+                max-width: 92vw;
+                margin: 1rem auto;
+            }
+
+            .event-promo-modal .modal-content {
+                border-radius: 20px;
+            }
+
+            .event-promo-image-pane img {
+                max-height: 74vh;
+            }
+
+            .event-promo-copy {
+                top: 12px;
+                right: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .event-promo-modal .modal-dialog {
+                width: min(94vw, calc(100vw - 1rem));
+                max-width: 94vw;
+                margin: 0.75rem auto;
+            }
+
+            .event-promo-image-pane img {
+                max-height: 68vh;
             }
         }
     </style>
@@ -263,20 +229,7 @@
     PRELOADER WITH LOGO
     ====================================================== -->
     <div id="preloader">
-        <div class="loader-wrapper">
-            <div class="loader-ring-container">
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <div class="loader-ring"></div>
-                <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="loader-logo">
-            </div>
-            <span class="loader-text">Gateway of Life</span>
-            <div class="loader-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="loader-logo">
     </div>
 
     <!-- ======= Header ======= -->
@@ -323,6 +276,23 @@
         {% block content %}{% endblock %}
     </main>
 
+    {% if event_modal_event %}
+    <div class="modal fade event-promo-modal" id="eventPromoModal" tabindex="-1" aria-labelledby="eventPromoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="event-promo-layout">
+                    <div class="event-promo-image-pane">
+                        <img src="{{ url_for('static', filename='uploads/' + event_modal_event.image) }}" alt="{{ event_modal_event.title }}" id="eventPromoModalLabel">
+                    </div>
+                    <div class="event-promo-copy">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer position-relative dark-background">
 
@@ -341,14 +311,14 @@
                         <p><strong>Golammi Worship Center</strong></p>
                         <p class="mt-3"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
                         <p><strong>Email:</strong> <span>info@golammi.org</span></p>
-                        <p><strong>Address:</strong> <span>123 Faith Avenue, City, State, Country</span></p>
+                        <p><strong>Headquarters:</strong> <span>17, Adeyinka Street, Agodo, Cele Egbe Bus Stop, Ikotun Isolo Road, Lagos.</span></p>
+                        <p><strong>Ikeja Assembly:</strong> <span>6, Olowu Street, off Obafemi Awolowo Way, Ikeja, Lagos.</span></p>
+                        <p><strong>Ado-Ekiti Assembly:</strong> <span>Ore Ofe Avenue, Adjacent Arts and Culture Centre Along Technical School, Ekute Quarters, Ado-Ekiti.</span></p>
                     </div>
                     <div class="social-links d-flex mt-4">
-                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
-                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                        <a href="https://web.facebook.com/golammiworshipcenter/" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.instagram.com/golammiworshipcenter?igsi=czJiem8wMjliMDB2" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.youtube.com/@golammiworshipcenter5517" target="_blank" rel="noopener" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                     </div>
                 </div>
 
@@ -452,6 +422,30 @@
                 preloader.classList.add('hidden');
             }
         }, 5000);
+
+        {% if event_modal_event %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const promoModalElement = document.getElementById('eventPromoModal');
+            if (!promoModalElement || typeof bootstrap === 'undefined') return;
+
+            const promoModalReloadKey = 'eventPromoModalHomepageReloadCount';
+            const promoModal = new bootstrap.Modal(promoModalElement, {
+                backdrop: false
+            });
+            const currentReloadCount = Number.parseInt(localStorage.getItem(promoModalReloadKey) || '0', 10) + 1;
+
+            if (currentReloadCount >= 3) {
+                localStorage.setItem(promoModalReloadKey, '0');
+                promoModal.show();
+                window.setInterval(function() {
+                    promoModal.show();
+                }, 300000);
+                return;
+            }
+
+            localStorage.setItem(promoModalReloadKey, String(currentReloadCount));
+        });
+        {% endif %}
     </script>
 
     {% block extra_js %}{% endblock %}

@@ -4,6 +4,7 @@ from PIL import Image
 from flask import current_app
 import re
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
 
 def save_picture(file, folder="gallery", size=(800, 800)):
@@ -11,8 +12,11 @@ def save_picture(file, folder="gallery", size=(800, 800)):
     if not file:
         return None
 
+    if not allowed_file(file.filename):
+        raise ValueError("Unsupported image format.")
+
     random_hex = secrets.token_hex(8)
-    f_name, f_ext = os.path.splitext(file.filename)
+    _, f_ext = os.path.splitext(secure_filename(file.filename))
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(current_app.config["UPLOAD_FOLDER"], folder, picture_fn)
 
@@ -21,6 +25,9 @@ def save_picture(file, folder="gallery", size=(800, 800)):
 
     # Resize and save image
     output_size = size
+    i = Image.open(file)
+    i.verify()
+    file.stream.seek(0)
     i = Image.open(file)
     i.thumbnail(output_size)
     i.save(picture_path, optimize=True, quality=85)
@@ -33,8 +40,11 @@ def save_file(file, folder="files"):
     if not file:
         return None
 
+    if not allowed_file(file.filename):
+        raise ValueError("Unsupported file format.")
+
     random_hex = secrets.token_hex(8)
-    f_name, f_ext = os.path.splitext(file.filename)
+    _, f_ext = os.path.splitext(secure_filename(file.filename))
     file_fn = random_hex + f_ext
     file_path = os.path.join(current_app.config["UPLOAD_FOLDER"], folder, file_fn)
 

@@ -1,12 +1,11 @@
 {% extends "frontend/base.html" %}
 
 {% block title %}About Us | Gateway of Life and Miracle Ministries International | Golammi Worship Center{% endblock %}
-{% block meta_description %}Learn about Gateway of Life and Miracle Ministries International - Golammi Worship Center. Discover our history, mission, vision, beliefs, and leadership.{% endblock %}
-{% block meta_keywords %}Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, about us, history, mission, vision, leadership{% endblock %}
+{% block meta_description %}Learn about Gateway of Life and Miracle Ministries International - Golammi Worship Center, our history, founder, leadership, and church branches.{% endblock %}
+{% block meta_keywords %}Golammi Worship Center, Gateway of Life and Miracle Ministries, about us, history, founder biography, leadership, branches{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* ===== PAGE TITLE - GOLD THEME ===== */
     .page-title {
         padding: 180px 0 100px 0;
         position: relative;
@@ -40,7 +39,7 @@
     .page-title p {
         color: rgba(255, 255, 255, 0.8);
         font-size: 1.2rem;
-        max-width: 700px;
+        max-width: 760px;
         margin: 0 auto 1.5rem;
     }
 
@@ -69,7 +68,6 @@
         color: rgba(255, 255, 255, 0.4);
     }
 
-    /* ===== HISTORY SECTION - GOLD THEME ===== */
     .history-section .history-content h3 {
         color: var(--gold);
         font-size: 1.1rem;
@@ -87,9 +85,9 @@
 
     .history-section .history-content p {
         color: #555;
-        font-size: 1.05rem;
+        font-size: 1.02rem;
         line-height: 1.8;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.3rem;
     }
 
     .history-section .founder-card {
@@ -135,7 +133,6 @@
         margin-bottom: 0;
     }
 
-    /* ===== TIMELINE - GOLD THEME ===== */
     .timeline-wrapper {
         position: relative;
         padding-left: 40px;
@@ -196,7 +193,6 @@
         margin-bottom: 0;
     }
 
-    /* ===== MISSION VISION VALUES - GOLD THEME ===== */
     .mission-vision-section .mv-card {
         background: var(--white);
         border-radius: 16px;
@@ -234,7 +230,6 @@
         margin-bottom: 0;
     }
 
-    /* ===== BELIEFS - GOLD THEME ===== */
     .beliefs-section .belief-card {
         background: var(--white);
         border-radius: 12px;
@@ -271,7 +266,6 @@
         margin-bottom: 0;
     }
 
-    /* ===== STATS - GOLD THEME ===== */
     .about-stats .stats-card {
         background: var(--white);
         border-radius: 12px;
@@ -301,7 +295,6 @@
         font-weight: 500;
     }
 
-    /* ===== LEADERSHIP - GOLD THEME ===== */
     .leadership-section .leader-card {
         background: var(--white);
         border-radius: 16px;
@@ -396,7 +389,6 @@
         margin-bottom: 0;
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 992px) {
         .page-title h1 { font-size: 2.5rem; }
         .history-section .history-content h2 { font-size: 2rem; }
@@ -420,24 +412,14 @@
         .about-stats .stats-card .stats-number { font-size: 2rem; }
         .leadership-section .leader-card .leader-image { height: 220px; }
     }
-
-    .btn-outline {
-        border-color: var(--gold) !important;
-        color: var(--gold) !important;
-    }
-    .btn-outline:hover {
-        background-color: var(--gold) !important;
-        color: var(--black) !important;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- ======= Page Title ======= -->
 <div class="page-title dark-background" style="background-image: url({{ url_for('static', filename='assets/img/go59.jpg') }});">
     <div class="container position-relative text-center">
         <h1>About Us</h1>
-        <p>Gateway of Life and Miracle Ministries International — A Prophetic Ministry where God reconstructs anything the devil has destroyed in the life of people.</p>
+        <p>Learn about the history of the ministry, the prophetic journey of the founder, our church leadership, and our branch locations.</p>
         <nav class="breadcrumbs">
             <a href="{{ url_for('frontend.index') }}">Home</a>
             <span class="separator">/</span>
@@ -446,46 +428,41 @@
     </div>
 </div>
 
-<!-- ======= History Section ======= -->
 <section id="history" class="history-section section">
     <div class="container" data-aos="fade-up">
         <div class="row g-5">
             <div class="col-lg-7" data-aos="fade-right">
                 <div class="history-content">
                     <h3>Our Story</h3>
-                    <h2>Gateway of Life and Miracle Ministries International</h2>
+                    <h2>Gateway of Life &amp; Miracle Ministries Int'l</h2>
 
-                    <p><strong>Gateway of Life and Miracle Ministries International</strong>, popularly known as <strong>Golammi Worship Center (GWC)</strong>, is a prophetic ministry birthed by divine mandate to bring hope, healing, and restoration to a broken world. The ministry was founded by <strong>Prophet (Dr.) James Elinissi Iferemilekun</strong>, affectionately called the <em>"Lion of Jesus,"</em> a man of God with a burning passion for souls and a deep prophetic mantle.</p>
+                    <p>Gateway of Life &amp; Miracle Ministries Int'l (Golammi Worship Centre), also called Mountain of Reconstruction and the City of Prophecy, was founded on November 17, 2002.</p>
 
-                    <p>The journey of GOLAMMI began over 25 years ago when God spoke to Prophet James in a vision, commissioning him to go forth and <strong>"reconstruct everything the devil has destroyed in the life of people."</strong> What started as a small prayer gathering in a humble home has now grown into a global ministry with thousands of members, multiple outreach programs, and countless testimonies of miracles, healing, deliverance, and transformation.</p>
+                    <p>The church started from a room at 29, Sariyu Olusesi Street, Agodo Egbe, Cele Egbe Bus Stop, Ikotun-Isolo Road, Lagos. The ministry began with 3 people. The second Sunday service recorded 7 people, and the third Sunday service recorded 12 people in attendance. As attendance kept increasing, the church later moved into the parlour.</p>
 
-                    <p>The name <strong>"GOLAMMI"</strong> is an acronym that represents the heart of the ministry: <strong>G</strong>ateway of <strong>O</strong>pportunity, <strong>L</strong>ife, and <strong>A</strong>bundance through <strong>M</strong>iracle <strong>M</strong>inistries <strong>I</strong>nternational. It is a prophetic declaration that every person who walks through the doors of GOLAMMI will experience a divine shift—a reconstruction of their destiny, health, finances, and relationships.</p>
+                    <p>By the second year, because of the rapid growth of the church, the ministry leased half a plot of land at 17, Olushola Street, Agodo for two years. Before the lease elapsed, God had spoken through the prophet that the church would not spend the whole two years there before moving to the permanent site. God was faithful to His word, and the permanent church land was secured before the end of the lease period.</p>
 
-                    <p>Over the years, GOLAMMI has become a beacon of light and hope, known for its powerful prophetic worship, life-changing prayer sessions, and unwavering commitment to the Word of God. The ministry has established itself as a place where the lost find their way, the broken find healing, and the hopeless find a reason to believe again.</p>
+                    <p>On July 7, 2007, the church held her first service on the permanent site at 17, Adeyinka Street, Agodo Egbe, in the same locality where the ministry started. That site remains the headquarters of the church, from where people from many nations are being blessed.</p>
 
-                    <!-- Founder Card -->
                     <div class="founder-card">
                         <div class="row align-items-center">
                             <div class="col-sm-3 text-center text-sm-start">
-                                <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet James Elinissi Iferemilekun" class="founder-image">
+                                <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet Dr. James Elinissi Iferemilekun" class="founder-image">
                             </div>
                             <div class="col-sm-9">
-                                <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
-                                <p class="founder-title">Founder &amp; General Overseer — The Lion of Jesus</p>
-                                <p>Prophet James is a dynamic speaker, prolific teacher of the Word, and a prophetic voice to this generation. He is married to his beautiful wife, Pastor (Mrs.) Esther Iferemilekun, and they are blessed with wonderful children. His passion for souls and his unwavering faith in God's power to restore has touched thousands of lives across the globe.</p>
+                                <h4>Prophet Dr. James Elinissi Iferemilekun</h4>
+                                <p class="founder-title">Founder &amp; General Overseer</p>
+                                <p>Known as the Lion of Jesus, Prophet Elinissi is the founder of Gateway of Life &amp; Miracle Ministries Int'l and carries a prophetic mandate to reconstruct mankind, awaken destinies, and restore divine order through the power of the Holy Spirit.</p>
                             </div>
                         </div>
                     </div>
 
-                    <h3 class="mt-5" style="color: var(--gold);">The Journey of Faith</h3>
-                    <p>What began as a humble prayer group in the living room of Prophet James and his wife has blossomed into a vibrant, multi-cultural congregation that spans across nations. The ministry has witnessed:</p>
+                    <h3 class="mt-5" style="color: var(--gold);">Branches And Worship Centers</h3>
+                    <p>Presently, the church has two branches in addition to the headquarters:</p>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Thousands of souls won for Christ through evangelistic crusades and outreach programs</li>
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Countless testimonies of healing from terminal diseases, including cancer, HIV/AIDS, and heart conditions</li>
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Deliverance from demonic oppression, addiction, and generational curses</li>
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Financial breakthroughs and career advancements through prophetic prayers</li>
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> Restored marriages, reconciled families, and transformed relationships</li>
-                        <li style="padding: 6px 0; display: flex; align-items: center; gap: 10px;"><i class="bi bi-check-circle-fill" style="color: var(--gold);"></i> The raising of next-generation leaders through the youth and children's ministries</li>
+                        <li style="padding: 6px 0; display: flex; align-items: start; gap: 10px;"><i class="bi bi-geo-alt-fill" style="color: var(--gold);"></i> <span><strong>Headquarters:</strong> 17, Adeyinka Street, Agodo, Cele Egbe Bus Stop, Ikotun Isolo Road, Lagos.</span></li>
+                        <li style="padding: 6px 0; display: flex; align-items: start; gap: 10px;"><i class="bi bi-geo-alt-fill" style="color: var(--gold);"></i> <span><strong>Ikeja Assembly:</strong> 6, Olowu Street, off Obafemi Awolowo Way, Ikeja, Lagos.</span></li>
+                        <li style="padding: 6px 0; display: flex; align-items: start; gap: 10px;"><i class="bi bi-geo-alt-fill" style="color: var(--gold);"></i> <span><strong>Ado-Ekiti Assembly:</strong> Ore Ofe Avenue, Adjacent Arts and Culture Centre Along Technical School, Ekute Quarters, Ado-Ekiti.</span></li>
                     </ul>
                 </div>
             </div>
@@ -494,45 +471,33 @@
                 <h3 style="color: var(--gold); margin-bottom: 2rem;">Our History Timeline</h3>
                 <div class="timeline-wrapper">
                     <div class="timeline-item">
-                        <div class="year">2001</div>
-                        <h4>The Birth of GOLAMMI</h4>
-                        <p>Prophet James receives the divine mandate to establish a prophetic ministry focused on reconstructing broken lives. The first prayer meeting is held in their home with just 5 people.</p>
+                        <div class="year">2002</div>
+                        <h4>The Ministry Begins</h4>
+                        <p>Gateway of Life &amp; Miracle Ministries Int'l was founded on November 17, 2002 and started in a room at 29, Sariyu Olusesi Street, Agodo Egbe, Lagos.</p>
                     </div>
 
                     <div class="timeline-item">
-                        <div class="year">2003</div>
-                        <h4>First Crusade &amp; Growth</h4>
-                        <p>The first open-air crusade is held with over 200 people attending. Many give their lives to Christ, and the first miracle of healing is recorded.</p>
+                        <div class="year">2002</div>
+                        <h4>Early Growth</h4>
+                        <p>The ministry began with 3 people, grew to 7 people on the second Sunday, and 12 on the third Sunday service, leading to a move from the room into the parlour.</p>
                     </div>
 
                     <div class="timeline-item">
-                        <div class="year">2005</div>
-                        <h4>Establishment of GOLAMMI Worship Center</h4>
-                        <p>The ministry acquires its first permanent worship center, officially named Golammi Worship Center. Membership grows to over 500.</p>
+                        <div class="year">2004</div>
+                        <h4>Leased Worship Ground</h4>
+                        <p>By the second year, the church leased half a plot of land at 17, Olushola Street, Agodo as attendance continued to increase.</p>
                     </div>
 
                     <div class="timeline-item">
-                        <div class="year">2010</div>
-                        <h4>International Reach</h4>
-                        <p>GOLAMMI expands internationally with branches established in multiple countries. The ministry's radio broadcast begins, reaching thousands of listeners.</p>
+                        <div class="year">2007</div>
+                        <h4>Permanent Site Service</h4>
+                        <p>On July 7, 2007, the first service was held at the permanent headquarters site at 17, Adeyinka Street, Agodo Egbe, Lagos.</p>
                     </div>
 
                     <div class="timeline-item">
-                        <div class="year">2015</div>
-                        <h4>Prophetic Conference Launch</h4>
-                        <p>The inaugural Annual Prophetic Conference is launched, attracting thousands of attendees from around the world for a week of prayer, worship, and prophetic impartation.</p>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="year">2020</div>
-                        <h4>Digital Expansion</h4>
-                        <p>GOLAMMI embraces digital platforms, launching live streaming services, online prayer sessions, and a robust social media presence to reach a global audience.</p>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="year">2024</div>
-                        <h4>2024 &amp; Beyond</h4>
-                        <p>GOLAMMI continues to grow, expanding its outreach programs, establishing new branches, and impacting lives across the continents with the message of hope and reconstruction.</p>
+                        <div class="year">Today</div>
+                        <h4>Growing Through Branches</h4>
+                        <p>The ministry now operates from the headquarters in Lagos and also has branches in Ikeja, Lagos and Ado-Ekiti, Ekiti State.</p>
                     </div>
                 </div>
             </div>
@@ -540,52 +505,45 @@
     </div>
 </section>
 
-<!-- ======= Mission, Vision & Values Section ======= -->
 <section id="mission" class="mission-vision-section section" style="background: var(--light-gray);">
     <div class="container section-title" data-aos="fade-up">
-        <h2>Our Mission, Vision &amp; Values</h2>
-        <p>Guided by the Holy Spirit, we are committed to fulfilling God's purpose for this generation.</p>
+        <h2>Founder’s Prophetic Journey</h2>
+        <p>Key parts of the life story and calling of Prophet Dr. James Elinissi Iferemilekun.</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="mv-card">
-                    <span class="mv-icon"><i class="bi bi-rocket-takeoff"></i></span>
-                    <h3>Our Mission</h3>
-                    <p>To reconstruct broken lives, restore destinies, and bring people into their God-given purpose through the prophetic word, prayer, and the power of the Holy Spirit. We are committed to winning souls, building disciples, and demonstrating the love of Christ to the world.</p>
+                    <span class="mv-icon"><i class="bi bi-stars"></i></span>
+                    <h3>Prophetic Birth</h3>
+                    <p>His birth was preceded by prophetic declarations across generations, including the word that a son would arise to end the hold of family idolatry and become a Prophet of God.</p>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="mv-card">
-                    <span class="mv-icon"><i class="bi bi-eye"></i></span>
-                    <h3>Our Vision</h3>
-                    <p>To be a global gateway of life and miracles, raising a generation of prophetic believers who will impact their world with the love and power of Jesus Christ. We envision a world where every person experiences the reconstruction of their destiny through the power of God.</p>
+                    <span class="mv-icon"><i class="bi bi-droplet-half"></i></span>
+                    <h3>Signs At Birth</h3>
+                    <p>At the time of his delivery, a prophet redirected his mother into a church where he was born, and water sprang up from the ground in a miraculous sign marking God’s hand upon his life.</p>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="mv-card">
-                    <span class="mv-icon"><i class="bi bi-star"></i></span>
-                    <h3>Our Values</h3>
-                    <p><strong>Faith</strong> — Unwavering trust in God's Word.<br>
-                    <strong>Love</strong> — Genuine love for all people.<br>
-                    <strong>Prayer</strong> — A lifestyle of prayer and intercession.<br>
-                    <strong>Prophetic Worship</strong> — Worship that invites God's presence.<br>
-                    <strong>Community Impact</strong> — Serving our community with compassion.<br>
-                    <strong>Excellence</strong> — Doing everything with excellence for God's glory.</p>
+                    <span class="mv-icon"><i class="bi bi-lightning-charge"></i></span>
+                    <h3>Divine Preservation</h3>
+                    <p>From infancy, God preserved him from evil attacks. His prophetic calling manifested from childhood, and by age six he had already begun to prophesy.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======= What We Believe Section ======= -->
 <section id="beliefs" class="beliefs-section section">
     <div class="container section-title" data-aos="fade-up">
-        <h2>What We Believe</h2>
-        <p>Our foundational beliefs are rooted in the Word of God and the power of the Holy Spirit.</p>
+        <h2>Biography Highlights</h2>
+        <p>Selected details from the founder’s life, training, and ministerial calling.</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -593,94 +551,92 @@
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
                     <span class="belief-icon"><i class="bi bi-book"></i></span>
-                    <h4>THE BIBLE</h4>
-                    <p>We believe in the divine inspiration and authority of the Holy Scriptures. The Bible is the Word of God, infallible, and the final authority for faith and practice.</p>
+                    <h4>Education &amp; Craft</h4>
+                    <p>He attended St John Anglican School, Idemo, St Paul Odo Ado, and Mary Hills Boys School, Oke Ila, and also mastered carpentry and furniture work with excellence.</p>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
-                    <span class="belief-icon"><i class="bi bi-person"></i></span>
-                    <h4>THE TRINITY</h4>
-                    <p>We believe in one God, eternally existing in three persons: God the Father, God the Son (Jesus Christ), and God the Holy Spirit. They are co-equal and co-eternal.</p>
+                    <span class="belief-icon"><i class="bi bi-eye"></i></span>
+                    <h4>Prophetic Training</h4>
+                    <p>Under Prophet David Falade, he was enrolled in the school of prophets and was ordained as the seer of the realm at age 12 and the leader of the realm at age 18.</p>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
-                    <span class="belief-icon"><i class="bi bi-heart-cross"></i></span>
-                    <h4>SALVATION</h4>
-                    <p>We believe that salvation is a free gift from God, received through faith in Jesus Christ. We are saved by grace through faith, and not by our own works.</p>
+                    <span class="belief-icon"><i class="bi bi-palette"></i></span>
+                    <h4>Creative Calling</h4>
+                    <p>He was deeply involved in theatre, cultural performance, and Yoruba traditional poetry, leading a theater group of about 40 crew members across Southwestern Nigeria.</p>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
-                    <span class="belief-icon"><i class="bi bi-droplet"></i></span>
-                    <h4>BAPTISM</h4>
-                    <p>We believe in water baptism by immersion as a public declaration of faith in Jesus Christ. We also believe in the baptism of the Holy Spirit as a distinct experience after conversion.</p>
+                    <span class="belief-icon"><i class="bi bi-signpost-split"></i></span>
+                    <h4>Years Away</h4>
+                    <p>At age 20 he left Ado-Ekiti, passed through difficult years in Lagos and other parts of Nigeria, and lived in the secular world for ten years before God called him back.</p>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
-                    <span class="belief-icon"><i class="bi bi-hand-thumbs-up"></i></span>
-                    <h4>HEALING &amp; MIRACLES</h4>
-                    <p>We believe in divine healing and the operation of the gifts of the Holy Spirit. Miracles, signs, and wonders are the inheritance of every believer and are active in the church today.</p>
+                    <span class="belief-icon"><i class="bi bi-shield-check"></i></span>
+                    <h4>Revelation At 30</h4>
+                    <p>On his 30th birthday in Port Harcourt, he received a revelation in which Prophet Moses Orimolade handed him a sword and rod and declared it was time to start his ministry.</p>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="belief-card">
-                    <span class="belief-icon"><i class="bi bi-gem"></i></span>
-                    <h4>THE SECOND COMING</h4>
-                    <p>We believe in the imminent return of Jesus Christ. We look forward to the resurrection of the dead and the final judgment, where God will establish His eternal kingdom.</p>
+                    <span class="belief-icon"><i class="bi bi-house-heart"></i></span>
+                    <h4>Ministry Release</h4>
+                    <p>Before starting his own ministry, he served under Baba Aladura Ogunkunle and Superintendent Apostle Joseph Tunolase, who later blessed and released him into his assignment.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======= Stats Section ======= -->
 <section class="about-stats section" style="background: var(--light-gray);">
     <div class="container" data-aos="fade-up">
         <div class="row g-4">
             <div class="col-6 col-md-3">
                 <div class="stats-card">
-                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2">25+</span>
-                    <span class="stats-label">Years of Ministry</span>
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="2002" data-purecounter-duration="2">2002</span>
+                    <span class="stats-label">Year Founded</span>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="stats-card">
-                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2">1200+</span>
-                    <span class="stats-label">Members &amp; Counting</span>
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="2">3</span>
+                    <span class="stats-label">Initial Members</span>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="stats-card">
-                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2">85+</span>
-                    <span class="stats-label">Miracles Reported</span>
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="2007" data-purecounter-duration="2">2007</span>
+                    <span class="stats-label">Permanent Site Service</span>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="stats-card">
-                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2">50+</span>
-                    <span class="stats-label">Outreach Programs</span>
+                    <span class="stats-number" data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2">2</span>
+                    <span class="stats-label">Current Branches</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======= Leadership Section ======= -->
 <section id="leadership" class="leadership-section section">
     <div class="container section-title" data-aos="fade-up">
         <h2>Our Leadership</h2>
-        <p>Meet the dedicated team of leaders guiding Gateway of Life and Miracle Ministries International.</p>
+        <p>Meet the leaders and ministers serving in Gateway of Life &amp; Miracle Ministries Int'l.</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -688,7 +644,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet James Elinissi Iferemilekun">
+                        <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet Dr. James Elinissi Iferemilekun">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-youtube"></i></a>
@@ -696,9 +652,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Prophet (Dr.) James Elinissi Iferemilekun</h4>
-                        <p class="position">Founder &amp; General Overseer</p>
-                        <p>Called the "Lion of Jesus," Prophet James is a prophetic voice to this generation, known for his deep insight, powerful prayers, and unwavering faith.</p>
+                        <h4>Prophet Dr. James Elinissi Iferemilekun</h4>
+                        <p class="position">Founder / General Overseer</p>
+                        <p>Also known as the Lion of Jesus, he leads the ministry with a prophetic mandate for reconstruction, restoration, and destiny awakening.</p>
                     </div>
                 </div>
             </div>
@@ -706,7 +662,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-7.webp') }}" alt="Pastor Esther Iferemilekun">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-7.webp') }}" alt="Lady Evangelist Elinissi Deborah Adejoke">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-instagram"></i></a>
@@ -714,9 +670,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Pastor (Mrs.) Esther Iferemilekun</h4>
-                        <p class="position">Co-Founder &amp; Women's Ministry Leader</p>
-                        <p>A woman of faith and prayer, Pastor Esther co-founded the ministry and leads the women's ministry with grace, wisdom, and compassion.</p>
+                        <h4>Lady Evangelist Elinissi Deborah Adejoke</h4>
+                        <p class="position">General Secretary</p>
+                        <p>She serves in ministry administration and supports the work of the church through dedicated leadership and service.</p>
                     </div>
                 </div>
             </div>
@@ -724,7 +680,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-7.webp') }}" alt="Pastor Stephen Golammi">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-7.webp') }}" alt="Evang Adeleye Mojeed Femi">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-twitter-x"></i></a>
@@ -732,9 +688,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Pastor Stephen Golammi</h4>
-                        <p class="position">Associate Pastor</p>
-                        <p>Pastor Stephen is a passionate preacher and teacher of the Word with a deep burden for the youth and next generation. He oversees the youth and young adult ministries.</p>
+                        <h4>Evang Adeleye Mojeed Femi</h4>
+                        <p class="position">Church Admin</p>
+                        <p>He oversees church administration and helps coordinate the operational life of the ministry.</p>
                     </div>
                 </div>
             </div>
@@ -742,7 +698,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-8.webp') }}" alt="Deaconess Mercy Johnson">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-8.webp') }}" alt="Evang Jacobyeiya Samuel">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-whatsapp"></i></a>
@@ -750,9 +706,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Deaconess Mercy Johnson</h4>
-                        <p class="position">Prayer Ministry Director</p>
-                        <p>Deaconess Mercy leads the intercessory prayer team with a powerful anointing for deliverance and spiritual warfare. She has a heart for those in need of breakthrough.</p>
+                        <h4>Evang Jacobyeiya Samuel</h4>
+                        <p class="position">Church Advisory Council Leader</p>
+                        <p>He serves in counsel and guidance, helping strengthen the church through advisory leadership.</p>
                     </div>
                 </div>
             </div>
@@ -762,7 +718,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-11.webp') }}" alt="Brother David Okafor">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-11.webp') }}" alt="Pastor Divine Michael Bajulaiye">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-instagram"></i></a>
@@ -770,9 +726,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Brother David Okafor</h4>
-                        <p class="position">Worship Leader</p>
-                        <p>Brother David leads the praise and worship team with a prophetic anointing. His passion for worship creates an atmosphere where God's presence is tangible.</p>
+                        <h4>Pastor Divine Michael Bajulaiye</h4>
+                        <p class="position">Ikeja Assembly Pastor</p>
+                        <p>He pastors the Ikeja Assembly and helps extend the ministry’s work and pastoral care in that branch.</p>
                     </div>
                 </div>
             </div>
@@ -780,7 +736,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-12.webp') }}" alt="Sister Grace Adebayo">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-12.webp') }}" alt="Lady Evangelist Omokoga Sarah">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-instagram"></i></a>
@@ -788,9 +744,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Sister Grace Adebayo</h4>
-                        <p class="position">Children's Ministry Coordinator</p>
-                        <p>Sister Grace has a heart for children and young families. She leads the children's church with creativity, love, and a desire to raise a godly generation.</p>
+                        <h4>Lady Evangelist Omokoga Sarah</h4>
+                        <p class="position">Minister</p>
+                        <p>She serves faithfully in ministry and supports the spiritual life and work of the church.</p>
                     </div>
                 </div>
             </div>
@@ -798,7 +754,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-13.webp') }}" alt="Brother Michael Chukwu">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-m-13.webp') }}" alt="Pastor Ojo Opeyemi and Evang Andrew Dickson">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-twitter-x"></i></a>
@@ -806,9 +762,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Brother Michael Chukwu</h4>
-                        <p class="position">Outreach &amp; Missions Director</p>
-                        <p>Brother Michael oversees the outreach programs, organizing evangelistic crusades, community service initiatives, and missions to unreached areas.</p>
+                        <h4>Pastor Ojo Opeyemi &amp; Evang Andrew Dickson</h4>
+                        <p class="position">Ministers</p>
+                        <p>They are part of the ministerial team serving the church through teaching, evangelism, and pastoral support.</p>
                     </div>
                 </div>
             </div>
@@ -816,7 +772,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-10.webp') }}" alt="Sister Joy Williams">
+                        <img src="{{ url_for('static', filename='assets/img/person/person-f-10.webp') }}" alt="Deaconess Dominic Comfort, Deaconess Olalusi Modupeola, and Minister Adeyemi Opeyemi">
                         <div class="social-links">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-instagram"></i></a>
@@ -824,9 +780,9 @@
                         </div>
                     </div>
                     <div class="leader-info">
-                        <h4>Sister Joy Williams</h4>
-                        <p class="position">Media &amp; Communications</p>
-                        <p>Sister Joy manages the media and communications department, ensuring that the message of hope reaches the world through digital platforms, radio, and social media.</p>
+                        <h4>Support Ministers</h4>
+                        <p class="position">Ministry Team</p>
+                        <p>Deaconess Dominic Comfort, Deaconess Olalusi Modupeola, and Minister Adeyemi Opeyemi are among the ministers serving the church faithfully.</p>
                     </div>
                 </div>
             </div>
@@ -834,14 +790,13 @@
     </div>
 </section>
 
-<!-- ======= Call to Action Section ======= -->
 <section class="section" style="background: linear-gradient(135deg, var(--black), var(--dark-gray)); padding: 60px 0;">
     <div class="container text-center" data-aos="fade-up">
-        <h2 style="color: #fff; font-weight: 700; margin-bottom: 1rem;">Join Us in Reconstructing Lives</h2>
-        <p style="color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.1rem;">Be part of what God is doing through Gateway of Life and Miracle Ministries International. Whether you're seeking prayer, want to give, or desire to serve, there's a place for you at GOLAMMI.</p>
+        <h2 style="color: #fff; font-weight: 700; margin-bottom: 1rem;">Worship With Us</h2>
+        <p style="color: rgba(255,255,255,0.8); max-width: 760px; margin: 0 auto 1.5rem; font-size: 1.1rem;">Join us at the headquarters in Lagos or at any of our branches in Ikeja and Ado-Ekiti as lives are blessed through worship, prayer, and the prophetic word.</p>
         <div>
-            <a href="#" class="btn btn-primary" style="margin: 0 10px;">Plan a Visit</a>
-            <a href="{{ url_for('frontend.contact') }}" class="btn btn-outline-light" style="border-color: rgba(255,255,255,0.3); color: #fff;">Contact Us</a>
+            <a href="{{ url_for('frontend.contact') }}" class="btn btn-primary" style="margin: 0 10px;">Contact Us</a>
+            <a href="{{ url_for('frontend.events') }}" class="btn btn-outline-light" style="border-color: rgba(255,255,255,0.3); color: #fff;">View Events</a>
         </div>
     </div>
 </section>

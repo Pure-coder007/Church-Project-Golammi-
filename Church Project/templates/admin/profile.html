@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Profile | GOLAMMI Admin{% endblock %}
+{% block page_title %}Your Profile{% endblock %}
+{% block page_subtitle %}Update your admin identity and password without leaving the control center.{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-xl-8">
+        <div class="admin-card" data-aos="fade-up">
+            <div class="admin-card-header">
+                <div>
+                    <h5 class="admin-card-title">Account Details</h5>
+                    <p class="admin-card-subtitle">Keep your login details accurate and secure.</p>
+                </div>
+                <span class="eyebrow"><i class="bi bi-person-circle"></i> {{ user.role|title }}</span>
+            </div>
+
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input class="form-control" type="text" name="username" value="{{ user.username }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input class="form-control" type="text" name="full_name" value="{{ user.full_name }}" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email" value="{{ user.email }}" required>
+                    </div>
+
+                    {% if current_user.is_super_admin() %}
+                    <div class="col-12 pt-2">
+                        <h6 class="fw-bold mb-3">Change Password</h6>
+                        <p class="text-muted small mb-0">Only the super admin can update passwords from this panel.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Current Password</label>
+                        <input class="form-control" type="password" name="current_password">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">New Password</label>
+                        <input class="form-control" type="password" name="new_password">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Confirm Password</label>
+                        <input class="form-control" type="password" name="confirm_password">
+                    </div>
+                    {% else %}
+                    <div class="col-12">
+                        <div class="soft-badge">
+                            <i class="bi bi-shield-lock"></i>
+                            Password changes are restricted to the super admin.
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-save"></i>
+                            Save Profile Changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="admin-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="admin-card-header">
+                <div>
+                    <h5 class="admin-card-title">Account Summary</h5>
+                    <p class="admin-card-subtitle">Current admin status.</p>
+                </div>
+            </div>
+            <div class="d-grid gap-3">
+                <div class="soft-badge"><i class="bi bi-person"></i> {{ user.username }}</div>
+                <div class="soft-badge"><i class="bi bi-envelope"></i> {{ user.email }}</div>
+                <div class="soft-badge"><i class="bi bi-shield-check"></i> {{ user.role|title }}</div>
+                <div class="soft-badge"><i class="bi bi-clock-history"></i> Last login:
+                    {{ user.last_login.strftime('%b %d, %Y %I:%M %p') if user.last_login else 'Not recorded' }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

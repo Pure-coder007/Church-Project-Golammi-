@@ -1,0 +1,411 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Contact Messages | GOLAMMI Admin{% endblock %}
+{% block page_title %}Contact Messages{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Message detail styling */
+    .message-detail {
+        padding: 0;
+    }
+
+    .message-detail .detail-item {
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .message-detail .detail-item:last-child {
+        border-bottom: none;
+    }
+
+    .message-detail .detail-item .detail-label {
+        font-weight: 600;
+        color: var(--black);
+        min-width: 120px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #888;
+    }
+
+    .message-detail .detail-item .detail-value {
+        flex: 1;
+        color: var(--black);
+        font-size: 0.9rem;
+        word-break: break-word;
+    }
+
+    .message-detail .detail-item .detail-value .badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    .message-detail .message-content {
+        background: var(--light-gray);
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-top: 0.5rem;
+        white-space: pre-wrap;
+        line-height: 1.8;
+        font-size: 0.9rem;
+        color: #444;
+        border-left: 3px solid var(--gold);
+    }
+
+    .message-detail .message-content p {
+        margin-bottom: 0;
+    }
+
+    .modal-header-custom {
+        background: linear-gradient(135deg, var(--black), var(--dark-gray));
+        border-bottom: 3px solid var(--gold);
+        padding: 1.2rem 1.5rem;
+    }
+
+    .modal-header-custom .modal-title {
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .modal-header-custom .modal-title i {
+        color: var(--gold);
+        margin-right: 0.5rem;
+    }
+
+    .modal-header-custom .btn-close {
+        filter: brightness(0) invert(1);
+        opacity: 0.6;
+    }
+
+    .modal-header-custom .btn-close:hover {
+        opacity: 1;
+    }
+
+    .modal-footer-custom {
+        background: var(--light-gray);
+        border-top: 1px solid #e8e8e8;
+        padding: 1rem 1.5rem;
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    .status-badge.active {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-badge.pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-badge.inactive {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .status-badge .bi {
+        margin-right: 4px;
+    }
+
+    .btn-group .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .table-custom td {
+        vertical-align: middle;
+    }
+
+    .table-custom .from-cell {
+        min-width: 150px;
+    }
+
+    .table-custom .subject-cell {
+        max-width: 200px;
+    }
+
+    .no-messages {
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+
+    .no-messages .empty-icon {
+        font-size: 4rem;
+        color: #ddd;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .no-messages h5 {
+        color: var(--black);
+        font-weight: 600;
+    }
+
+    .no-messages p {
+        color: #888;
+    }
+
+    @media (max-width: 768px) {
+        .message-detail .detail-item {
+            flex-direction: column;
+            padding: 0.5rem 1rem;
+        }
+
+        .message-detail .detail-item .detail-label {
+            min-width: auto;
+            margin-bottom: 0.2rem;
+        }
+
+        .message-detail .message-content {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .modal-dialog {
+            margin: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">View and respond to messages from the contact form</p>
+    </div>
+    <div>
+        <span class="badge bg-secondary me-1">Total: {{ messages.total }}</span>
+        <span class="badge bg-danger">Unread: {{ unread_count or 0 }}</span>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-custom table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>From</th>
+                <th>Subject</th>
+                <th>Reason</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if messages.items %}
+                {% for msg in messages.items %}
+                <tr {% if not msg.is_read %}style="font-weight: 600; background: rgba(201,168,76,0.04);"{% endif %}>
+                    <td>{{ loop.index + (messages.page - 1) * messages.per_page }}</td>
+                    <td class="from-cell">
+                        <strong>{{ msg.name }}</strong>
+                        <br><small class="text-muted"><i class="bi bi-envelope"></i> {{ msg.email }}</small>
+                        {% if msg.phone %}
+                        <br><small class="text-muted"><i class="bi bi-phone"></i> {{ msg.phone }}</small>
+                        {% endif %}
+                    </td>
+                    <td class="subject-cell">{{ msg.subject|truncate(35) }}</td>
+                    <td><span class="badge bg-secondary">{{ msg.reason|title }}</span></td>
+                    <td>{{ msg.created_at.strftime('%b %d, %Y') }}</td>
+                    <td>
+                        {% if msg.is_replied %}
+                        <span class="status-badge active"><i class="bi bi-check-circle"></i> Replied</span>
+                        {% elif msg.is_read %}
+                        <span class="status-badge pending"><i class="bi bi-clock"></i> Read</span>
+                        {% else %}
+                        <span class="status-badge inactive"><i class="bi bi-x-circle"></i> Unread</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-outline-info" title="View" data-bs-toggle="modal" data-bs-target="#viewMessageModal{{ msg.id }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <a href="mailto:{{ msg.email }}?subject=Re: {{ msg.subject }}" class="btn btn-outline-gold" title="Reply">
+                                <i class="bi bi-reply"></i>
+                            </a>
+                            <button type="button" class="btn btn-outline-success" title="Mark as Read" onclick="markAsRead('{{ msg.id }}')">
+                                <i class="bi bi-check2"></i>
+                            </button>
+                            <form action="{{ url_for('admin.delete_contact_message', msg_id=msg.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline-danger" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        <div class="no-messages">
+                            <span class="empty-icon"><i class="bi bi-inbox"></i></span>
+                            <h5>No Messages Yet</h5>
+                            <p>When someone submits the contact form, their messages will appear here.</p>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- View Message Modals -->
+{% for msg in messages.items %}
+<div class="modal fade" id="viewMessageModal{{ msg.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header modal-header-custom">
+                <h5 class="modal-title">
+                    <i class="bi bi-envelope"></i>
+                    Message from {{ msg.name }}
+                    {% if not msg.is_read %}
+                    <span class="badge bg-danger ms-2">New</span>
+                    {% endif %}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="message-detail">
+                    <!-- From -->
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="bi bi-person"></i> From</span>
+                        <span class="detail-value">
+                            <strong>{{ msg.name }}</strong>
+                            <br><small class="text-muted">{{ msg.email }}</small>
+                            {% if msg.phone %}
+                            <br><small class="text-muted"><i class="bi bi-phone"></i> {{ msg.phone }}</small>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="bi bi-tag"></i> Subject</span>
+                        <span class="detail-value">{{ msg.subject }}</span>
+                    </div>
+
+                    <!-- Reason -->
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="bi bi-list-ul"></i> Reason</span>
+                        <span class="detail-value">
+                            <span class="badge bg-secondary">{{ msg.reason|title }}</span>
+                        </span>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="bi bi-clock"></i> Received</span>
+                        <span class="detail-value">{{ msg.created_at.strftime('%B %d, %Y at %I:%M %p') }}</span>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="detail-item">
+                        <span class="detail-label"><i class="bi bi-info-circle"></i> Status</span>
+                        <span class="detail-value">
+                            {% if msg.is_replied %}
+                            <span class="status-badge active"><i class="bi bi-check-circle"></i> Replied</span>
+                            {% elif msg.is_read %}
+                            <span class="status-badge pending"><i class="bi bi-clock"></i> Read</span>
+                            {% else %}
+                            <span class="status-badge inactive"><i class="bi bi-x-circle"></i> Unread</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="detail-item" style="display: block; padding: 1.25rem;">
+                        <span class="detail-label" style="display: block; margin-bottom: 0.5rem;"><i class="bi bi-chat-dots"></i> Message</span>
+                        <div class="message-content">
+                            {{ msg.message }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-custom">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Close
+                </button>
+                <a href="mailto:{{ msg.email }}?subject=Re: {{ msg.subject }}" class="btn btn-gold">
+                    <i class="bi bi-reply"></i> Reply
+                </a>
+                <button type="button" class="btn btn-outline-success" onclick="markAsRead('{{ msg.id }}')">
+                    <i class="bi bi-check2"></i> Mark as Read
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Pagination -->
+{% if messages.pages > 1 %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if messages.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('admin.contact_messages', page=messages.prev_num) }}">&laquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+
+        {% for page_num in messages.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
+            {% if page_num %}
+                {% if messages.page == page_num %}
+                <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.contact_messages', page=page_num) }}">{{ page_num }}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if messages.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('admin.contact_messages', page=messages.next_num) }}">&raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<script>
+function markAsRead(msgId) {
+    fetch('/admin/contact-messages/mark-read/' + msgId, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error marking message as read');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+{% endblock %}

@@ -12,6 +12,9 @@ from models.gallery import GalleryImage
 from models.radio import RadioStation, RadioSchedule
 from models.testimony import Testimony
 from models.prayer import PrayerRequest
+from models.contact import ContactMessage
+from models.donation import DonationSubmission
+from models.activity import ActivityLog
 from forms import (
     UserForm, SermonForm, EventForm, BlogForm, GalleryForm,
     RadioForm, RadioScheduleForm, TestimonyForm, SettingsForm, PrayerRequestForm
@@ -20,8 +23,61 @@ from utils import save_picture, save_file, generate_slug, get_current_time
 from datetime import datetime, timedelta
 import os
 from sqlalchemy import func, extract
+from models.church_stats import ChurchStats
+
+
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
+
+
+@admin_bp.app_context_processor
+def inject_admin_sidebar_counts():
+    try:
+        return {
+            "contact_unread_count": ContactMessage.query.filter_by(is_read=False).count(),
+            "prayer_pending_count": PrayerRequest.query.filter_by(is_prayed_for=False).count(),
+            "testimony_pending_count": Testimony.query.filter_by(is_approved=False).count(),
+        }
+    except Exception:
+        return {
+            "contact_unread_count": 0,
+            "prayer_pending_count": 0,
+            "testimony_pending_count": 0,
+        }
+
+
+def parse_non_negative_int(value, field_label):
+    value = (value or "").strip()
+    if not value:
+        raise ValueError(f"{field_label} is required.")
+    if not value.isdigit():
+        raise ValueError(f"{field_label} must contain numbers only.")
+    return int(value)
+
+
+def parse_positive_amount(value, field_label):
+    value = (value or "").strip()
+    if not value:
+        raise ValueError(f"{field_label} is required.")
+    try:
+        amount = float(value)
+    except ValueError as exc:
+        raise ValueError(f"{field_label} must be a valid number.") from exc
+    if amount <= 0:
+        raise ValueError(f"{field_label} must be greater than 0.")
+    return amount
+
+
+def build_growth_series(records, limit=12):
+    ordered = sorted(records, key=lambda record: (record.year, record.month))
+    deduped = {}
+    for record in ordered:
+        deduped[(record.year, record.month)] = record.total_members
+
+    series = list(deduped.items())[-limit:]
+    labels = [f"{datetime(year, month, 1).strftime('%b %Y')}" for (year, month), _ in series]
+    values = [total_members for _, total_members in series]
+    return labels, values
 
 
 def admin_required(f):
@@ -58,28 +114,168 @@ def super_admin_required(f):
 @admin_required
 def dashboard():
     """Admin dashboard"""
+    church_stats = ChurchStats.query.first()
+
     # Statistics
     stats = {
         "total_sermons": Sermon.query.count(),
+        "published_sermons": Sermon.query.filter_by(is_published=True).count(),
+        "live_sermons": Sermon.query.filter_by(is_live=True).count(),
         "total_events": Event.query.count(),
+        "visible_events": Event.query.filter(
+            Event.start_date >= datetime.utcnow(), Event.is_published == True
+        ).count(),
+        "upcoming_events": Event.query.filter(
+            Event.start_date >= datetime.utcnow(), Event.is_published == True
+        ).count(),
         "total_blog_posts": BlogPost.query.count(),
+        "published_posts": BlogPost.query.filter_by(is_published=True).count(),
         "total_gallery_images": GalleryImage.query.count(),
         "total_testimonies": Testimony.query.count(),
         "total_prayer_requests": PrayerRequest.query.count(),
+        "total_donation_submissions": DonationSubmission.query.count(),
+        "total_activity_logs": ActivityLog.query.count(),
+        "frontend_visits": ActivityLog.query.filter_by(section="frontend").count(),
+        "admin_visits": ActivityLog.query.filter_by(section="admin").count(),
         "total_users": User.query.count(),
+        "total_radio_stations": RadioStation.query.count(),
         "pending_testimonies": Testimony.query.filter_by(is_approved=False).count(),
         "pending_prayer_requests": PrayerRequest.query.filter_by(
             is_prayed_for=False
         ).count(),
+        "total_members": church_stats.total_members if church_stats else 0,
         "recent_sermons": Sermon.query.order_by(Sermon.created_at.desc())
         .limit(5)
         .all(),
-        "recent_events": Event.query.order_by(Event.start_date.desc()).limit(5).all(),
+        "recent_events": Event.query.order_by(Event.start_date.asc()).limit(5).all(),
         "recent_blog_posts": BlogPost.query.order_by(BlogPost.created_at.desc())
+        .limit(5)
+        .all(),
+        "recent_prayer_requests": PrayerRequest.query.order_by(
+            PrayerRequest.created_at.desc()
+        )
+        .limit(5)
+        .all(),
+        "recent_donation_submissions": DonationSubmission.query.order_by(
+            DonationSubmission.created_at.desc()
+        )
+        .limit(5)
+        .all(),
+        "recent_activity_logs": ActivityLog.query.order_by(ActivityLog.occurred_at.desc())
         .limit(5)
         .all(),
     }
     return render_template("admin/dashboard.html", stats=stats)
+
+
+@admin_bp.route("/activity-center")
+@login_required
+@super_admin_required
+def activity_center():
+    """Show detailed website and admin activity logs in plain language"""
+    page = request.args.get("page", 1, type=int)
+    section_filter = request.args.get("section", "all")
+    status_filter = request.args.get("status", "all")
+    activity_search = (request.args.get("search") or "").strip()
+
+    query = ActivityLog.query
+
+    if section_filter != "all":
+        query = query.filter_by(section=section_filter)
+
+    if status_filter == "success":
+        query = query.filter(ActivityLog.status_code < 400)
+    elif status_filter == "error":
+        query = query.filter(ActivityLog.status_code >= 400)
+
+    if activity_search:
+        query = query.filter(
+            db.or_(
+                ActivityLog.path.ilike(f"%{activity_search}%"),
+                ActivityLog.action_label.ilike(f"%{activity_search}%"),
+                ActivityLog.request_summary.ilike(f"%{activity_search}%"),
+                ActivityLog.endpoint.ilike(f"%{activity_search}%"),
+            )
+        )
+
+    logs = query.order_by(ActivityLog.occurred_at.desc()).paginate(
+        page=page, per_page=25, error_out=False
+    )
+
+    total_logs = ActivityLog.query.count()
+    frontend_visits = ActivityLog.query.filter_by(section="frontend").count()
+    admin_visits = ActivityLog.query.filter_by(section="admin").count()
+    error_logs = ActivityLog.query.filter(ActivityLog.status_code >= 400).count()
+    successful_logs = ActivityLog.query.filter(ActivityLog.status_code < 400).count()
+    unique_visitors = (
+        db.session.query(func.count(func.distinct(ActivityLog.visitor_key))).scalar() or 0
+    )
+    unique_admin_users = (
+        db.session.query(func.count(func.distinct(ActivityLog.user_id)))
+        .filter(ActivityLog.section == "admin", ActivityLog.user_id.isnot(None))
+        .scalar()
+        or 0
+    )
+    average_response_ms = (
+        db.session.query(func.avg(ActivityLog.response_time_ms)).scalar() or 0
+    )
+
+    top_pages = (
+        db.session.query(
+            ActivityLog.path,
+            func.count(ActivityLog.id).label("visit_count"),
+        )
+        .group_by(ActivityLog.path)
+        .order_by(func.count(ActivityLog.id).desc())
+        .limit(8)
+        .all()
+    )
+
+    recent_errors = (
+        ActivityLog.query.filter(ActivityLog.status_code >= 400)
+        .order_by(ActivityLog.occurred_at.desc())
+        .limit(8)
+        .all()
+    )
+
+    activity_breakdown = {
+        "frontend_readable": frontend_visits,
+        "admin_readable": admin_visits,
+        "success_readable": successful_logs,
+        "error_readable": error_logs,
+    }
+
+    return render_template(
+        "admin/activity_center.html",
+        logs=logs,
+        total_logs=total_logs,
+        frontend_visits=frontend_visits,
+        admin_visits=admin_visits,
+        error_logs=error_logs,
+        successful_logs=successful_logs,
+        unique_visitors=unique_visitors,
+        unique_admin_users=unique_admin_users,
+        average_response_ms=round(average_response_ms),
+        top_pages=top_pages,
+        recent_errors=recent_errors,
+        section_filter=section_filter,
+        status_filter=status_filter,
+        activity_search=activity_search,
+        activity_breakdown=activity_breakdown,
+    )
+
+
+@admin_bp.route("/donations")
+@login_required
+@admin_required
+def donations():
+    """List donation submissions from the giving page"""
+    page = request.args.get("page", 1, type=int)
+    donations = DonationSubmission.query.order_by(
+        DonationSubmission.created_at.desc()
+    ).paginate(page=page, per_page=15, error_out=False)
+
+    return render_template("admin/donations.html", donations=donations)
 
 
 # ===================== USER MANAGEMENT =====================
@@ -214,6 +410,11 @@ def add_sermon():
         flash("Sermon added successfully!", "success")
         return redirect(url_for("admin.sermons"))
 
+    if request.method == "POST" and form.errors:
+        for field_errors in form.errors.values():
+            for error in field_errors:
+                flash(error, "danger")
+
     return render_template("admin/sermon_form.html", form=form, title="Add Sermon")
 
 
@@ -263,6 +464,11 @@ def edit_sermon(sermon_id):
         db.session.commit()
         flash("Sermon updated successfully!", "success")
         return redirect(url_for("admin.sermons"))
+
+    if request.method == "POST" and form.errors:
+        for field_errors in form.errors.values():
+            for error in field_errors:
+                flash(error, "danger")
 
     return render_template(
         "admin/sermon_form.html", form=form, sermon=sermon, title="Edit Sermon"
@@ -360,6 +566,11 @@ def add_event():
         flash("Event added successfully!", "success")
         return redirect(url_for("admin.events"))
 
+    if request.method == "POST" and form.errors:
+        for field_errors in form.errors.values():
+            for error in field_errors:
+                flash(error, "danger")
+
     return render_template("admin/event_form.html", form=form, title="Add Event")
 
 
@@ -402,6 +613,11 @@ def edit_event(event_id):
         db.session.commit()
         flash("Event updated successfully!", "success")
         return redirect(url_for("admin.events"))
+
+    if request.method == "POST" and form.errors:
+        for field_errors in form.errors.values():
+            for error in field_errors:
+                flash(error, "danger")
 
     return render_template(
         "admin/event_form.html", form=form, event=event, title="Edit Event"
@@ -717,6 +933,9 @@ def add_testimony():
         if form.image.data:
             image_path = save_picture(form.image.data, 'testimonies', size=(400, 400))
 
+        is_approved = form.is_approved.data
+        is_published = form.is_published.data if is_approved else False
+
         testimony = Testimony(
             title=form.title.data,
             content=form.content.data,
@@ -726,9 +945,10 @@ def add_testimony():
             category=form.category.data,
             image=image_path,
             is_featured=form.is_featured.data,
-            is_approved=form.is_approved.data,
-            is_published=form.is_published.data,
-            reviewed_by=current_user.id if form.is_approved.data else None,
+            is_approved=is_approved,
+            is_published=is_published,
+            reviewed_by=current_user.id if is_approved else None,
+            reviewed_at=datetime.utcnow() if is_approved else None,
             created_at=datetime.utcnow()
         )
         db.session.add(testimony)
@@ -749,13 +969,14 @@ def edit_testimony(testimony_id):
 
     if form.validate_on_submit():
         # Handle image upload
-        if form.image.data:
+        uploaded_image = form.image.data
+        if hasattr(uploaded_image, "filename") and uploaded_image.filename:
             # Delete old image if exists
             if testimony.image:
                 old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], testimony.image)
                 if os.path.exists(old_path):
                     os.remove(old_path)
-            testimony.image = save_picture(form.image.data, 'testimonies', size=(400, 400))
+            testimony.image = save_picture(uploaded_image, 'testimonies', size=(400, 400))
 
         # Update fields
         testimony.title = form.title.data
@@ -766,8 +987,9 @@ def edit_testimony(testimony_id):
         testimony.category = form.category.data
         testimony.is_featured = form.is_featured.data
         testimony.is_approved = form.is_approved.data
-        testimony.is_published = form.is_published.data
+        testimony.is_published = form.is_published.data if form.is_approved.data else False
         testimony.reviewed_by = current_user.id if form.is_approved.data else None
+        testimony.reviewed_at = datetime.utcnow() if form.is_approved.data else None
         testimony.updated_at = datetime.utcnow()
 
         db.session.commit()
@@ -786,6 +1008,7 @@ def approve_testimony(testimony_id):
     testimony.is_approved = True
     testimony.is_published = True
     testimony.reviewed_by = current_user.id
+    testimony.reviewed_at = datetime.utcnow()
     testimony.updated_at = datetime.utcnow()
     db.session.commit()
     flash('Testimony approved and published successfully!', 'success')
@@ -1011,8 +1234,10 @@ def analytics():
     """Church analytics dashboard"""
     stats = None
     growth_data = [0] * 12
+    growth_labels = []
     total_tithes = 0
     total_offerings = 0
+    total_prophetic_seeds = 0
     total_donations = 0
     total_income = 0
     finance_labels = []
@@ -1035,32 +1260,23 @@ def analytics():
             db.session.add(stats)
             db.session.commit()
 
-        # Calculate member growth percentage
-        if stats.total_members > 0:
-            prev_month = MemberGrowth.query.order_by(
-                MemberGrowth.year.desc(),
-                MemberGrowth.month.desc()
-            ).limit(2).all()
-            if len(prev_month) >= 2:
-                prev_total = prev_month[1].total_members
-                if prev_total > 0:
-                    member_growth_percent = round(((stats.total_members - prev_total) / prev_total) * 100, 1)
-
-        # Get growth data - last 12 months (descending order - newest first)
         growth_records = MemberGrowth.query.order_by(
-            MemberGrowth.year.desc(),
-            MemberGrowth.month.desc()
-        ).limit(12).all()
+            MemberGrowth.year.asc(),
+            MemberGrowth.month.asc(),
+            MemberGrowth.recorded_at.asc(),
+        ).all()
 
-        # Reverse to show chronological order (oldest to newest) for the chart
-        growth_records = growth_records[::-1]
+        growth_labels, growth_data = build_growth_series(growth_records)
 
-        if growth_records:
-            growth_data = [record.total_members for record in growth_records]
-            if len(growth_data) < 12:
-                growth_data = [0] * (12 - len(growth_data)) + growth_data
-        else:
-            growth_data = [stats.total_members] + [0] * 11
+        if len(growth_data) >= 2:
+            prev_total = growth_data[-2]
+            current_total = growth_data[-1]
+            if prev_total > 0:
+                member_growth_percent = round(((current_total - prev_total) / prev_total) * 100, 1)
+
+        if not growth_data:
+            growth_labels = [datetime.utcnow().strftime('%b %Y')]
+            growth_data = [stats.total_members]
 
         # Get financial data (super admin only)
         if current_user.is_super_admin():
@@ -1085,9 +1301,11 @@ def analytics():
             total_tithes = db.session.query(func.sum(FinancialRecord.amount)).filter_by(type='tithe').scalar() or 0
             total_offerings = db.session.query(func.sum(FinancialRecord.amount)).filter_by(
                 type='offering').scalar() or 0
+            total_prophetic_seeds = db.session.query(func.sum(FinancialRecord.amount)).filter_by(
+                type='prophetic_seed').scalar() or 0
             total_donations = db.session.query(func.sum(FinancialRecord.amount)).filter_by(
                 type='donation').scalar() or 0
-            total_income = total_tithes + total_offerings + total_donations
+            total_income = total_tithes + total_offerings + total_prophetic_seeds + total_donations
 
             # Monthly financial data - descending order (most recent first)
             from sqlalchemy import extract
@@ -1144,8 +1362,10 @@ def analytics():
     return render_template('admin/analytics.html',
                            stats=stats,
                            growth_data=growth_data,
+                           growth_labels=growth_labels,
                            total_tithes=total_tithes if current_user.is_super_admin() else 0,
                            total_offerings=total_offerings if current_user.is_super_admin() else 0,
+                           total_prophetic_seeds=total_prophetic_seeds if current_user.is_super_admin() else 0,
                            total_donations=total_donations if current_user.is_super_admin() else 0,
                            total_income=total_income if current_user.is_super_admin() else 0,
                            finance_labels=finance_labels if current_user.is_super_admin() else [],
@@ -1187,13 +1407,12 @@ def update_members():
         flash('Church stats models not available. Please run database migrations.', 'danger')
         return redirect(url_for('admin.analytics'))
 
-    men = request.form.get('men', 0, type=int)
-    women = request.form.get('women', 0, type=int)
-    children = request.form.get('children', 0, type=int)
-
-    # Validate input
-    if men < 0 or women < 0 or children < 0:
-        flash('Please enter valid numbers (0 or greater).', 'danger')
+    try:
+        men = parse_non_negative_int(request.form.get('men'), 'Men')
+        women = parse_non_negative_int(request.form.get('women'), 'Women')
+        children = parse_non_negative_int(request.form.get('children'), 'Children')
+    except ValueError as exc:
+        flash(str(exc), 'danger')
         return redirect(url_for('admin.analytics'))
 
     stats = ChurchStats.query.first()
@@ -1208,13 +1427,13 @@ def update_members():
 
     db.session.add(stats)
 
-    # Record growth history
     now = datetime.utcnow()
-    growth = MemberGrowth(
-        month=now.month,
-        year=now.year,
-        total_members=stats.total_members
-    )
+    growth = MemberGrowth.query.filter_by(month=now.month, year=now.year).first()
+    if not growth:
+        growth = MemberGrowth(month=now.month, year=now.year, total_members=stats.total_members)
+    else:
+        growth.total_members = stats.total_members
+        growth.recorded_at = now
     db.session.add(growth)
 
     db.session.commit()
@@ -1236,32 +1455,38 @@ def add_financial():
         return redirect(url_for('admin.analytics'))
 
     finance_type = request.form.get('finance_type')
-    amount = request.form.get('amount', 0, type=float)
+    amount_raw = request.form.get('amount')
     finance_date = request.form.get('finance_date')
+    description = (request.form.get('description') or '').strip()
+    valid_types = {'tithe', 'offering', 'prophetic_seed', 'donation'}
 
-    if not finance_type:
+    if finance_type not in valid_types:
         flash('Please select a financial type.', 'danger')
         return redirect(url_for('admin.analytics'))
 
-    if amount <= 0:
-        flash('Please enter a valid amount greater than 0.', 'danger')
+    try:
+        amount = parse_positive_amount(amount_raw, 'Amount')
+    except ValueError as exc:
+        flash(str(exc), 'danger')
         return redirect(url_for('admin.analytics'))
 
     try:
         record_date = datetime.strptime(finance_date, '%Y-%m-%d') if finance_date else datetime.utcnow()
     except ValueError:
-        record_date = datetime.utcnow()
+        flash('Use a valid financial date.', 'danger')
+        return redirect(url_for('admin.analytics'))
 
     record = FinancialRecord(
         type=finance_type,
         amount=amount,
         date=record_date,
+        description=description[:200] if description else None,
         created_by=current_user.id
     )
     db.session.add(record)
     db.session.commit()
 
-    flash(f' {finance_type.title()} of ₦{amount:,.2f} recorded successfully for {record_date.strftime("%b %d, %Y")}!',
+    flash(f'{finance_type.replace("_", " ").title()} of ₦{amount:,.2f} recorded successfully for {record_date.strftime("%b %d, %Y")}!',
           'success')
     return redirect(url_for('admin.analytics'))
 
@@ -1278,40 +1503,28 @@ def analytics_data():
 
     period = request.args.get('period', 'yearly')
 
+    records = MemberGrowth.query.order_by(
+        MemberGrowth.year.asc(),
+        MemberGrowth.month.asc(),
+        MemberGrowth.recorded_at.asc(),
+    ).all()
+
+    monthly_labels, monthly_values = build_growth_series(records, limit=12)
+
     if period == 'weekly':
-        # Get last 7 weeks of data (descending)
-        records = MemberGrowth.query.order_by(
-            MemberGrowth.year.desc(),
-            MemberGrowth.month.desc()
-        ).limit(7).all()
-        # Reverse for chronological order
-        records = records[::-1]
-        labels = [f"Wk {i + 1}" for i in range(len(records))]
-        values = [r.total_members for r in records]
-
+        recent = sorted(records, key=lambda record: record.recorded_at)[-7:]
+        labels = [record.recorded_at.strftime('%d %b %Y') for record in recent]
+        values = [record.total_members for record in recent]
     elif period == 'monthly':
-        # Get last 12 months (descending)
-        records = MemberGrowth.query.order_by(
-            MemberGrowth.year.desc(),
-            MemberGrowth.month.desc()
-        ).limit(12).all()
-        # Reverse for chronological order
-        records = records[::-1]
-        labels = [f"{r.month}/{r.year}" for r in records]
-        values = [r.total_members for r in records]
-
+        labels = monthly_labels
+        values = monthly_values
     else:
-        # Yearly - get last 5 years (descending)
-        records = db.session.query(
-            MemberGrowth.year,
-            func.avg(MemberGrowth.total_members).label('avg_members')
-        ).group_by(MemberGrowth.year).order_by(
-            MemberGrowth.year.desc()
-        ).limit(5).all()
-        # Reverse for chronological order
-        records = records[::-1]
-        labels = [str(r[0]) for r in records]
-        values = [float(r[1]) for r in records]
+        yearly = {}
+        for record in sorted(records, key=lambda row: (row.year, row.month, row.recorded_at)):
+            yearly[record.year] = record.total_members
+        yearly_items = list(yearly.items())[-5:]
+        labels = [str(year) for year, _ in yearly_items]
+        values = [total for _, total in yearly_items]
 
     return jsonify({
         'labels': labels,
@@ -1468,3 +1681,108 @@ def settings():
         return redirect(url_for("admin.settings"))
 
     return render_template("admin/settings.html", form=form)
+
+
+
+
+
+@admin_bp.route('/contact-messages')
+@login_required
+@admin_required
+def contact_messages():
+    """List all contact messages"""
+    page = request.args.get('page', 1, type=int)
+    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).paginate(page=page, per_page=15)
+    return render_template('admin/contact_messages.html', messages=messages)
+
+@admin_bp.route('/contact-messages/delete/<int:msg_id>', methods=['POST'])
+@login_required
+@admin_required
+def delete_contact_message(msg_id):
+    """Delete a contact message"""
+    msg = ContactMessage.query.get_or_404(msg_id)
+    db.session.delete(msg)
+    db.session.commit()
+    flash('Message deleted successfully!', 'success')
+    return redirect(url_for('admin.contact_messages'))
+
+# @admin_bp.route('/contact-messages/mark-read/<int:msg_id>', methods=['POST'])
+# @login_required
+# @admin_required
+# def mark_contact_read(msg_id):
+#     """Mark a contact message as read"""
+#     msg = ContactMessage.query.get_or_404(msg_id)
+#     msg.is_read = True
+#     db.session.commit()
+#     flash('Message marked as read!', 'success')
+#     return redirect(url_for('admin.contact_messages'))
+
+
+@admin_bp.route('/gallery/edit/<int:image_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_gallery(image_id):
+    """Edit a gallery image"""
+    image = GalleryImage.query.get_or_404(image_id)
+    form = GalleryForm(obj=image)
+
+    if form.validate_on_submit():
+        # Handle image upload
+        if form.image.data:
+            # Delete old images
+            if image.image_path:
+                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image.image_path)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+            if image.thumbnail_path:
+                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image.thumbnail_path)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            # Save new images
+            image_path = save_picture(form.image.data, 'gallery', size=(800, 800))
+            thumbnail_path = save_picture(form.image.data, 'gallery/thumbnails', size=(300, 300))
+            image.image_path = image_path
+            image.thumbnail_path = thumbnail_path
+
+        image.title = form.title.data
+        image.description = form.description.data
+        image.category = form.category.data
+        image.is_featured = form.is_featured.data
+        image.is_published = form.is_published.data
+
+        db.session.commit()
+        flash('Image updated successfully!', 'success')
+        return redirect(url_for('admin.gallery'))
+
+    return render_template('admin/gallery_form.html', form=form, image=image, title='Edit Image')
+
+
+
+@admin_bp.route('/gallery/toggle-featured/<int:image_id>', methods=['POST'])
+@login_required
+@admin_required
+def toggle_featured(image_id):
+    """Toggle featured status of a gallery image"""
+    try:
+        image = GalleryImage.query.get_or_404(image_id)
+        image.is_featured = not image.is_featured
+        db.session.commit()
+        return jsonify({'success': True, 'featured': image.is_featured})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+
+@admin_bp.route('/contact-messages/mark-read/<int:msg_id>', methods=['POST'])
+@login_required
+@admin_required
+def mark_contact_read(msg_id):
+    """Mark a contact message as read via AJAX"""
+    try:
+        msg = ContactMessage.query.get_or_404(msg_id)
+        msg.is_read = True
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Message marked as read'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500

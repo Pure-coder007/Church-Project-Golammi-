@@ -1,229 +1,482 @@
 {% extends "admin/base.html" %}
 
 {% block title %}Dashboard | GOLAMMI Admin{% endblock %}
+{% block topbar_title %}Hello {{ current_user.full_name.split(' ')[0] if current_user.is_authenticated else 'Admin' }}{% endblock %}
+{% block topbar_subtitle %}Track ministry activity, publishing flow, and visitor-facing content from one place.{% endblock %}
 {% block page_title %}Dashboard Overview{% endblock %}
+{% block page_subtitle %}A clean control center for sermons, events, outreach content, and prayer follow-up.{% endblock %}
+{% block page_actions %}
+<a href="{{ url_for('admin.add_sermon') }}" class="btn btn-outline-secondary">
+    <i class="bi bi-mic"></i>
+    Add Sermon
+</a>
+<a href="{{ url_for('admin.add_event') }}" class="btn btn-gold">
+    <i class="bi bi-calendar-plus"></i>
+    Add Event
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-summary {
+        background:
+            radial-gradient(circle at top right, rgba(47, 103, 227, 0.2), transparent 30%),
+            linear-gradient(135deg, #ffffff 0%, #f4f8ff 52%, #edf3ff 100%);
+        padding: 28px;
+    }
+
+    .hero-summary-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    .hero-summary h4 {
+        margin: 0;
+        font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+        font-weight: 800;
+        letter-spacing: -0.06em;
+    }
+
+    .hero-summary p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.75;
+        max-width: 760px;
+    }
+
+    .hero-balance-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+    }
+
+    .hero-balance-item {
+        padding: 18px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(223, 230, 244, 0.95);
+    }
+
+    .hero-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .hero-action {
+        width: 92px;
+        text-align: center;
+    }
+
+    .hero-action-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(47, 103, 227, 0.18);
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy);
+        font-size: 1.35rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .quick-tile {
+        padding: 20px;
+        border-radius: 24px;
+        border: 1px solid rgba(223, 230, 244, 0.95);
+        background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    }
+
+    .quick-tile .tile-icon {
+        width: 46px;
+        height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: #edf3ff;
+        color: var(--accent);
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    .quick-tile h6 {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 800;
+    }
+
+    .quick-tile p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.65;
+    }
+
+    @media (max-width: 1199px) {
+        .hero-summary-grid,
+        .quick-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .hero-summary-grid,
+        .hero-balance-grid,
+        .quick-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-actions {
+            justify-content: flex-start;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<!-- Stats Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_sermons }}</div>
-                    <div class="card-label">Sermons</div>
+<div class="section-grid">
+    <div class="admin-card hero-summary" data-aos="fade-up">
+        <div class="hero-summary-grid">
+            <div>
+                <span class="eyebrow">
+                    <i class="bi bi-stars"></i>
+                    Ministry performance snapshot
+                </span>
+                <h4>Everything important is visible at a glance.</h4>
+                <p>The public website only shows published sermons, published events, and upcoming event content. This dashboard keeps those states visible so you can spot missing content before visitors do.</p>
+
+                <div class="hero-balance-grid">
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Published Sermons</div>
+                        <div class="metric-value">{{ stats.published_sermons }}</div>
+                        <div class="metric-foot">
+                            <span>{{ stats.live_sermons }} live now</span>
+                            <span class="soft-badge"><i class="bi bi-broadcast"></i> streaming</span>
+                        </div>
+                    </div>
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Visible Events</div>
+                        <div class="metric-value">{{ stats.visible_events }}</div>
+                        <div class="metric-foot">
+                            <span>Upcoming on the public side</span>
+                            <span class="soft-badge"><i class="bi bi-calendar-week"></i> scheduled</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-icon"><i class="bi bi-mic"></i></div>
             </div>
-            <div class="mt-2">
-                <span class="status-badge live"><i class="bi bi-broadcast"></i> {{ stats.live_sermons or 0 }} Live</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_events }}</div>
-                    <div class="card-label">Events</div>
+
+            <div class="hero-actions">
+                <div class="hero-action">
+                    <div class="hero-action-icon"><i class="bi bi-plus-lg"></i></div>
+                    <div class="fw-bold">Create</div>
+                    <small class="text-muted">New content</small>
                 </div>
-                <div class="card-icon"><i class="bi bi-calendar-event"></i></div>
-            </div>
-            <div class="mt-2">
-                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.upcoming_events or 0 }} Upcoming</span>
+                <div class="hero-action">
+                    <div class="hero-action-icon"><i class="bi bi-send"></i></div>
+                    <div class="fw-bold">Publish</div>
+                    <small class="text-muted">Push live</small>
+                </div>
+                <div class="hero-action">
+                    <div class="hero-action-icon"><i class="bi bi-arrow-repeat"></i></div>
+                    <div class="fw-bold">Review</div>
+                    <small class="text-muted">Stay current</small>
+                </div>
             </div>
         </div>
     </div>
 
-
-        <!-- Add this to the dashboard -->
-    <div class="row g-4 mt-2">
-        <div class="col-12">
-            <div class="admin-card">
-                <div class="d-flex justify-content-between align-items-center">
+    <div class="row g-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="admin-card metric-card" data-aos="fade-up" data-aos-delay="50">
+                <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <h5 class="mb-0"><i class="bi bi-graph-up" style="color: var(--gold);"></i> Church Growth</h5>
-                        <small class="text-muted">Total Members: {{ stats.total_members or 0 }}</small>
+                        <div class="card-label">Sermons</div>
+                        <div class="card-number">{{ stats.total_sermons }}</div>
                     </div>
-                    <a href="{{ url_for('admin.analytics') }}" class="btn btn-gold btn-sm">View Analytics <i class="bi bi-arrow-right"></i></a>
+                    <div class="card-icon"><i class="bi bi-mic"></i></div>
+                </div>
+                <div class="card-foot">
+                    <span>{{ stats.live_sermons }} currently live</span>
+                    <span class="status-badge live"><i class="bi bi-broadcast"></i> Live</span>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_blog_posts }}</div>
-                    <div class="card-label">Blog Posts</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-newspaper"></i></div>
-            </div>
-            <div class="mt-2">
-                <span class="status-badge active"><i class="bi bi-check-circle"></i> {{ stats.published_posts or 0 }} Published</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_gallery_images }}</div>
-                    <div class="card-label">Gallery Images</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-images"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_testimonies }}</div>
-                    <div class="card-label">Testimonies</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-chat-quote"></i></div>
-            </div>
-            <div class="mt-2">
-                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.pending_testimonies or 0 }} Pending</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_prayer_requests }}</div>
-                    <div class="card-label">Prayer Requests</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-hand-praying"></i></div>
-            </div>
-            <div class="mt-2">
-                <span class="status-badge pending"><i class="bi bi-clock"></i> {{ stats.pending_prayer_requests or 0 }} Pending</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_users }}</div>
-                    <div class="card-label">Users</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-people"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="admin-card">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="card-number">{{ stats.total_radio_stations or 0 }}</div>
-                    <div class="card-label">Radio Stations</div>
-                </div>
-                <div class="card-icon"><i class="bi bi-radio"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Recent Activity -->
-<div class="row g-4">
-    <div class="col-lg-6">
-        <div class="admin-card">
-            <h5 class="mb-3"><i class="bi bi-mic" style="color: var(--gold);"></i> Recent Sermons</h5>
-            <div class="list-group list-group-flush">
-                {% for sermon in stats.recent_sermons %}
-                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                    <div class="d-flex align-items-center">
-                        <div style="width: 40px; height: 40px; background: var(--gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; margin-right: 12px;">
-                            <i class="bi bi-mic"></i>
-                        </div>
-                        <div>
-                            <strong>{{ sermon.title|truncate(30) }}</strong>
-                            <br><small class="text-muted">{{ sermon.speaker }} · {{ sermon.date_preached.strftime('%b %d, %Y') }}</small>
-                        </div>
-                    </div>
-                    <span class="status-badge {% if sermon.is_live %}live{% else %}active{% endif %}">
-                        {% if sermon.is_live %}<i class="bi bi-broadcast"></i> LIVE{% else %}{{ sermon.category|title }}{% endif %}
-                    </span>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="mt-3 text-end">
-                <a href="{{ url_for('admin.sermons') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="admin-card">
-            <h5 class="mb-3"><i class="bi bi-calendar-event" style="color: var(--gold);"></i> Upcoming Events</h5>
-            <div class="list-group list-group-flush">
-                {% for event in stats.recent_events %}
-                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                    <div class="d-flex align-items-center">
-                        <div style="width: 40px; height: 40px; background: var(--gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; margin-right: 12px;">
-                            <i class="bi bi-calendar"></i>
-                        </div>
-                        <div>
-                            <strong>{{ event.title|truncate(30) }}</strong>
-                            <br><small class="text-muted">{{ event.start_date.strftime('%b %d, %Y') }} · {{ event.location or 'Online' }}</small>
-                        </div>
-                    </div>
-                    <span class="status-badge active">{{ event.category|title }}</span>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="mt-3 text-end">
-                <a href="{{ url_for('admin.events') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row g-4 mt-2">
-    <div class="col-lg-6">
-        <div class="admin-card">
-            <h5 class="mb-3"><i class="bi bi-newspaper" style="color: var(--gold);"></i> Latest Blog Posts</h5>
-            <div class="list-group list-group-flush">
-                {% for post in stats.recent_blog_posts %}
-                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+        <div class="col-xl-3 col-md-6">
+            <div class="admin-card metric-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <strong>{{ post.title|truncate(35) }}</strong>
-                        <br><small class="text-muted">{{ post.author }} · {{ post.created_at.strftime('%b %d, %Y') }}</small>
+                        <div class="card-label">Events</div>
+                        <div class="card-number">{{ stats.total_events }}</div>
                     </div>
-                    <span class="status-badge {% if post.is_published %}active{% else %}inactive{% endif %}">
-                        {% if post.is_published %}Published{% else %}Draft{% endif %}
-                    </span>
+                    <div class="card-icon"><i class="bi bi-calendar-event"></i></div>
                 </div>
-                {% endfor %}
+                <div class="card-foot">
+                    <span>{{ stats.upcoming_events }} upcoming</span>
+                    <span class="status-badge pending"><i class="bi bi-clock-history"></i> Queue</span>
+                </div>
             </div>
-            <div class="mt-3 text-end">
-                <a href="{{ url_for('admin.blog') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="admin-card metric-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="card-label">Blog Posts</div>
+                        <div class="card-number">{{ stats.total_blog_posts }}</div>
+                    </div>
+                    <div class="card-icon"><i class="bi bi-journal-richtext"></i></div>
+                </div>
+                <div class="card-foot">
+                    <span>{{ stats.published_posts }} published</span>
+                    <span class="status-badge active"><i class="bi bi-check2-circle"></i> Live</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="admin-card metric-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="card-label">Prayer Requests</div>
+                        <div class="card-number">{{ stats.total_prayer_requests }}</div>
+                    </div>
+                    <div class="card-icon"><i class="bi bi-heart-pulse"></i></div>
+                </div>
+                <div class="card-foot">
+                    <span>{{ stats.pending_prayer_requests }} pending</span>
+                    <span class="status-badge pending"><i class="bi bi-hourglass-split"></i> Action</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="admin-card metric-card" data-aos="fade-up" data-aos-delay="250">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="card-label">Activity Logs</div>
+                        <div class="card-number">{{ stats.total_activity_logs }}</div>
+                    </div>
+                    <div class="card-icon"><i class="bi bi-activity"></i></div>
+                </div>
+                <div class="card-foot">
+                    <span>{{ stats.frontend_visits }} public • {{ stats.admin_visits }} admin</span>
+                    <span class="status-badge active"><i class="bi bi-bar-chart"></i> Traffic</span>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="admin-card">
-            <h5 class="mb-3"><i class="bi bi-hand-praying" style="color: var(--gold);"></i> Recent Prayer Requests</h5>
-            <div class="list-group list-group-flush">
-                {% for prayer in stats.recent_prayer_requests %}
-                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
-                    <div>
-                        <strong>{{ prayer.full_name }}</strong>
-                        <br><small class="text-muted">{{ prayer.category|title }} · {{ prayer.created_at.strftime('%b %d, %Y') }}</small>
-                    </div>
-                    <span class="status-badge {% if prayer.is_prayed_for %}active{% else %}pending{% endif %}">
-                        {% if prayer.is_prayed_for %}Prayed For{% else %}Pending{% endif %}
-                    </span>
-                </div>
-                {% endfor %}
+
+    <div class="admin-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="admin-card-header">
+            <div>
+                <h5 class="admin-card-title">Quick Actions</h5>
+                <p class="admin-card-subtitle">Jump directly into the sections you update most often.</p>
             </div>
-            <div class="mt-3 text-end">
-                <a href="{{ url_for('admin.prayer_requests') }}" class="btn btn-gold btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="quick-grid">
+            <a class="quick-tile" href="{{ url_for('admin.add_sermon') }}">
+                <div class="tile-icon"><i class="bi bi-mic"></i></div>
+                <h6>Add Sermon</h6>
+                <p>Create a sermon with audio, thumbnail, stream URL, and public publish state.</p>
+            </a>
+            <a class="quick-tile" href="{{ url_for('admin.add_event') }}">
+                <div class="tile-icon"><i class="bi bi-calendar2-plus"></i></div>
+                <h6>Add Event</h6>
+                <p>Publish a new event with time, venue, featured status, and registration details.</p>
+            </a>
+            <a class="quick-tile" href="{{ url_for('admin.analytics') }}">
+                <div class="tile-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                <h6>View Analytics</h6>
+                <p>Check member growth, financial totals, and month-to-month ministry activity.</p>
+            </a>
+            <a class="quick-tile" href="{{ url_for('admin.contact_messages') }}">
+                <div class="tile-icon"><i class="bi bi-envelope-open"></i></div>
+                <h6>Read Messages</h6>
+                <p>Review new visitor enquiries and keep outreach response time under control.</p>
+            </a>
+            <a class="quick-tile" href="{{ url_for('admin.activity_center') }}">
+                <div class="tile-icon"><i class="bi bi-activity"></i></div>
+                <h6>Activity Center</h6>
+                <p>See website traffic, admin actions, errors, and page-by-page visitor movement in plain language.</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-xl-4">
+            <div class="admin-card h-100" data-aos="fade-up" data-aos-delay="120">
+                <div class="admin-card-header">
+                    <div>
+                        <h5 class="admin-card-title">Church Growth</h5>
+                        <p class="admin-card-subtitle">Current recorded member count and pastoral admin load.</p>
+                    </div>
+                    <span class="eyebrow"><i class="bi bi-people"></i> {{ stats.total_members }} members</span>
+                </div>
+                <div class="hero-balance-grid" style="margin-top: 0;">
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Users</div>
+                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_users }}</div>
+                    </div>
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Radio Stations</div>
+                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_radio_stations }}</div>
+                    </div>
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Gallery Images</div>
+                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_gallery_images }}</div>
+                    </div>
+                    <div class="hero-balance-item">
+                        <div class="metric-label">Pending Testimonies</div>
+                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.pending_testimonies }}</div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ url_for('admin.analytics') }}" class="btn btn-gold w-100">
+                        <i class="bi bi-bar-chart-line"></i>
+                        Open Analytics Workspace
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="admin-card h-100" data-aos="fade-up" data-aos-delay="160">
+                        <div class="admin-card-header">
+                            <div>
+                                <h5 class="admin-card-title">Recent Sermons</h5>
+                                <p class="admin-card-subtitle">Most recently created sermon entries.</p>
+                            </div>
+                            <a href="{{ url_for('admin.sermons') }}" class="soft-badge"><i class="bi bi-arrow-right"></i> View all</a>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            {% for sermon in stats.recent_sermons %}
+                            <div class="list-group-item px-0 d-flex justify-content-between gap-3">
+                                <div class="d-flex gap-3">
+                                    <div class="inline-avatar"><i class="bi bi-mic"></i></div>
+                                    <div>
+                                        <strong>{{ sermon.title|truncate(34) }}</strong>
+                                        <div class="text-muted small mt-1">{{ sermon.speaker }} • {{ sermon.date_preached.strftime('%b %d, %Y') }}</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge {% if sermon.is_live %}live{% else %}active{% endif %}">
+                                    {% if sermon.is_live %}LIVE{% else %}{{ sermon.category|title }}{% endif %}
+                                </span>
+                            </div>
+                            {% else %}
+                            <div class="empty-state px-0">
+                                <i class="bi bi-mic"></i>
+                                <p class="mb-0 mt-2">No sermons yet.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="admin-card h-100" data-aos="fade-up" data-aos-delay="200">
+                        <div class="admin-card-header">
+                            <div>
+                                <h5 class="admin-card-title">Recent Prayer Requests</h5>
+                                <p class="admin-card-subtitle">Newest community care submissions.</p>
+                            </div>
+                            <a href="{{ url_for('admin.prayer_requests') }}" class="soft-badge"><i class="bi bi-arrow-right"></i> View all</a>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            {% for prayer in stats.recent_prayer_requests %}
+                            <div class="list-group-item px-0 d-flex justify-content-between gap-3">
+                                <div class="d-flex gap-3">
+                                    <div class="inline-avatar"><i class="bi bi-heart"></i></div>
+                                    <div>
+                                        <strong>{{ prayer.full_name }}</strong>
+                                        <div class="text-muted small mt-1">{{ prayer.category|title }} • {{ prayer.created_at.strftime('%b %d, %Y') }}</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge {% if prayer.is_prayed_for %}active{% else %}pending{% endif %}">
+                                    {% if prayer.is_prayed_for %}Prayed{% else %}Pending{% endif %}
+                                </span>
+                            </div>
+                            {% else %}
+                            <div class="empty-state px-0">
+                                <i class="bi bi-heart"></i>
+                                <p class="mb-0 mt-2">No prayer requests yet.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="admin-card" data-aos="fade-up" data-aos-delay="240">
+                        <div class="admin-card-header">
+                            <div>
+                                <h5 class="admin-card-title">Upcoming Events & Latest Blog</h5>
+                                <p class="admin-card-subtitle">A quick view of what visitors will discover next.</p>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="surface-card p-3 rounded-4 h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <strong>Events</strong>
+                                        <a href="{{ url_for('admin.events') }}" class="soft-badge">Open</a>
+                                    </div>
+                                    {% for event in stats.recent_events %}
+                                    <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+                                        <div>
+                                            <strong>{{ event.title|truncate(34) }}</strong>
+                                            <div class="text-muted small mt-1">{{ event.start_date.strftime('%b %d, %Y') }} • {{ event.location or 'Online' }}</div>
+                                        </div>
+                                        <span class="status-badge active">{{ event.category|title }}</span>
+                                    </div>
+                                    {% else %}
+                                    <div class="empty-state">
+                                        <i class="bi bi-calendar-event"></i>
+                                        <p class="mb-0 mt-2">No events available.</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="surface-card p-3 rounded-4 h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <strong>Blog</strong>
+                                        <a href="{{ url_for('admin.blog') }}" class="soft-badge">Open</a>
+                                    </div>
+                                    {% for post in stats.recent_blog_posts %}
+                                    <div class="d-flex justify-content-between gap-3 py-2 border-bottom">
+                                        <div>
+                                            <strong>{{ post.title|truncate(34) }}</strong>
+                                            <div class="text-muted small mt-1">{{ post.author }} • {{ post.created_at.strftime('%b %d, %Y') }}</div>
+                                        </div>
+                                        <span class="status-badge {% if post.is_published %}active{% else %}inactive{% endif %}">
+                                            {% if post.is_published %}Published{% else %}Draft{% endif %}
+                                        </span>
+                                    </div>
+                                    {% else %}
+                                    <div class="empty-state">
+                                        <i class="bi bi-journal-richtext"></i>
+                                        <p class="mb-0 mt-2">No blog posts available.</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

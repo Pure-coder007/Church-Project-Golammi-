@@ -494,8 +494,18 @@
                         <p class="sub-title">A Prophetic Ministry</p>
                         <p class="tagline">"Where God reconstructs anything the devil has destroyed in the life of people."</p>
                         <div>
-                            <a href="#" class="btn-hero btn-hero-primary">Join Us This Sunday</a>
-                            <a href="#" class="btn-hero btn-hero-live"><i class="bi bi-play-circle"></i> Watch Live</a>
+                            {% if live_sermon %}
+                            <a href="{{ live_sermon.live_stream_url }}" class="btn-hero btn-hero-live" target="_blank" rel="noopener">
+                                <i class="bi bi-play-circle"></i> Watch Live
+                            </a>
+                            <!--<div class="mt-3 text-white-50" style="font-size: 0.9rem;">
+                                Live now: {{ live_sermon.title }}
+                            </div> -->
+                            {% else %}
+                            <a href="{{ url_for('frontend.sermons') }}" class="btn-hero btn-hero-secondary">
+                                <i class="bi bi-broadcast"></i> View Sermons
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -506,10 +516,7 @@
                         <h1>Praise &amp; Worship</h1>
                         <p class="sub-title">Enter His Gates with Thanksgiving</p>
                         <p class="tagline">"Make a joyful noise unto the Lord, all ye lands." — Psalm 100:1</p>
-                        <div>
-                            <a href="#" class="btn-hero btn-hero-primary">Join Us</a>
-                            <a href="#" class="btn-hero btn-hero-secondary">Learn More</a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -519,10 +526,7 @@
                         <h1>Prayer &amp; Intercession</h1>
                         <p class="sub-title">Where Miracles Happen</p>
                         <p class="tagline">"The earnest prayer of a righteous person has great power." — James 5:16</p>
-                        <div>
-                            <a href="#" class="btn-hero btn-hero-primary">Submit Prayer Request</a>
-                            <a href="#" class="btn-hero btn-hero-secondary">Join Prayer Meeting</a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -532,10 +536,7 @@
                         <h1>Youth &amp; Next Generation</h1>
                         <p class="sub-title">Raising Kingdom Leaders</p>
                         <p class="tagline">"Let no one despise you for your youth, but set the believers an example." — 1 Timothy 4:12</p>
-                        <div>
-                            <a href="#" class="btn-hero btn-hero-primary">Youth Ministry</a>
-                            <a href="#" class="btn-hero btn-hero-secondary">Events</a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -906,7 +907,7 @@
         <div class="testimonial-masonry">
             {% if testimonies %}
                 {% for testimony in testimonies %}
-                <div class="testimonial-item {% if loop.index == 2 or loop.index == 5 %}highlight{% endif %}" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="testimonial-item {% if loop.index == 2 %}highlight{% endif %}" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
                     <div class="testimonial-content">
                         <div class="quote-pattern">
                             <i class="bi bi-quote"></i>
@@ -917,7 +918,7 @@
                                 {% if testimony.image %}
                                 <img src="{{ url_for('static', filename='uploads/' + testimony.image) }}" alt="{{ testimony.author_name }}">
                                 {% else %}
-                                <img src="{{ url_for('static', filename='assets/img/person/person-f-7.webp') }}" alt="{{ testimony.author_name }}">
+                                <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="{{ testimony.author_name }}">
                                 {% endif %}
                             </div>
                             <div class="client-details">
@@ -928,6 +929,24 @@
                     </div>
                 </div>
                 {% endfor %}
+            {% else %}
+                <div class="testimonial-item highlight" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <div class="quote-pattern">
+                            <i class="bi bi-quote"></i>
+                        </div>
+                        <p>Testimonies will appear here as approved stories are added from the ministry admin panel.</p>
+                        <div class="client-info">
+                            <div class="client-image">
+                                <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Testimony placeholder">
+                            </div>
+                            <div class="client-details">
+                                <h3>Golammi Worship Center</h3>
+                                <span class="position">Community Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
         </div>
     </div>
@@ -943,7 +962,6 @@
                     <p class="stats-description">Gateway of Life and Miracle Ministries International (Golammi Worship Center) has been a beacon of hope, faith, and miracles. Through prophetic worship, prayer, and the Word, we have seen countless lives transformed and destinies restored.</p>
                     <div class="stats-cta">
                         <a href="#" class="btn btn-primary">Our Story</a>
-                        <a href="#" class="btn btn-outline">Watch Testimonies</a>
                     </div>
                 </div>
             </div>
@@ -1105,7 +1123,6 @@
                         </div>
                         <div class="event-actions">
                             <a href="{{ url_for('frontend.event_detail', slug=event.slug) }}" class="btn-learn-more">Learn More</a>
-                            <a href="#" class="btn-calendar"><i class="bi bi-calendar-plus"></i> Add to Calendar</a>
                         </div>
                     </div>
                 </div>

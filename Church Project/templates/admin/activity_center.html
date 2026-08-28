@@ -1,0 +1,537 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Activity Center | GOLAMMI Admin{% endblock %}
+{% block page_title %}Activity Center{% endblock %}
+{% block page_subtitle %}A detailed traffic and activity view for the public website and the admin panel as of August 20, 2026.{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i>
+    Dashboard
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .activity-overview {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 22px;
+    }
+
+    .activity-mini-card {
+        padding: 18px 20px;
+        border-radius: 22px;
+        border: 1px solid rgba(223, 230, 244, 0.95);
+        background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .activity-mini-label {
+        color: var(--muted);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .activity-mini-value {
+        margin-top: 10px;
+        font-size: 1.45rem;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        font-family: "Poppins", "Roboto", sans-serif;
+        color: var(--text);
+    }
+
+    .activity-mini-note {
+        margin-top: 10px;
+        font-size: 0.76rem;
+        line-height: 1.6;
+        color: var(--muted);
+    }
+
+    .activity-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+        gap: 22px;
+    }
+
+    .activity-surface {
+        padding: 22px;
+        border-radius: 26px;
+        border: 1px solid rgba(223, 230, 244, 0.95);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+
+    .activity-header h4 {
+        margin: 0;
+        font-size: 0.98rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .activity-header p {
+        margin: 6px 0 0;
+        font-size: 0.76rem;
+        line-height: 1.65;
+        color: var(--muted);
+        max-width: 700px;
+    }
+
+    .activity-filter-bar {
+        display: grid;
+        grid-template-columns: 1.5fr 0.9fr 0.9fr auto;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .activity-control {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 0.78rem 0.9rem;
+        background: #fff;
+        color: var(--text);
+        font-size: 0.78rem;
+    }
+
+    .activity-control:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(47, 103, 227, 0.1);
+    }
+
+    .activity-status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: #f8fbff;
+        border: 1px solid rgba(223, 230, 244, 0.95);
+        font-size: 0.76rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+    }
+
+    .activity-table-wrap {
+        border: 1px solid rgba(223, 230, 244, 0.95);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .activity-log-table {
+        margin: 0;
+    }
+
+    .activity-log-table th {
+        background: #f7faff;
+        color: var(--muted);
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 0.82rem 0.9rem;
+        border-bottom: 1px solid rgba(223, 230, 244, 0.95);
+    }
+
+    .activity-log-table td {
+        padding: 0.9rem;
+        font-size: 0.76rem;
+        vertical-align: top;
+        border-bottom: 1px solid rgba(223, 230, 244, 0.7);
+    }
+
+    .activity-log-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .activity-log-table tbody tr:hover td {
+        background: #fbfdff;
+    }
+
+    .activity-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 4px;
+    }
+
+    .activity-text {
+        font-size: 0.72rem;
+        line-height: 1.55;
+        color: var(--muted);
+        word-break: break-word;
+    }
+
+    .activity-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0.3rem 0.68rem;
+        border-radius: 999px;
+        font-size: 0.63rem;
+        font-weight: 700;
+    }
+
+    .activity-pill.frontend {
+        background: rgba(31, 157, 104, 0.1);
+        color: #1f9d68;
+    }
+
+    .activity-pill.admin {
+        background: rgba(47, 103, 227, 0.12);
+        color: var(--accent);
+    }
+
+    .activity-pill.success {
+        background: rgba(31, 157, 104, 0.1);
+        color: #1f9d68;
+    }
+
+    .activity-pill.error {
+        background: rgba(212, 82, 82, 0.12);
+        color: #d45252;
+    }
+
+    .activity-pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid rgba(223, 230, 244, 0.95);
+        flex-wrap: wrap;
+    }
+
+    .activity-pagination-info {
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+
+    .activity-page-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .activity-page-link {
+        min-width: 38px;
+        padding: 0.52rem 0.76rem;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--text);
+        text-decoration: none;
+        text-align: center;
+        font-size: 0.74rem;
+        font-weight: 700;
+    }
+
+    .activity-page-link:hover {
+        border-color: rgba(47, 103, 227, 0.32);
+        color: var(--accent);
+        background: #f8fbff;
+    }
+
+    .activity-page-link.active {
+        background: linear-gradient(180deg, #3f76ec 0%, #2f67e3 100%);
+        border-color: #2f67e3;
+        color: #fff;
+    }
+
+    .activity-page-link.disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .activity-side-stack {
+        display: grid;
+        gap: 18px;
+    }
+
+    .activity-list {
+        display: grid;
+        gap: 10px;
+    }
+
+    .activity-list-item {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(223, 230, 244, 0.9);
+        background: #fbfcff;
+    }
+
+    .activity-list-item strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+        color: var(--text);
+    }
+
+    .activity-list-item p {
+        margin: 0;
+        font-size: 0.72rem;
+        line-height: 1.55;
+        color: var(--muted);
+        word-break: break-word;
+    }
+
+    .activity-note-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0.34rem 0.72rem;
+        border-radius: 999px;
+        background: #edf3ff;
+        color: var(--accent);
+        font-size: 0.66rem;
+        font-weight: 700;
+    }
+
+    @media (max-width: 1199px) {
+        .activity-overview {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .activity-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .activity-overview,
+        .activity-filter-bar {
+            grid-template-columns: 1fr;
+        }
+
+        .activity-surface,
+        .activity-mini-card {
+            padding: 18px;
+            border-radius: 20px;
+        }
+
+        .activity-mini-value {
+            font-size: 1.2rem;
+        }
+
+        .activity-log-table th,
+        .activity-log-table td {
+            padding: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="activity-overview">
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">All Recorded Activity</div>
+        <div class="activity-mini-value">{{ "{:,}".format(total_logs) }}</div>
+        <div class="activity-mini-note">Total requests logged across the public website and the admin panel.</div>
+    </div>
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">Public Traffic</div>
+        <div class="activity-mini-value">{{ "{:,}".format(frontend_visits) }}</div>
+        <div class="activity-mini-note">Page visits made by normal website visitors.</div>
+    </div>
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">Admin Traffic</div>
+        <div class="activity-mini-value">{{ "{:,}".format(admin_visits) }}</div>
+        <div class="activity-mini-note">Page visits made inside the control center.</div>
+    </div>
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">Known Visitors</div>
+        <div class="activity-mini-value">{{ "{:,}".format(unique_visitors) }}</div>
+        <div class="activity-mini-note">Estimated unique visitor count from recorded devices and networks.</div>
+    </div>
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">Errors Seen</div>
+        <div class="activity-mini-value">{{ "{:,}".format(error_logs) }}</div>
+        <div class="activity-mini-note">Requests that ended with an error status instead of a normal response.</div>
+    </div>
+    <div class="activity-mini-card">
+        <div class="activity-mini-label">Average Response Time</div>
+        <div class="activity-mini-value">{{ average_response_ms }}ms</div>
+        <div class="activity-mini-note">Average time the system needed to answer a request.</div>
+    </div>
+</div>
+
+<div class="activity-layout">
+    <div class="activity-surface">
+        <div class="activity-header">
+            <div>
+                <h4>Detailed Activity Log</h4>
+                <p>Every row explains what happened, where it happened, whether it succeeded, and how long it took. This view is limited to super admin access only.</p>
+            </div>
+            <span class="activity-note-badge">
+                <i class="bi bi-shield-lock"></i>
+                Super Admin Only
+            </span>
+        </div>
+
+        <form method="GET" action="{{ url_for('admin.activity_center') }}" class="activity-filter-bar">
+            <input class="activity-control" type="text" name="search" value="{{ activity_search }}" placeholder="Search by page, action, or URL">
+            <select class="activity-control" name="section">
+                <option value="all" {% if section_filter == 'all' %}selected{% endif %}>All areas</option>
+                <option value="frontend" {% if section_filter == 'frontend' %}selected{% endif %}>Public website</option>
+                <option value="admin" {% if section_filter == 'admin' %}selected{% endif %}>Admin panel</option>
+            </select>
+            <select class="activity-control" name="status">
+                <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All results</option>
+                <option value="success" {% if status_filter == 'success' %}selected{% endif %}>Successful only</option>
+                <option value="error" {% if status_filter == 'error' %}selected{% endif %}>Errors only</option>
+            </select>
+            <button class="btn btn-gold" type="submit">
+                <i class="bi bi-funnel"></i>
+                Filter
+            </button>
+        </form>
+
+        <div class="activity-status-bar">
+            <span>Showing <strong>{{ logs.items|length }}</strong> logs on page <strong>{{ logs.page }}</strong> of <strong>{{ logs.pages or 1 }}</strong>.</span>
+            <span><strong>{{ successful_logs }}</strong> successful responses • <strong>{{ error_logs }}</strong> errors • <strong>{{ unique_admin_users }}</strong> admin users recorded</span>
+        </div>
+
+        <div class="activity-table-wrap">
+            <div class="table-responsive">
+                <table class="table activity-log-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Area</th>
+                            <th>Result</th>
+                            <th>Visitor</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs.items %}
+                        <tr>
+                            <td>
+                                <div class="activity-title">{{ log.action_label }}</div>
+                                <div class="activity-text">{{ log.request_summary }}</div>
+                                <div class="activity-text mt-1">{{ log.path }}</div>
+                            </td>
+                            <td>
+                                <span class="activity-pill {{ log.section }}">
+                                    <i class="bi {% if log.section == 'admin' %}bi-shield-lock{% else %}bi-globe{% endif %}"></i>
+                                    {{ "Admin Panel" if log.section == "admin" else "Public Website" }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="activity-pill {{ 'error' if log.status_code >= 400 else 'success' }}">
+                                    <i class="bi {% if log.status_code >= 400 %}bi-exclamation-triangle{% else %}bi-check2-circle{% endif %}"></i>
+                                    {{ "Error" if log.status_code >= 400 else "Successful" }}
+                                </span>
+                                <div class="activity-text mt-2">HTTP {{ log.status_code }} • {{ log.response_time_ms }}ms</div>
+                            </td>
+                            <td>
+                                <div class="activity-text">IP: {{ log.ip_address or "Unknown" }}</div>
+                                <div class="activity-text">Referrer: {{ log.referrer or "Direct visit" }}</div>
+                                <div class="activity-text">User: {{ log.user.full_name if log.user else "Guest / Visitor" }}</div>
+                            </td>
+                            <td>
+                                <div class="activity-title" style="font-size: 0.75rem;">{{ log.occurred_at.strftime('%b %d, %Y') }}</div>
+                                <div class="activity-text">{{ log.occurred_at.strftime('%I:%M:%S %p') }}</div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">No activity logs matched your current filter.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if logs.pages > 1 %}
+        <div class="activity-pagination">
+            <div class="activity-pagination-info">
+                Page {{ logs.page }} of {{ logs.pages }} • {{ logs.total }} total activity records
+            </div>
+            <div class="activity-page-links">
+                <a class="activity-page-link {% if not logs.has_prev %}disabled{% endif %}" href="{{ url_for('admin.activity_center', page=logs.prev_num, section=section_filter, status=status_filter, search=activity_search) if logs.has_prev else '#' }}">
+                    Prev
+                </a>
+                {% for page_num in logs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                        <a class="activity-page-link {% if page_num == logs.page %}active{% endif %}" href="{{ url_for('admin.activity_center', page=page_num, section=section_filter, status=status_filter, search=activity_search) }}">{{ page_num }}</a>
+                    {% else %}
+                        <span class="activity-page-link disabled">…</span>
+                    {% endif %}
+                {% endfor %}
+                <a class="activity-page-link {% if not logs.has_next %}disabled{% endif %}" href="{{ url_for('admin.activity_center', page=logs.next_num, section=section_filter, status=status_filter, search=activity_search) if logs.has_next else '#' }}">
+                    Next
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="activity-side-stack">
+        <div class="activity-surface">
+            <div class="activity-header">
+                <div>
+                    <h4>Most Opened Pages</h4>
+                    <p>The pages below are getting the most attention from visitors or admins.</p>
+                </div>
+            </div>
+            <div class="activity-list">
+                {% for path, visit_count in top_pages %}
+                <div class="activity-list-item">
+                    <strong>{{ path }}</strong>
+                    <p>Opened {{ "{:,}".format(visit_count) }} times.</p>
+                </div>
+                {% else %}
+                <div class="activity-list-item">
+                    <strong>No page activity yet</strong>
+                    <p>Traffic summaries will appear here as the website is used.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="activity-surface">
+            <div class="activity-header">
+                <div>
+                    <h4>Latest Errors</h4>
+                    <p>Quickly review failed requests, broken links, or pages people could not open correctly.</p>
+                </div>
+            </div>
+            <div class="activity-list">
+                {% for log in recent_errors %}
+                <div class="activity-list-item">
+                    <strong>{{ log.action_label }}</strong>
+                    <p>{{ log.path }}</p>
+                    <p>Returned HTTP {{ log.status_code }} in {{ log.response_time_ms }}ms on {{ log.occurred_at.strftime('%b %d, %Y %I:%M %p') }}.</p>
+                </div>
+                {% else %}
+                <div class="activity-list-item">
+                    <strong>No recent errors</strong>
+                    <p>No failed requests have been recorded recently.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

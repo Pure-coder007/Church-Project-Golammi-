@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Setup Super Admin | GOLAMMI Admin{% endblock %}
+{% block page_title %}Initial Admin Setup{% endblock %}
+{% block page_subtitle %}Create the first super admin account for the control center.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-xl-6">
+        <div class="admin-card" data-aos="fade-up">
+            <div class="admin-card-header">
+                <div>
+                    <h5 class="admin-card-title">Create Super Admin</h5>
+                    <p class="admin-card-subtitle">This should only be used during initial platform setup.</p>
+                </div>
+            </div>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="row g-4">
+                    <div class="col-12">
+                        <label class="form-label">Email Address</label>
+                        {{ form.email(class="form-control", placeholder="admin@golammi.org") }}
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Password</label>
+                        {{ form.password(class="form-control", placeholder="Choose a strong password") }}
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-gold btn-lg w-100">
+                            <i class="bi bi-shield-lock"></i>
+                            Create Super Admin
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

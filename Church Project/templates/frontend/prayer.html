@@ -49,6 +49,42 @@
     .prayer-times p { font-size: 0.85rem; color: #555; margin-bottom: 0.2rem; }
     .prayer-times .time-icon { font-size: 2rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
 
+    /* Flash message styling */
+    .alert-custom {
+        border-radius: 12px;
+        padding: 14px 18px;
+        font-size: 0.85rem;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideDown 0.4s ease;
+        margin-bottom: 1rem;
+    }
+    .alert-custom.alert-success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #2e7d32;
+    }
+    .alert-custom.alert-danger {
+        background: #fce4ec;
+        color: #c62828;
+        border-left: 4px solid #c62828;
+    }
+    .alert-custom.alert-info {
+        background: #e3f2fd;
+        color: #0d47a1;
+        border-left: 4px solid #0d47a1;
+    }
+    .alert-custom i { font-size: 1.3rem; }
+    .alert-custom .btn-close { font-size: 0.7rem; opacity: 0.5; }
+    .alert-custom .btn-close:hover { opacity: 1; }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 992px) {
         .prayer-form-wrapper { padding: 25px 20px; }
         .prayer-form-wrapper h2 { font-size: 1.4rem; }
@@ -80,6 +116,19 @@
 
 <section class="section" style="padding-top: 40px;">
     <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert-custom alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="bi bi-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <div class="row g-4 mb-5">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="prayer-card-custom text-center">
@@ -150,7 +199,7 @@
                     <form method="POST" action="{{ url_for('frontend.prayer') }}">
                         {{ form.hidden_tag() }}
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        
+
                         <div class="row g-2">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -229,9 +278,15 @@
                                 </div>
                             </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-submit">
+                                <button type="submit" class="btn btn-submit" id="prayerSubmitBtn">
                                     <i class="bi bi-send"></i> Submit Prayer Request
                                 </button>
+                            </div>
+                            <div class="col-12 text-center mt-2">
+                                <p style="color: #999; font-size: 0.75rem;">
+                                    <i class="bi bi-shield-check" style="color: var(--gold);"></i>
+                                    Your prayer request is confidential and will be shared only with our prayer team.
+                                </p>
                             </div>
                         </div>
                     </form>
@@ -240,4 +295,33 @@
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-hide flash messages after 5 seconds
+    const alerts = document.querySelectorAll('.alert-custom');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            alert.classList.remove('show');
+            setTimeout(function() {
+                alert.remove();
+            }, 300);
+        }, 5000);
+    });
+
+    // Form submission - disable button to prevent double submission
+    const form = document.querySelector('form');
+    const submitBtn = document.getElementById('prayerSubmitBtn');
+    if (form && submitBtn) {
+        form.addEventListener('submit', function() {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting...';
+            setTimeout(function() {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-send"></i> Submit Prayer Request';
+            }, 5000);
+        });
+    }
+});
+</script>
 {% endblock %}

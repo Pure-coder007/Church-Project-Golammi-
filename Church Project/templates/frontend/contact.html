@@ -248,53 +248,67 @@
         margin-bottom: 0;
     }
 
-    .php-email-form .error-message {
+    /* Form messages */
+    .form-message {
         display: none;
-        background: #df1529;
-        color: #ffffff;
-        text-align: center;
-        padding: 10px;
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: 12px;
+        padding: 14px 18px;
         font-size: 0.85rem;
-        margin-bottom: 12px;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideDown 0.4s ease;
+        margin-bottom: 1rem;
     }
+    .form-message.success {
+        display: flex;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #2e7d32;
+    }
+    .form-message.error {
+        display: flex;
+        background: #fce4ec;
+        color: #c62828;
+        border-left: 4px solid #c62828;
+    }
+    .form-message i { font-size: 1.3rem; }
 
-    .php-email-form .sent-message {
-        display: none;
-        color: #ffffff;
-        background: var(--gold);
-        text-align: center;
-        padding: 10px;
-        border-radius: 6px;
-        font-weight: 600;
+    /* Flash message styling */
+    .alert-custom {
+        border-radius: 12px;
+        padding: 14px 18px;
         font-size: 0.85rem;
-        margin-bottom: 12px;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideDown 0.4s ease;
+        margin-bottom: 1rem;
     }
-
-    .php-email-form .loading {
-        display: none;
-        text-align: center;
-        padding: 10px;
-        font-size: 0.85rem;
-        margin-bottom: 12px;
+    .alert-custom.alert-success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #2e7d32;
     }
-
-    .php-email-form .loading:before {
-        content: "";
-        display: inline-block;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        margin: 0 10px -5px 0;
-        border: 3px solid var(--gold);
-        border-top-color: transparent;
-        animation: form-loading 1s linear infinite;
+    .alert-custom.alert-danger {
+        background: #fce4ec;
+        color: #c62828;
+        border-left: 4px solid #c62828;
     }
+    .alert-custom.alert-info {
+        background: #e3f2fd;
+        color: #0d47a1;
+        border-left: 4px solid #0d47a1;
+    }
+    .alert-custom i { font-size: 1.3rem; }
+    .alert-custom .btn-close { font-size: 0.7rem; opacity: 0.5; }
+    .alert-custom .btn-close:hover { opacity: 1; }
 
-    @keyframes form-loading {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .additional-info h5 {
@@ -341,12 +355,6 @@
         .input-with-icon .form-control { font-size: 0.8rem; padding: 8px 12px 8px 36px; }
         .input-with-icon i { font-size: 0.85rem; left: 12px; }
     }
-
-    .scroll-top { background-color: var(--gold); }
-    .scroll-top i { color: var(--black); }
-    .scroll-top:hover { background-color: var(--gold-dark); }
-    .btn-primary { background-color: var(--gold) !important; border-color: var(--gold) !important; color: var(--black) !important; }
-    .btn-primary:hover { background-color: var(--gold-dark) !important; border-color: var(--gold-dark) !important; color: var(--black) !important; }
 </style>
 {% endblock %}
 
@@ -367,6 +375,19 @@
 <!-- ======= Contact Section ======= -->
 <section id="contact" class="contact section" style="padding-bottom: 0; padding-top: 40px;">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert-custom alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="bi bi-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <!-- Contact Info Boxes -->
         <div class="row gy-3 mb-4">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -462,7 +483,7 @@
                 <h2 class="text-center">Send Us a Message</h2>
                 <p class="form-subtitle">We'd love to hear from you. Fill out the form below and our team will get back to you promptly.</p>
 
-                <form action="{{ url_for('frontend.contact') }}" method="post" class="php-email-form">
+                <form method="POST" action="{{ url_for('frontend.contact') }}" id="contactForm">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="row g-2">
                         <div class="col-md-6">
@@ -536,14 +557,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="loading">Sending message...</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent successfully! Our team will get back to you within 24-48 hours.</div>
-                        </div>
-
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-submit">
+                            <button type="submit" class="btn btn-submit" id="contactSubmitBtn">
                                 <i class="bi bi-send"></i> Send Message
                             </button>
                         </div>
@@ -604,26 +619,182 @@
 </section>
 
 <script>
-    // Contact Reason Cards - Interactive
-    document.querySelectorAll('.contact-reason-card').forEach(function(card) {
-        card.addEventListener('click', function() {
-            document.querySelectorAll('.contact-reason-card').forEach(function(c) {
-                c.classList.remove('active');
-            });
-            this.classList.add('active');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-hide flash messages after 5 seconds
+        const alerts = document.querySelectorAll('.alert-custom');
+        alerts.forEach(function(alert) {
+            setTimeout(function() {
+                alert.classList.remove('show');
+                setTimeout(function() {
+                    alert.remove();
+                }, 300);
+            }, 5000);
+        });
 
-            const reason = this.dataset.reason;
-            const select = document.getElementById('contactReason');
-            if (select) {
-                const options = select.options;
-                for (let i = 0; i < options.length; i++) {
-                    if (options[i].value === reason) {
-                        select.selectedIndex = i;
-                        break;
+        // Contact Reason Cards - Interactive
+        document.querySelectorAll('.contact-reason-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.contact-reason-card').forEach(function(c) {
+                    c.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                const reason = this.dataset.reason;
+                const select = document.getElementById('contactReason');
+                if (select) {
+                    const options = select.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value === reason) {
+                            select.selectedIndex = i;
+                            break;
+                        }
                     }
                 }
-            }
+            });
         });
+
+        // Form submission - disable button to prevent double submission
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('contactSubmitBtn');
+        if (form && submitBtn) {
+            form.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
+                setTimeout(function() {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-send"></i> Send Message';
+                }, 5000);
+            });
+        }
     });
 </script>
+
+
+
+<!-- Add this to the contact page, after the existing script -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== PHONE NUMBER SANITIZATION =====
+        const phoneInput = document.querySelector('input[name="phone"]');
+
+        if (phoneInput) {
+            // Allow only numbers and plus sign
+            phoneInput.addEventListener('input', function() {
+                // Remove any character that is not a digit or plus sign
+                this.value = this.value.replace(/[^0-9+]/g, '');
+
+                // Ensure plus sign is only at the beginning
+                if (this.value.indexOf('+') > 0) {
+                    this.value = this.value.replace(/\+/g, '');
+                }
+
+                // Limit to 15 characters (max for international phone numbers)
+                if (this.value.length > 15) {
+                    this.value = this.value.slice(0, 15);
+                }
+            });
+
+            // Validate on blur (when user leaves the field)
+            phoneInput.addEventListener('blur', function() {
+                const value = this.value.trim();
+                if (value.length > 0 && !/^\+?[0-9]{7,15}$/.test(value)) {
+                    this.classList.add('is-invalid');
+                } else if (value.length > 0) {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+
+            // Remove validation styling on focus
+            phoneInput.addEventListener('focus', function() {
+                this.classList.remove('is-invalid');
+            });
+        }
+
+        // Auto-hide flash messages after 5 seconds
+        const alerts = document.querySelectorAll('.alert-custom');
+        alerts.forEach(function(alert) {
+            setTimeout(function() {
+                alert.classList.remove('show');
+                setTimeout(function() {
+                    alert.remove();
+                }, 300);
+            }, 5000);
+        });
+
+        // Contact Reason Cards - Interactive
+        document.querySelectorAll('.contact-reason-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.contact-reason-card').forEach(function(c) {
+                    c.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                const reason = this.dataset.reason;
+                const select = document.getElementById('contactReason');
+                if (select) {
+                    const options = select.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value === reason) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+
+        // Form submission - disable button to prevent double submission
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('contactSubmitBtn');
+        if (form && submitBtn) {
+            form.addEventListener('submit', function(e) {
+                // Validate phone before submission
+                const phone = document.querySelector('input[name="phone"]');
+                if (phone && phone.value.trim().length > 0) {
+                    const phoneValue = phone.value.trim();
+                    if (!/^\+?[0-9]{7,15}$/.test(phoneValue)) {
+                        e.preventDefault();
+                        phone.classList.add('is-invalid');
+                        alert('Please enter a valid phone number (only numbers and optional + sign, 7-15 digits)');
+                        phone.focus();
+                        return;
+                    }
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
+                setTimeout(function() {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-send"></i> Send Message';
+                }, 5000);
+            });
+        }
+    });
+</script>
+
+<!-- Add this CSS for phone validation styling -->
+<style>
+    .input-with-icon .form-control.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.08);
+    }
+
+    .input-with-icon .form-control.is-valid {
+        border-color: #28a745;
+        box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.08);
+    }
+
+    .invalid-feedback {
+        display: none;
+        color: #dc3545;
+        font-size: 0.75rem;
+        margin-top: 0.3rem;
+    }
+
+    .input-with-icon .form-control.is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+</style>
 {% endblock %}

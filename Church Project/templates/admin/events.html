@@ -2,117 +2,136 @@
 
 {% block title %}Events | GOLAMMI Admin{% endblock %}
 {% block page_title %}Manage Events{% endblock %}
+{% block page_subtitle %}Create and schedule events that should be discoverable on the public events page.{% endblock %}
+{% block page_actions %}
+<a href="{{ url_for('admin.add_event') }}" class="btn btn-gold">
+    <i class="bi bi-plus-circle"></i>
+    Add Event
+</a>
+{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <p class="text-muted mb-0">Manage all church events and programs</p>
+<div class="section-grid">
+    <div class="table-shell" data-aos="fade-up">
+        <div class="table-shell-header">
+            <div>
+                <h5 class="admin-card-title mb-1">Events Calendar</h5>
+                <p class="admin-card-subtitle">Published events now remain visible on the frontend, with upcoming items prioritized first.</p>
+            </div>
+            <span class="eyebrow"><i class="bi bi-calendar3"></i> {{ events.total }} records</span>
+        </div>
+        <div class="table-shell-body">
+            <div class="table-responsive">
+                <table class="table table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cover</th>
+                            <th>Event</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events.items %}
+                        <tr>
+                            <td>{{ loop.index + (events.page - 1) * events.per_page }}</td>
+                            <td>
+                                {% if event.image %}
+                                <img src="{{ url_for('static', filename='uploads/' + event.image) }}" alt="{{ event.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
+                                {% else %}
+                                <div class="inline-avatar"><i class="bi bi-calendar-event"></i></div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="fw-bold">{{ event.title|truncate(42) }}</div>
+                                <div class="text-muted small mt-1">
+                                    {{ event.venue or event.location or 'Online experience' }}
+                                    {% if event.registration_required %} • Registration required{% endif %}
+                                </div>
+                            </td>
+                            <td><span class="soft-badge">{{ event.category|title }}</span></td>
+                            <td>
+                                <div class="fw-semibold">{{ event.start_date.strftime('%b %d, %Y') }}</div>
+                                <div class="text-muted small mt-1">{{ event.start_time or 'Time not set' }}</div>
+                            </td>
+                            <td>{{ event.location or 'Online' }}</td>
+                            <td>
+                                <div class="d-flex flex-column gap-2">
+                                    <span class="status-badge {% if event.is_published %}active{% else %}inactive{% endif %}">
+                                        <i class="bi {% if event.is_published %}bi-check2-circle{% else %}bi-eye-slash{% endif %}"></i>
+                                        {% if event.is_published %}Published{% else %}Draft{% endif %}
+                                    </span>
+                                    {% if event.start_date >= get_current_time() %}
+                                    <span class="status-badge live"><i class="bi bi-calendar-week"></i> Upcoming</span>
+                                    {% else %}
+                                    <span class="status-badge pending"><i class="bi bi-clock-history"></i> Past</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ url_for('admin.edit_event', event_id=event.id) }}" class="btn btn-outline-secondary" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ url_for('admin.delete_event', event_id=event.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-outline-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                <i class="bi bi-calendar-event"></i>
+                                <p class="mb-0 mt-2">No events have been created yet.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div>
-        <a href="{{ url_for('admin.add_event') }}" class="btn btn-gold">
-            <i class="bi bi-plus-circle"></i> Add Event
-        </a>
-    </div>
-</div>
 
-<!-- Events Table -->
-<div class="table-responsive">
-    <table class="table table-custom table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events.items %}
-            <tr>
-                <td>{{ loop.index + (events.page - 1) * events.per_page }}</td>
-                <td>
-                    {% if event.image %}
-                    <img src="{{ url_for('static', filename='uploads/' + event.image) }}" alt="{{ event.title }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                    {% else %}
-                    <div style="width: 50px; height: 50px; background: var(--gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold);">
-                        <i class="bi bi-calendar"></i>
-                    </div>
-                    {% endif %}
-                </td>
-                <td>
-                    <strong>{{ event.title|truncate(30) }}</strong>
-                    {% if event.is_featured %}
-                    <span class="badge bg-warning text-dark ms-1"><i class="bi bi-star-fill"></i></span>
-                    {% endif %}
-                    {% if event.is_online %}
-                    <span class="badge bg-info text-dark ms-1"><i class="bi bi-wifi"></i></span>
-                    {% endif %}
-                </td>
-                <td><span class="badge bg-secondary">{{ event.category|title }}</span></td>
-                <td>{{ event.start_date.strftime('%b %d, %Y') }}</td>
-                <td>{{ event.location or 'Online' }}</td>
-                <td>
-                    {% if event.is_published %}
-                    <span class="status-badge active"><i class="bi bi-check-circle"></i> Published</span>
-                    {% else %}
-                    <span class="status-badge inactive"><i class="bi bi-x-circle"></i> Draft</span>
-                    {% endif %}
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        <a href="{{ url_for('admin.edit_event', event_id=event.id) }}" class="btn btn-outline-gold" title="Edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ url_for('admin.delete_event', event_id=event.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <button type="submit" class="btn btn-outline-danger" title="Delete">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-<!-- Pagination -->
-{% if events.pages > 1 %}
-<nav aria-label="Page navigation" class="mt-4">
-    <ul class="pagination justify-content-center">
-        {% if events.has_prev %}
-        <li class="page-item">
-            <a class="page-link" href="{{ url_for('admin.events', page=events.prev_num) }}">&laquo;</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-        {% endif %}
-
-        {% for page_num in events.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
-            {% if page_num %}
-                {% if events.page == page_num %}
-                <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
-                {% else %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('admin.events', page=page_num) }}">{{ page_num }}</a></li>
-                {% endif %}
+    {% if events.pages > 1 %}
+    <nav aria-label="Events pagination">
+        <ul class="pagination justify-content-center">
+            {% if events.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin.events', page=events.prev_num) }}">&laquo;</a>
+            </li>
             {% else %}
-                <li class="page-item disabled"><span class="page-link">…</span></li>
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
             {% endif %}
-        {% endfor %}
 
-        {% if events.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="{{ url_for('admin.events', page=events.next_num) }}">&raquo;</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
+            {% for page_num in events.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    {% if events.page == page_num %}
+                    <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.events', page=page_num) }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if events.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin.events', page=events.next_num) }}">&raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 {% endblock %}

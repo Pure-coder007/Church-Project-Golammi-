@@ -1,0 +1,861 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}{{ event.title }} | Events | GOLAMMI{% endblock %}
+{% block meta_description %}{{ (event.short_description or event.description)|truncate(155) }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .event-detail-page {
+        background:
+            radial-gradient(circle at top left, rgba(201, 168, 76, 0.18), transparent 28%),
+            radial-gradient(circle at top right, rgba(26, 26, 26, 0.08), transparent 32%),
+            linear-gradient(180deg, #fcfbf7 0%, #f6f2e8 100%);
+    }
+
+    .event-hero {
+        position: relative;
+        overflow: hidden;
+        padding: 92px 0 56px;
+        background:
+            linear-gradient(135deg, rgba(10, 10, 10, 0.88), rgba(30, 24, 12, 0.72)),
+            url({{ url_for('static', filename='uploads/' + event.image) if event.image else url_for('static', filename='assets/img/go59.jpg') }}) center/cover no-repeat;
+        color: #fff;
+    }
+
+    .event-hero::before {
+        content: "";
+        position: absolute;
+        inset: auto auto -120px -80px;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(201, 168, 76, 0.24), transparent 68%);
+        pointer-events: none;
+    }
+
+    .event-hero::after {
+        content: "";
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 240px;
+        height: 240px;
+        border-radius: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        transform: rotate(18deg);
+        pointer-events: none;
+    }
+
+    .event-hero .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .event-hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.8fr);
+        gap: 1.4rem;
+        align-items: end;
+    }
+
+    .event-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 0.9rem;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(12px);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .event-kicker i {
+        color: var(--gold);
+    }
+
+    .event-headline {
+        font-size: clamp(1.9rem, 3.6vw, 3rem);
+        line-height: 1.02;
+        font-weight: 800;
+        margin: 0 0 0.8rem;
+        letter-spacing: -0.05em;
+        max-width: 11ch;
+    }
+
+    .event-summary {
+        max-width: 650px;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.86);
+        margin-bottom: 1.2rem;
+    }
+
+    .event-meta-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+    }
+
+    .event-meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 0.85rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(14px);
+        color: #fff;
+        min-width: 170px;
+    }
+
+    .event-meta-pill i {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(201, 168, 76, 0.18);
+        color: var(--gold);
+        font-size: 0.82rem;
+    }
+
+    .event-meta-pill span {
+        display: block;
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.62);
+        margin-bottom: 0.12rem;
+    }
+
+    .event-meta-pill strong {
+        font-size: 0.86rem;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .event-status-card {
+        padding: 1.15rem;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.16);
+    }
+
+    .event-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.48rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(201, 168, 76, 0.18);
+        color: #fff6da;
+        border: 1px solid rgba(201, 168, 76, 0.24);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+    }
+
+    .event-status-card h3 {
+        margin: 0.8rem 0 0.35rem;
+        font-size: 1.22rem;
+        color: #fff;
+    }
+
+    .event-status-card p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.76);
+        line-height: 1.65;
+        font-size: 0.88rem;
+    }
+
+    .event-main-section {
+        position: relative;
+        margin-top: -28px;
+        padding-bottom: 72px;
+    }
+
+    .event-main-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(310px, 0.75fr);
+        gap: 1.35rem;
+        align-items: start;
+    }
+
+    .event-panel {
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(201, 168, 76, 0.12);
+        box-shadow: 0 30px 70px rgba(75, 54, 8, 0.08);
+        backdrop-filter: blur(18px);
+        border-radius: 24px;
+    }
+
+    .event-story-card {
+        overflow: hidden;
+    }
+
+    .event-story-image {
+        width: 100%;
+        height: clamp(260px, 40vw, 460px);
+        object-fit: cover;
+        display: block;
+    }
+
+    .event-story-body {
+        padding: 1.5rem;
+    }
+
+    .section-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.42rem 0.78rem;
+        border-radius: 999px;
+        background: rgba(201, 168, 76, 0.12);
+        color: #7a5a12;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .event-story-body h2 {
+        margin: 0.8rem 0 0.8rem;
+        font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+        color: #17120b;
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+    }
+
+    .event-story-body p {
+        color: #574c3d;
+        line-height: 1.78;
+        font-size: 0.92rem;
+        margin-bottom: 1rem;
+        white-space: pre-line;
+    }
+
+    .event-highlight-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .event-highlight-card {
+        padding: 1rem;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 239, 225, 0.92));
+        border: 1px solid rgba(201, 168, 76, 0.14);
+    }
+
+    .event-highlight-card i {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(201, 168, 76, 0.16);
+        color: #8d6a16;
+        font-size: 0.9rem;
+        margin-bottom: 0.7rem;
+    }
+
+    .event-highlight-card h4 {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+        color: #1d1810;
+    }
+
+    .event-highlight-card p {
+        margin: 0;
+        font-size: 0.84rem;
+        line-height: 1.75;
+        color: #665a4a;
+    }
+
+    .event-sidebar {
+        display: grid;
+        gap: 1rem;
+        position: sticky;
+        top: 96px;
+    }
+
+    .event-info-card,
+    .event-cta-card,
+    .related-events-card {
+        padding: 1.2rem;
+    }
+
+    .sidebar-title {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 0.8rem;
+        color: #18130c;
+    }
+
+    .sidebar-title i {
+        width: 34px;
+        height: 34px;
+        border-radius: 11px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(201, 168, 76, 0.12);
+        color: #8d6a16;
+    }
+
+    .sidebar-title h3 {
+        margin: 0;
+        font-size: 0.98rem;
+        font-weight: 700;
+    }
+
+    .event-detail-list {
+        display: grid;
+        gap: 0.7rem;
+    }
+
+    .event-detail-row {
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 0.7rem;
+        align-items: start;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(30, 22, 11, 0.08);
+    }
+
+    .event-detail-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .event-detail-row i {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f7f1e3;
+        color: #8c6812;
+        font-size: 0.84rem;
+    }
+
+    .event-detail-row span {
+        display: block;
+        margin-bottom: 0.18rem;
+        color: #9f8f79;
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .event-detail-row strong,
+    .event-detail-row a {
+        color: #241c13;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        word-break: break-word;
+    }
+
+    .event-detail-row a:hover {
+        color: #8d6a16;
+    }
+
+    .event-cta-card {
+        background:
+            linear-gradient(180deg, rgba(28, 22, 14, 0.96), rgba(17, 14, 10, 0.96)),
+            radial-gradient(circle at top right, rgba(201, 168, 76, 0.18), transparent 36%);
+        color: #fff;
+    }
+
+    .event-cta-card p {
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        font-size: 0.88rem;
+    }
+
+    .event-actions {
+        display: grid;
+        gap: 0.65rem;
+    }
+
+    .event-btn-primary,
+    .event-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        min-height: 48px;
+        padding: 0.78rem 1rem;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 0.84rem;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .event-btn-primary {
+        background: linear-gradient(135deg, #d8b45a, #b88d2b);
+        color: #1a1207;
+        box-shadow: 0 18px 35px rgba(184, 141, 43, 0.28);
+    }
+
+    .event-btn-primary:hover {
+        color: #1a1207;
+        transform: translateY(-2px);
+        box-shadow: 0 22px 38px rgba(184, 141, 43, 0.34);
+    }
+
+    .event-btn-secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .event-btn-secondary:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    .event-note {
+        margin-top: 1rem;
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.82rem;
+        line-height: 1.7;
+    }
+
+    .related-events-list {
+        display: grid;
+        gap: 0.8rem;
+    }
+
+    .related-event-item {
+        display: grid;
+        grid-template-columns: 54px minmax(0, 1fr);
+        gap: 0.8rem;
+        align-items: center;
+        padding: 0.85rem;
+        border-radius: 16px;
+        background: #fbf8f1;
+        border: 1px solid rgba(201, 168, 76, 0.1);
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .related-event-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 36px rgba(75, 54, 8, 0.08);
+    }
+
+    .related-event-date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 54px;
+        height: 64px;
+        border-radius: 15px;
+        background: linear-gradient(180deg, #d8b45a, #bb9337);
+        color: #20170a;
+        font-weight: 800;
+        box-shadow: 0 14px 28px rgba(184, 141, 43, 0.22);
+    }
+
+    .related-event-date strong {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .related-event-date span {
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .related-event-copy h4 {
+        margin: 0 0 0.35rem;
+        font-size: 0.9rem;
+        color: #21180e;
+    }
+
+    .related-event-copy p {
+        margin: 0;
+        color: #766955;
+        font-size: 0.8rem;
+        line-height: 1.65;
+    }
+
+    .related-event-copy a {
+        color: inherit;
+    }
+
+    .event-bottom-cta {
+        margin-top: 1.35rem;
+        padding: 1.35rem 1.5rem;
+        border-radius: 22px;
+        background: linear-gradient(135deg, rgba(30, 23, 14, 0.96), rgba(47, 37, 20, 0.92));
+        color: #fff;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 1rem;
+        align-items: center;
+        box-shadow: 0 22px 48px rgba(30, 23, 14, 0.16);
+    }
+
+    .event-bottom-cta h3 {
+        margin: 0 0 0.35rem;
+        color: #fff;
+        font-size: 1.05rem;
+    }
+
+    .event-bottom-cta p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.65;
+        font-size: 0.86rem;
+    }
+
+    @media (max-width: 1199px) {
+        .event-hero-grid,
+        .event-main-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .event-sidebar {
+            position: static;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .event-hero {
+            padding: 78px 0 46px;
+        }
+
+        .event-headline {
+            max-width: none;
+        }
+
+        .event-meta-pill {
+            min-width: 100%;
+        }
+
+        .event-story-body,
+        .event-info-card,
+        .event-cta-card,
+        .related-events-card {
+            padding: 1rem;
+        }
+
+        .event-highlight-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .event-bottom-cta {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+
+        .event-detail-row {
+            grid-template-columns: 34px minmax(0, 1fr);
+            gap: 0.6rem;
+        }
+
+        .event-detail-row i,
+        .sidebar-title i,
+        .event-meta-pill i {
+            width: 30px;
+            height: 30px;
+            font-size: 0.74rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% set is_past = event.end_date and event.end_date < now or (not event.end_date and event.start_date < now) %}
+{% set is_happening = event.start_date <= now and (event.end_date and event.end_date >= now) %}
+
+<div class="event-detail-page">
+    <section class="event-hero">
+        <div class="container">
+            <div class="event-hero-grid">
+                <div>
+                    <div class="event-kicker">
+                        <i class="bi bi-stars"></i>
+                        {{ event.category|title }} Experience
+                    </div>
+                    <h1 class="event-headline">{{ event.title }}</h1>
+                    <p class="event-summary">{{ event.short_description or event.description|truncate(260) }}</p>
+
+                    <div class="event-meta-strip">
+                        <div class="event-meta-pill">
+                            <i class="bi bi-calendar-event"></i>
+                            <div>
+                                <span>Date</span>
+                                <strong>{{ event.start_date.strftime('%A, %B %d, %Y') }}</strong>
+                            </div>
+                        </div>
+                        <div class="event-meta-pill">
+                            <i class="bi bi-clock-history"></i>
+                            <div>
+                                <span>Time</span>
+                                <strong>{{ event.start_time or 'Time to be announced' }}{% if event.end_time %} - {{ event.end_time }}{% endif %}</strong>
+                            </div>
+                        </div>
+                        <div class="event-meta-pill">
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <span>Venue</span>
+                                <strong>{{ event.venue or event.location or 'Online event' }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-status-card">
+                    <div class="event-status-badge">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        {% if is_happening %}
+                        Happening Now
+                        {% elif is_past %}
+                        Past Event
+                        {% else %}
+                        Upcoming Event
+                        {% endif %}
+                    </div>
+                    <h3>Set apart for impact</h3>
+                    <p>
+                        {% if event.is_online %}
+                        Join from anywhere and be part of the moment live.
+                        {% else %}
+                        Prepare for a well-curated in-person experience with clarity, atmosphere, and purpose.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-main-section">
+        <div class="container">
+            <div class="event-main-grid">
+                <div>
+                    <article class="event-panel event-story-card">
+                        {% if event.image %}
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + event.image) }}"
+                            alt="{{ event.title }}"
+                            class="event-story-image"
+                        >
+                        {% endif %}
+
+                        <div class="event-story-body">
+                            <div class="section-chip">
+                                <i class="bi bi-gem"></i>
+                                Event Overview
+                            </div>
+                            <h2>{{ event.title }}</h2>
+                            <p>{{ event.description }}</p>
+
+                            <div class="event-highlight-grid">
+                                <div class="event-highlight-card">
+                                    <i class="bi bi-calendar2-check"></i>
+                                    <h4>Well Timed</h4>
+                                    <p>
+                                        {% if event.end_date and event.end_date.date() != event.start_date.date() %}
+                                        Runs from {{ event.start_date.strftime('%b %d, %Y') }} to {{ event.end_date.strftime('%b %d, %Y') }}.
+                                        {% else %}
+                                        Scheduled for {{ event.start_date.strftime('%B %d, %Y') }} with a focused, single-event flow.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="event-highlight-card">
+                                    <i class="bi bi-broadcast-pin"></i>
+                                    <h4>{{ 'Accessible Online' if event.is_online else 'On-site Experience' }}</h4>
+                                    <p>
+                                        {% if event.is_online %}
+                                        Attend remotely through the official event link without missing the core experience.
+                                        {% else %}
+                                        Gather physically at {{ event.venue or event.location or 'the announced venue' }} for a more immersive atmosphere.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="event-highlight-card">
+                                    <i class="bi bi-collection-play"></i>
+                                    <h4>Clear Structure</h4>
+                                    <p>
+                                        The page now presents the event with stronger hierarchy, cleaner information blocks, and direct next actions.
+                                    </p>
+                                </div>
+                                <div class="event-highlight-card">
+                                    <i class="bi bi-person-check"></i>
+                                    <h4>{{ 'Registration Open' if event.registration_link else 'Open Attendance' }}</h4>
+                                    <p>
+                                        {% if event.registration_link %}
+                                        Reserve your place early using the registration link so attendance is easier to manage.
+                                        {% else %}
+                                        No registration link is required right now. Follow the listed details and attend as announced.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div class="event-bottom-cta">
+                        <div>
+                            <h3>Keep this event in view</h3>
+                            <p>Share it with your church community, invite someone, and return here for the confirmed details.</p>
+                        </div>
+                        <a href="{{ url_for('frontend.events') }}" class="event-btn-primary">Explore More Events</a>
+                    </div>
+                </div>
+
+                <aside class="event-sidebar">
+                    <div class="event-panel event-info-card">
+                        <div class="sidebar-title">
+                            <i class="bi bi-info-circle"></i>
+                            <h3>Event Details</h3>
+                        </div>
+
+                        <div class="event-detail-list">
+                            <div class="event-detail-row">
+                                <i class="bi bi-calendar3"></i>
+                                <div>
+                                    <span>Start Date</span>
+                                    <strong>{{ event.start_date.strftime('%A, %B %d, %Y') }}</strong>
+                                </div>
+                            </div>
+
+                            {% if event.end_date %}
+                            <div class="event-detail-row">
+                                <i class="bi bi-calendar-range"></i>
+                                <div>
+                                    <span>End Date</span>
+                                    <strong>{{ event.end_date.strftime('%A, %B %d, %Y') }}</strong>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="event-detail-row">
+                                <i class="bi bi-alarm"></i>
+                                <div>
+                                    <span>Time</span>
+                                    <strong>{{ event.start_time or 'Not specified' }}{% if event.end_time %} - {{ event.end_time }}{% endif %}</strong>
+                                </div>
+                            </div>
+
+                            <div class="event-detail-row">
+                                <i class="bi bi-tag"></i>
+                                <div>
+                                    <span>Category</span>
+                                    <strong>{{ event.category|title }}</strong>
+                                </div>
+                            </div>
+
+                            <div class="event-detail-row">
+                                <i class="bi bi-geo-alt"></i>
+                                <div>
+                                    <span>Location</span>
+                                    <strong>{{ event.venue or event.location or 'Online' }}</strong>
+                                </div>
+                            </div>
+
+                            {% if event.is_online and event.online_link %}
+                            <div class="event-detail-row">
+                                <i class="bi bi-link-45deg"></i>
+                                <div>
+                                    <span>Online Access</span>
+                                    <a href="{{ event.online_link }}" target="_blank" rel="noopener">Join the event online</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="event-panel event-cta-card">
+                        <div class="sidebar-title">
+                            <i class="bi bi-rocket-takeoff"></i>
+                            <h3>Take Action</h3>
+                        </div>
+                        <p>
+                            Make the next step easy. Register if needed, join online when available, or browse more upcoming events.
+                        </p>
+                        <div class="event-actions">
+                            {% if event.registration_link %}
+                            <a href="{{ event.registration_link }}" target="_blank" rel="noopener" class="event-btn-primary">
+                                <i class="bi bi-pencil-square"></i>
+                                Register Now
+                            </a>
+                            {% endif %}
+
+                            {% if event.is_online and event.online_link %}
+                            <a href="{{ event.online_link }}" target="_blank" rel="noopener" class="event-btn-secondary">
+                                <i class="bi bi-camera-video"></i>
+                                Join Online
+                            </a>
+                            {% endif %}
+
+                            <a href="{{ url_for('frontend.events') }}" class="event-btn-secondary">
+                                <i class="bi bi-arrow-left"></i>
+                                Back to Events
+                            </a>
+                        </div>
+                        <div class="event-note">
+                            {% if is_past %}
+                            This event date has passed. Browse the events page for current and upcoming gatherings.
+                            {% else %}
+                            Save the date and keep an eye on this page for any final timing or venue updates.
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if related_events %}
+                    <div class="event-panel related-events-card">
+                        <div class="sidebar-title">
+                            <i class="bi bi-grid"></i>
+                            <h3>Related Events</h3>
+                        </div>
+
+                        <div class="related-events-list">
+                            {% for related_event in related_events %}
+                            <div class="related-event-item">
+                                <div class="related-event-date">
+                                    <strong>{{ related_event.start_date.strftime('%d') }}</strong>
+                                    <span>{{ related_event.start_date.strftime('%b') }}</span>
+                                </div>
+                                <div class="related-event-copy">
+                                    <h4>
+                                        <a href="{{ url_for('frontend.event_detail', slug=related_event.slug) }}">{{ related_event.title }}</a>
+                                    </h4>
+                                    <p>{{ related_event.short_description or related_event.description|truncate(90) }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

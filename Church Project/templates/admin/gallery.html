@@ -1,10 +1,275 @@
 {% extends "admin/base.html" %}
 
 {% block title %}Gallery | GOLAMMI Admin{% endblock %}
+{% block page_title %}Gallery Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .gallery-card {
+        background: var(--white);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(201,168,76,0.08);
+        position: relative;
+    }
+
+    .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .gallery-card .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        background: var(--light-gray);
+        height: 220px;
+    }
+
+    .gallery-card .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-card:hover .image-wrapper img {
+        transform: scale(1.06);
+    }
+
+    .gallery-card .image-wrapper .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: flex-end;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .gallery-card:hover .image-wrapper .image-overlay {
+        opacity: 1;
+    }
+
+    .gallery-card .image-wrapper .image-overlay .quick-actions {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .gallery-card .image-wrapper .image-overlay .quick-actions .btn-action {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        color: #fff;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .gallery-card .image-wrapper .image-overlay .quick-actions .btn-action:hover {
+        background: var(--gold);
+        color: var(--black);
+        transform: scale(1.1);
+    }
+
+    .gallery-card .image-wrapper .badge-container {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-end;
+    }
+
+    .gallery-card .image-wrapper .badge-container .badge-custom {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .badge-featured {
+        background: var(--gold);
+        color: var(--black);
+    }
+
+    .badge-published {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .badge-draft {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .gallery-card .card-footer {
+        padding: 0.8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--white);
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .gallery-card .card-footer .image-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .gallery-card .card-footer .image-info .image-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--black);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gallery-card .card-footer .image-info .image-meta {
+        font-size: 0.7rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .gallery-card .card-footer .image-info .image-meta .category-badge {
+        background: rgba(201,168,76,0.12);
+        color: var(--gold-dark);
+        padding: 0.1rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.6rem;
+        font-weight: 600;
+    }
+
+    .gallery-card .card-footer .delete-btn {
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        border-radius: 8px;
+    }
+
+    .gallery-card .card-footer .delete-btn:hover {
+        color: #dc3545;
+        background: rgba(220,53,69,0.08);
+        transform: scale(1.1);
+    }
+
+    .empty-gallery {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+    }
+
+    .empty-gallery .empty-icon {
+        font-size: 4rem;
+        color: #ddd;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .empty-gallery h5 {
+        color: var(--black);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-gallery p {
+        color: #888;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 992px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-card .image-wrapper {
+            height: 180px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .gallery-card .image-wrapper {
+            height: 140px;
+        }
+
+        .gallery-card .card-footer {
+            padding: 0.5rem 0.6rem;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .gallery-card .card-footer .image-info .image-title {
+            font-size: 0.75rem;
+        }
+
+        .gallery-card .card-footer .image-info .image-meta {
+            font-size: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .gallery-card .card-footer .delete-btn {
+            font-size: 0.9rem;
+            padding: 0.2rem 0.4rem;
+            margin-top: 0.3rem;
+        }
+
+        .gallery-card .image-wrapper .badge-container .badge-custom {
+            font-size: 0.5rem;
+            padding: 0.15rem 0.5rem;
+        }
+
+        .gallery-card .image-wrapper .image-overlay .quick-actions .btn-action {
+            width: 30px;
+            height: 30px;
+            font-size: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"><i class="bi bi-images" style="color: var(--gold);"></i> Gallery</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="text-muted mb-0">Manage your church gallery images</p>
+    </div>
     <div>
         <a href="{{ url_for('admin.add_gallery') }}" class="btn btn-gold">
             <i class="bi bi-plus-circle"></i> Add Image
@@ -13,38 +278,76 @@
 </div>
 
 <!-- Gallery Grid -->
-<div class="row g-4">
+{% if images.items %}
+<div class="gallery-grid">
     {% for image in images.items %}
-    <div class="col-lg-3 col-md-4 col-6">
-        <div class="admin-card" style="padding: 0; overflow: hidden; border-bottom: none;">
-            <div style="position: relative;">
-                <img src="{{ url_for('static', filename='uploads/' + image.thumbnail_path) }}" alt="{{ image.title }}" style="width: 100%; height: 200px; object-fit: cover;">
-                <div style="position: absolute; top: 10px; right: 10px;">
-                    {% if image.is_featured %}
-                    <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i></span>
-                    {% endif %}
-                </div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); padding: 20px 12px 12px;">
-                    <h6 style="color: #fff; margin: 0; font-size: 0.85rem;">{{ image.title|truncate(25) }}</h6>
-                    <span class="badge bg-secondary" style="font-size: 0.65rem;">{{ image.category|title }}</span>
-                    <span class="badge {% if image.is_published %}bg-success{% else %}bg-danger{% endif %}" style="font-size: 0.65rem;">
-                        {% if image.is_published %}Published{% else %}Draft{% endif %}
-                    </span>
+    <div class="gallery-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+        <div class="image-wrapper">
+            {% if image.thumbnail_path %}
+            <img src="{{ url_for('static', filename='uploads/' + image.thumbnail_path) }}" alt="{{ image.title }}" loading="lazy">
+            {% else %}
+            <img src="{{ url_for('static', filename='assets/img/placeholder.jpg') }}" alt="{{ image.title }}" loading="lazy">
+            {% endif %}
+
+            <div class="image-overlay">
+                <div class="quick-actions">
+                    <button
+                        type="button"
+                        class="btn-action"
+                        onclick="viewImage('{{ url_for('static', filename='uploads/' + (image.image_path or image.thumbnail_path)) }}', '{{ image.title|e }}')"
+                        title="View Full Image"
+                    >
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <a href="{{ url_for('admin.edit_gallery', image_id=image.id) }}" class="btn-action" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <button type="button" class="btn-action" onclick="toggleFeatured('{{ image.id }}')" title="Toggle Featured">
+                        <i class="bi bi-star"></i>
+                    </button>
                 </div>
             </div>
-            <div style="padding: 10px 12px; background: var(--white);">
-                <div class="btn-group btn-group-sm w-100">
-                    <form action="{{ url_for('admin.delete_gallery', image_id=image.id) }}" method="POST" style="display: inline; width: 100%;" onsubmit="return confirm('Are you sure you want to delete this image?');">
-                        <button type="submit" class="btn btn-outline-danger w-100">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </form>
+
+            <div class="badge-container">
+                {% if image.is_featured %}
+                <span class="badge-custom badge-featured"><i class="bi bi-star-fill"></i> Featured</span>
+                {% endif %}
+                {% if image.is_published %}
+                <span class="badge-custom badge-published"><i class="bi bi-check-circle"></i> Published</span>
+                {% else %}
+                <span class="badge-custom badge-draft"><i class="bi bi-x-circle"></i> Draft</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="image-info">
+                <div class="image-title">{{ image.title }}</div>
+                <div class="image-meta">
+                    <span class="category-badge">{{ image.category|title }}</span>
+                    <span>{{ image.created_at.strftime('%b %d, %Y') }}</span>
                 </div>
             </div>
+            <form action="{{ url_for('admin.delete_gallery', image_id=image.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this image?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="delete-btn" title="Delete Image">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </form>
         </div>
     </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="empty-gallery">
+    <span class="empty-icon"><i class="bi bi-images"></i></span>
+    <h5>No Images in Gallery</h5>
+    <p>Start adding images to showcase your church events and activities.</p>
+    <a href="{{ url_for('admin.add_gallery') }}" class="btn btn-gold">
+        <i class="bi bi-plus-circle"></i> Add Your First Image
+    </a>
+</div>
+{% endif %}
 
 <!-- Pagination -->
 {% if images.pages > 1 %}
@@ -52,13 +355,13 @@
     <ul class="pagination justify-content-center">
         {% if images.has_prev %}
         <li class="page-item">
-            <a class="page-link" href="{{ url_for('admin.gallery', page=images.prev_num) }}">&laquo;</a>
+            <a class="page-link" href="{{ url_for('admin.gallery', page=images.prev_num) }}"><i class="bi bi-chevron-left"></i></a>
         </li>
         {% else %}
-        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-left"></i></span></li>
         {% endif %}
 
-        {% for page_num in images.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% for page_num in images.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
             {% if page_num %}
                 {% if images.page == page_num %}
                 <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
@@ -72,12 +375,120 @@
 
         {% if images.has_next %}
         <li class="page-item">
-            <a class="page-link" href="{{ url_for('admin.gallery', page=images.next_num) }}">&raquo;</a>
+            <a class="page-link" href="{{ url_for('admin.gallery', page=images.next_num) }}"><i class="bi bi-chevron-right"></i></a>
         </li>
         {% else %}
-        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-right"></i></span></li>
         {% endif %}
     </ul>
 </nav>
 {% endif %}
+
+<script>
+function viewImage(imageSrc, imageTitle) {
+    if (!imageSrc) {
+        return;
+    }
+
+    const lightbox = document.createElement('div');
+    lightbox.style.cssText = `
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        z-index: 99999;
+        cursor: pointer;
+        opacity: 0;
+        background: transparent;
+        transition: opacity 0.35s ease;
+    `;
+
+    const imgClone = document.createElement('img');
+    imgClone.src = imageSrc;
+    imgClone.alt = imageTitle || 'Gallery image';
+    imgClone.style.cssText = `
+        width: min(96vw, 1400px);
+        max-height: 94vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+        transform: scale(0.97);
+        transition: transform 0.35s ease;
+        cursor: default;
+    `;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.setAttribute('aria-label', 'Close image preview');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 18px;
+        right: 24px;
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.92);
+        color: #111;
+        font-size: 2rem;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    `;
+
+    const removeLightbox = () => {
+        lightbox.style.opacity = '0';
+        imgClone.style.transform = 'scale(0.97)';
+        setTimeout(() => lightbox.remove(), 350);
+        document.removeEventListener('keydown', escHandler);
+    };
+
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            removeLightbox();
+        }
+    };
+
+    lightbox.appendChild(imgClone);
+    lightbox.appendChild(closeBtn);
+    document.body.appendChild(lightbox);
+
+    requestAnimationFrame(() => {
+        lightbox.style.opacity = '1';
+        imgClone.style.transform = 'scale(1)';
+    });
+
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox || e.target === closeBtn) {
+            removeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', escHandler);
+}
+
+function toggleFeatured(imageId) {
+    fetch('/admin/gallery/toggle-featured/' + imageId, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error toggling featured status');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
 {% endblock %}

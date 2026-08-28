@@ -6,6 +6,8 @@ from models.gallery import GalleryImage
 from models.radio import RadioStation, RadioSchedule
 from models.testimony import Testimony
 from models.prayer import PrayerRequest
+from models.donation import DonationSubmission
+from models.activity import ActivityLog
 from models.church_stats import ChurchStats, FinancialRecord, MemberGrowth
 
 # Export all models
@@ -19,6 +21,8 @@ __all__ = [
     'RadioSchedule',
     'Testimony',
     'PrayerRequest',
+    'DonationSubmission',
+    'ActivityLog',
     'ChurchStats',
     'FinancialRecord',
     'MemberGrowth'

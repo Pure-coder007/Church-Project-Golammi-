@@ -1,11 +1,12 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class Testimony(db.Model):
     __tablename__ = 'testimonies'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
     author_name = db.Column(db.String(100), nullable=False)
@@ -23,7 +24,7 @@ class Testimony(db.Model):
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    reviewed_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    reviewed_by = uuid_fk_column('users.id')
     reviewed_at = db.Column(db.DateTime)
 
     # Relationship

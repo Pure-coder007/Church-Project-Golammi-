@@ -42,8 +42,21 @@ def has_letters(value):
     return any(char.isalpha() for char in (value or ""))
 
 
+def normalize_contact_reason(reason):
+    normalized = (reason or "").strip().lower()
+    aliases = {
+        "prayer request": "prayer",
+        "prayer-line": "prayer",
+        "prayer line": "prayer",
+        "prayer line request": "prayer",
+        "share testimony": "testimony",
+        "testimonies": "testimony",
+    }
+    return aliases.get(normalized, normalized)
+
+
 def is_valid_reason(reason):
-    return reason in {"prayer", "testimony", "giving", "general"}
+    return normalize_contact_reason(reason) in {"prayer", "testimony", "giving", "general", "volunteer"}
 
 
 def get_event_modal_event():
@@ -511,7 +524,7 @@ def contact():
         name = (request.form.get('name') or '').strip()
         email = (request.form.get('email') or '').strip()
         phone = (request.form.get('phone') or '').strip()
-        reason = (request.form.get('reason') or '').strip()
+        reason = normalize_contact_reason(request.form.get('reason'))
         subject = (request.form.get('subject') or '').strip()
         message = (request.form.get('message') or '').strip()
 

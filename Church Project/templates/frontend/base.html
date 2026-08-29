@@ -182,6 +182,89 @@
         }
 
         @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
+            .mobile-nav-toggle {
+                font-size: 34px !important;
+            }
+
+            h1,
+            .h1,
+            .display-1,
+            .display-2,
+            .display-3,
+            .display-4,
+            .display-5,
+            .display-6,
+            .hero-carousel .carousel-caption h1,
+            .page-title,
+            .section-title h2 {
+                font-size: min(2rem, 8vw) !important;
+                line-height: 1.2 !important;
+            }
+
+            h2,
+            .h2 {
+                font-size: min(1.7rem, 7vw) !important;
+                line-height: 1.24 !important;
+            }
+
+            h3,
+            .h3 {
+                font-size: min(1.45rem, 6vw) !important;
+                line-height: 1.28 !important;
+            }
+
+            h4,
+            .h4,
+            h5,
+            .h5,
+            h6,
+            .h6 {
+                font-size: min(1.15rem, 5vw) !important;
+                line-height: 1.32 !important;
+            }
+
+            p,
+            li,
+            label,
+            input,
+            select,
+            textarea,
+            button,
+            .btn,
+            .navmenu a,
+            .navmenu a:focus,
+            .hero-carousel .carousel-caption .sub-title,
+            .hero-carousel .carousel-caption .tagline,
+            .section-title p,
+            small,
+            .small {
+                font-size: 0.82rem !important;
+                line-height: 1.55 !important;
+            }
+
+            .navmenu a i,
+            .navmenu a:focus i,
+            .btn i,
+            .section-title i,
+            [class*="bi-"],
+            .bi {
+                font-size: 0.9em;
+            }
+
+            .navmenu a,
+            .navmenu a:focus {
+                font-size: 0.95rem !important;
+                padding: 12px 22px !important;
+            }
+
+            .navmenu .dropdown ul {
+                margin: 10px 14px !important;
+            }
+
             #preloader .loader-logo {
                 width: 78px;
                 height: 78px;
@@ -208,6 +291,68 @@
         }
 
         @media (max-width: 480px) {
+            html {
+                font-size: 13px;
+            }
+
+            .mobile-nav-toggle {
+                font-size: 32px !important;
+            }
+
+            h1,
+            .h1,
+            .display-1,
+            .display-2,
+            .display-3,
+            .display-4,
+            .display-5,
+            .display-6,
+            .hero-carousel .carousel-caption h1,
+            .page-title,
+            .section-title h2 {
+                font-size: min(1.7rem, 9vw) !important;
+            }
+
+            h2,
+            .h2 {
+                font-size: min(1.45rem, 7.5vw) !important;
+            }
+
+            h3,
+            .h3 {
+                font-size: min(1.25rem, 6vw) !important;
+            }
+
+            h4,
+            .h4,
+            h5,
+            .h5,
+            h6,
+            .h6,
+            p,
+            li,
+            label,
+            input,
+            select,
+            textarea,
+            button,
+            .btn,
+            .navmenu a,
+            .navmenu a:focus,
+            .hero-carousel .carousel-caption .sub-title,
+            .hero-carousel .carousel-caption .tagline,
+            .section-title p,
+            small,
+            .small {
+                font-size: 0.78rem !important;
+            }
+
+            .navmenu a,
+            .navmenu a:focus {
+                font-size: 0.88rem !important;
+                padding: 11px 20px !important;
+            }
+
             .event-promo-modal .modal-dialog {
                 width: min(94vw, calc(100vw - 1rem));
                 max-width: 94vw;
@@ -250,7 +395,6 @@
                     <li><a href="{{ url_for('frontend.sermons') }}" class="{% if request.endpoint == 'frontend.sermons' %}active{% endif %}">Sermons</a></li>
                     <li><a href="{{ url_for('frontend.events') }}" class="{% if request.endpoint == 'frontend.events' %}active{% endif %}">Events</a></li>
                     <li><a href="{{ url_for('frontend.prayer') }}" class="{% if request.endpoint == 'frontend.prayer' %}active{% endif %}">Prayer</a></li>
-                    <li><a href="{{ url_for('frontend.media') }}" class="{% if request.endpoint == 'frontend.media' %}active{% endif %}">Media</a></li>
                     <li><a href="{{ url_for('frontend.giving') }}" class="{% if request.endpoint == 'frontend.giving' %}active{% endif %}">Giving</a></li>
                     <li><a href="{{ url_for('frontend.school_of_prophets') }}" class="{% if request.endpoint == 'frontend.school_of_prophets' %}active{% endif %}">Prophetic School</a></li>
                     <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -309,8 +453,9 @@
                     <div class="footer-contact pt-3">
                         <p><strong>Gateway of Life and Miracle Ministries International</strong></p>
                         <p><strong>Golammi Worship Center</strong></p>
-                        <p class="mt-3"><strong>Phone:</strong> <span>+234 800 000 0000</span></p>
-                        <p><strong>Email:</strong> <span>info@golammi.org</span></p>
+                        <p class="mt-3"><strong>Phone 1:</strong> <span>09032804020</span></p>
+                        <p><strong>Phone 2:</strong> <span>08060998511</span></p>
+                        <p><strong>Email:</strong> <span>golammiworshipcenter@gmail.com</span></p>
                         <p><strong>Headquarters:</strong> <span>17, Adeyinka Street, Agodo, Cele Egbe Bus Stop, Ikotun Isolo Road, Lagos.</span></p>
                         <p><strong>Ikeja Assembly:</strong> <span>6, Olowu Street, off Obafemi Awolowo Way, Ikeja, Lagos.</span></p>
                         <p><strong>Ado-Ekiti Assembly:</strong> <span>Ore Ofe Avenue, Adjacent Arts and Culture Centre Along Technical School, Ekute Quarters, Ado-Ekiti.</span></p>

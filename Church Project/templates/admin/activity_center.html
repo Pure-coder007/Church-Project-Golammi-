@@ -54,9 +54,7 @@
     }
 
     .activity-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
-        gap: 22px;
+        display: block;
     }
 
     .activity-surface {
@@ -262,38 +260,6 @@
         pointer-events: none;
     }
 
-    .activity-side-stack {
-        display: grid;
-        gap: 18px;
-    }
-
-    .activity-list {
-        display: grid;
-        gap: 10px;
-    }
-
-    .activity-list-item {
-        padding: 14px 16px;
-        border-radius: 18px;
-        border: 1px solid rgba(223, 230, 244, 0.9);
-        background: #fbfcff;
-    }
-
-    .activity-list-item strong {
-        display: block;
-        margin-bottom: 6px;
-        font-size: 0.8rem;
-        color: var(--text);
-    }
-
-    .activity-list-item p {
-        margin: 0;
-        font-size: 0.72rem;
-        line-height: 1.55;
-        color: var(--muted);
-        word-break: break-word;
-    }
-
     .activity-note-badge {
         display: inline-flex;
         align-items: center;
@@ -309,10 +275,6 @@
     @media (max-width: 1199px) {
         .activity-overview {
             grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .activity-layout {
-            grid-template-columns: 1fr;
         }
     }
 
@@ -487,51 +449,5 @@
         {% endif %}
     </div>
 
-    <div class="activity-side-stack">
-        <div class="activity-surface">
-            <div class="activity-header">
-                <div>
-                    <h4>Most Opened Pages</h4>
-                    <p>The pages below are getting the most attention from visitors or admins.</p>
-                </div>
-            </div>
-            <div class="activity-list">
-                {% for path, visit_count in top_pages %}
-                <div class="activity-list-item">
-                    <strong>{{ path }}</strong>
-                    <p>Opened {{ "{:,}".format(visit_count) }} times.</p>
-                </div>
-                {% else %}
-                <div class="activity-list-item">
-                    <strong>No page activity yet</strong>
-                    <p>Traffic summaries will appear here as the website is used.</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="activity-surface">
-            <div class="activity-header">
-                <div>
-                    <h4>Latest Errors</h4>
-                    <p>Quickly review failed requests, broken links, or pages people could not open correctly.</p>
-                </div>
-            </div>
-            <div class="activity-list">
-                {% for log in recent_errors %}
-                <div class="activity-list-item">
-                    <strong>{{ log.action_label }}</strong>
-                    <p>{{ log.path }}</p>
-                    <p>Returned HTTP {{ log.status_code }} in {{ log.response_time_ms }}ms on {{ log.occurred_at.strftime('%b %d, %Y %I:%M %p') }}.</p>
-                </div>
-                {% else %}
-                <div class="activity-list-item">
-                    <strong>No recent errors</strong>
-                    <p>No failed requests have been recorded recently.</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}

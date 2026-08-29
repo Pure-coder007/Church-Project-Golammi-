@@ -1,12 +1,13 @@
 from datetime import datetime
 
 from extensions import db
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class ActivityLog(db.Model):
     __tablename__ = "activity_logs"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     occurred_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     method = db.Column(db.String(10), nullable=False)
     path = db.Column(db.String(500), nullable=False)
@@ -20,7 +21,7 @@ class ActivityLog(db.Model):
     visitor_key = db.Column(db.String(64))
     user_agent = db.Column(db.String(500))
     referrer = db.Column(db.String(500))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = uuid_fk_column("users.id")
 
     user = db.relationship("User", foreign_keys=[user_id])
 

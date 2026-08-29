@@ -315,43 +315,7 @@
     </div>
 
     <div class="row g-4">
-        <div class="col-xl-4">
-            <div class="admin-card h-100" data-aos="fade-up" data-aos-delay="120">
-                <div class="admin-card-header">
-                    <div>
-                        <h5 class="admin-card-title">Church Growth</h5>
-                        <p class="admin-card-subtitle">Current recorded member count and pastoral admin load.</p>
-                    </div>
-                    <span class="eyebrow"><i class="bi bi-people"></i> {{ stats.total_members }} members</span>
-                </div>
-                <div class="hero-balance-grid" style="margin-top: 0;">
-                    <div class="hero-balance-item">
-                        <div class="metric-label">Users</div>
-                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_users }}</div>
-                    </div>
-                    <div class="hero-balance-item">
-                        <div class="metric-label">Radio Stations</div>
-                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_radio_stations }}</div>
-                    </div>
-                    <div class="hero-balance-item">
-                        <div class="metric-label">Gallery Images</div>
-                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.total_gallery_images }}</div>
-                    </div>
-                    <div class="hero-balance-item">
-                        <div class="metric-label">Pending Testimonies</div>
-                        <div class="metric-value" style="font-size: 2.2rem;">{{ stats.pending_testimonies }}</div>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <a href="{{ url_for('admin.analytics') }}" class="btn btn-gold w-100">
-                        <i class="bi bi-bar-chart-line"></i>
-                        Open Analytics Workspace
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-8">
+        <div class="col-12">
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="admin-card h-100" data-aos="fade-up" data-aos-delay="160">

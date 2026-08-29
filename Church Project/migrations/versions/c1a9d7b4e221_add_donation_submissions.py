@@ -19,7 +19,7 @@ depends_on = None
 def upgrade():
     op.create_table(
         "donation_submissions",
-        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("id", sa.Uuid(as_uuid=False), nullable=False),
         sa.Column("full_name", sa.String(length=100), nullable=False),
         sa.Column("email", sa.String(length=120), nullable=False),
         sa.Column("phone", sa.String(length=20), nullable=True),

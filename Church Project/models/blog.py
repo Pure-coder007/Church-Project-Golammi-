@@ -1,11 +1,12 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     title = db.Column(db.String(200), nullable=False)
     slug = db.Column(db.String(200), unique=True, nullable=False)
     content = db.Column(db.Text, nullable=False)
@@ -31,8 +32,8 @@ class BlogPost(db.Model):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-    updated_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_by = uuid_fk_column("users.id")
+    updated_by = uuid_fk_column("users.id")
 
     # Relationships
     comments = db.relationship(
@@ -46,8 +47,8 @@ class BlogPost(db.Model):
 class BlogComment(db.Model):
     __tablename__ = "blog_comments"
 
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"), nullable=False)
+    id = uuid_pk_column()
+    post_id = uuid_fk_column("blog_posts.id", nullable=False)
     author_name = db.Column(db.String(100), nullable=False)
     author_email = db.Column(db.String(120))
     content = db.Column(db.Text, nullable=False)

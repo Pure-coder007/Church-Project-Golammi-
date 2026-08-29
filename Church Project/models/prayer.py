@@ -1,11 +1,12 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class PrayerRequest(db.Model):
     __tablename__ = 'prayer_requests'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120))
     phone = db.Column(db.String(20))
@@ -18,7 +19,7 @@ class PrayerRequest(db.Model):
 
     # Response
     response = db.Column(db.Text)
-    responded_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    responded_by = uuid_fk_column('users.id')
     responded_at = db.Column(db.DateTime)
 
     # Timestamps

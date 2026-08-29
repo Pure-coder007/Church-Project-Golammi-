@@ -899,7 +899,7 @@
 <!-- ======= Testimonials Section - Dynamic from Database ======= -->
 <section id="testimonials" class="testimonials section" style="background: #fff;">
     <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonies of God's Power</h2>
+        <h2>Testimonies</h2>
         <p>Hear what God is doing in the lives of people through Golammi Worship Center.</p>
     </div>
 
@@ -912,7 +912,7 @@
                         <div class="quote-pattern">
                             <i class="bi bi-quote"></i>
                         </div>
-                        <p>{{ testimony.content|truncate(150) }}</p>
+                        <p>{{ testimony.content }}</p>
                         <div class="client-info">
                             <div class="client-image">
                                 {% if testimony.image %}

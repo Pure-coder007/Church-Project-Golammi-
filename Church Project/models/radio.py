@@ -1,11 +1,12 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class RadioStation(db.Model):
     __tablename__ = "radio_stations"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     stream_url = db.Column(db.String(500), nullable=False)  # Audio stream URL
@@ -27,7 +28,7 @@ class RadioStation(db.Model):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_by = uuid_fk_column("users.id")
 
     def __repr__(self):
         return f"<RadioStation {self.name}>"
@@ -36,10 +37,8 @@ class RadioStation(db.Model):
 class RadioSchedule(db.Model):
     __tablename__ = "radio_schedules"
 
-    id = db.Column(db.Integer, primary_key=True)
-    station_id = db.Column(
-        db.Integer, db.ForeignKey("radio_stations.id"), nullable=False
-    )
+    id = uuid_pk_column()
+    station_id = uuid_fk_column("radio_stations.id", nullable=False)
     day_of_week = db.Column(db.Integer, nullable=False)  # 0-6 (Monday-Sunday)
     start_time = db.Column(db.String(10), nullable=False)  # HH:MM format
     end_time = db.Column(db.String(10), nullable=False)
@@ -52,7 +51,7 @@ class RadioSchedule(db.Model):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_by = uuid_fk_column("users.id")
 
     def __repr__(self):
         return f"<RadioSchedule {self.program_name}>"

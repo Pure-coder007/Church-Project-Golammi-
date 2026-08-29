@@ -1,5 +1,6 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 # models/contact.py
@@ -7,7 +8,7 @@ from datetime import datetime
 class ContactMessage(db.Model):
     __tablename__ = 'contact_messages'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(20))
@@ -17,7 +18,7 @@ class ContactMessage(db.Model):
     is_read = db.Column(db.Boolean, default=False)
     is_replied = db.Column(db.Boolean, default=False)
     replied_at = db.Column(db.DateTime)
-    replied_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    replied_by = uuid_fk_column('users.id')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     replier = db.relationship('User', foreign_keys=[replied_by])

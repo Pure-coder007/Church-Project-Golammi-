@@ -73,7 +73,7 @@ def create_app(config_class=DevelopmentConfig):
     # User loader
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return User.query.get(user_id)
 
     @app.before_request
     def capture_request_started_at():
@@ -186,8 +186,19 @@ def create_app(config_class=DevelopmentConfig):
     return app
 
 
+def get_runtime_config():
+    env_name = (os.environ.get("FLASK_ENV") or os.environ.get("APP_ENV") or "development").strip().lower()
+    if env_name == "production":
+        return ProductionConfig
+    return DevelopmentConfig
+
+
 # Create app instance
-app = create_app(DevelopmentConfig)
+app = create_app(get_runtime_config())
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(
+        debug=app.config.get("DEBUG", False),
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+    )

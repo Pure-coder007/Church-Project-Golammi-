@@ -19,7 +19,7 @@ depends_on = None
 def upgrade():
     op.create_table(
         "activity_logs",
-        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("id", sa.Uuid(as_uuid=False), nullable=False),
         sa.Column("occurred_at", sa.DateTime(), nullable=False),
         sa.Column("method", sa.String(length=10), nullable=False),
         sa.Column("path", sa.String(length=500), nullable=False),
@@ -33,7 +33,7 @@ def upgrade():
         sa.Column("visitor_key", sa.String(length=64), nullable=True),
         sa.Column("user_agent", sa.String(length=500), nullable=True),
         sa.Column("referrer", sa.String(length=500), nullable=True),
-        sa.Column("user_id", sa.Integer(), nullable=True),
+        sa.Column("user_id", sa.Uuid(as_uuid=False), nullable=True),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"]),
         sa.PrimaryKeyConstraint("id"),
     )

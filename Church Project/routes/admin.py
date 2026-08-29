@@ -80,6 +80,82 @@ def build_growth_series(records, limit=12):
     return labels, values
 
 
+def normalize_contact_reason(reason):
+    normalized = (reason or "").strip().lower()
+    aliases = {
+        "prayer request": "prayer",
+        "prayer-line": "prayer",
+        "prayer line": "prayer",
+        "prayer line request": "prayer",
+        "share testimony": "testimony",
+        "testimonies": "testimony",
+    }
+    return aliases.get(normalized, normalized)
+
+
+def sync_categorized_contact_messages():
+    legacy_messages = ContactMessage.query.order_by(ContactMessage.created_at.asc()).all()
+    has_changes = False
+
+    for msg in legacy_messages:
+        normalized_reason = normalize_contact_reason(msg.reason)
+
+        if normalized_reason == "testimony":
+            existing_testimony = Testimony.query.filter_by(
+                title=msg.subject,
+                content=msg.message,
+                author_name=msg.name,
+                author_email=msg.email,
+            ).first()
+            if not existing_testimony:
+                db.session.add(
+                    Testimony(
+                        title=msg.subject,
+                        content=msg.message,
+                        author_name=msg.name,
+                        author_email=msg.email,
+                        author_phone=msg.phone or None,
+                        category="other",
+                        image=None,
+                        is_featured=False,
+                        is_approved=False,
+                        is_published=False,
+                        created_at=msg.created_at or datetime.utcnow(),
+                        updated_at=msg.created_at or datetime.utcnow(),
+                    )
+                )
+            db.session.delete(msg)
+            has_changes = True
+        elif normalized_reason == "prayer":
+            prayer_body = msg.message.strip()
+            if msg.subject and msg.subject.strip() and msg.subject.strip().lower() not in prayer_body.lower():
+                prayer_body = f"{msg.subject.strip()}\n\n{prayer_body}"
+
+            existing_prayer = PrayerRequest.query.filter_by(
+                full_name=msg.name,
+                email=msg.email,
+                phone=msg.phone or None,
+                request=prayer_body,
+            ).first()
+            if not existing_prayer:
+                db.session.add(
+                    PrayerRequest(
+                        full_name=msg.name,
+                        email=msg.email,
+                        phone=msg.phone or None,
+                        category="general",
+                        request=prayer_body,
+                        is_anonymous=False,
+                        created_at=msg.created_at or datetime.utcnow(),
+                    )
+                )
+            db.session.delete(msg)
+            has_changes = True
+
+    if has_changes:
+        db.session.commit()
+
+
 def admin_required(f):
     """Decorator to require admin access"""
     from functools import wraps
@@ -145,24 +221,24 @@ def dashboard():
         ).count(),
         "total_members": church_stats.total_members if church_stats else 0,
         "recent_sermons": Sermon.query.order_by(Sermon.created_at.desc())
-        .limit(5)
+        .limit(3)
         .all(),
-        "recent_events": Event.query.order_by(Event.start_date.asc()).limit(5).all(),
+        "recent_events": Event.query.order_by(Event.start_date.asc()).limit(3).all(),
         "recent_blog_posts": BlogPost.query.order_by(BlogPost.created_at.desc())
-        .limit(5)
+        .limit(3)
         .all(),
         "recent_prayer_requests": PrayerRequest.query.order_by(
             PrayerRequest.created_at.desc()
         )
-        .limit(5)
+        .limit(3)
         .all(),
         "recent_donation_submissions": DonationSubmission.query.order_by(
             DonationSubmission.created_at.desc()
         )
-        .limit(5)
+        .limit(3)
         .all(),
         "recent_activity_logs": ActivityLog.query.order_by(ActivityLog.occurred_at.desc())
-        .limit(5)
+        .limit(3)
         .all(),
     }
     return render_template("admin/dashboard.html", stats=stats)
@@ -199,7 +275,7 @@ def activity_center():
         )
 
     logs = query.order_by(ActivityLog.occurred_at.desc()).paginate(
-        page=page, per_page=25, error_out=False
+        page=page, per_page=5, error_out=False
     )
 
     total_logs = ActivityLog.query.count()
@@ -273,7 +349,7 @@ def donations():
     page = request.args.get("page", 1, type=int)
     donations = DonationSubmission.query.order_by(
         DonationSubmission.created_at.desc()
-    ).paginate(page=page, per_page=15, error_out=False)
+    ).paginate(page=page, per_page=10, error_out=False)
 
     return render_template("admin/donations.html", donations=donations)
 
@@ -285,7 +361,7 @@ def donations():
 def users():
     """List all users"""
     page = request.args.get("page", 1, type=int)
-    users = User.query.order_by(User.created_at.desc()).paginate(page=page, per_page=20)
+    users = User.query.order_by(User.created_at.desc()).paginate(page=page, per_page=5)
     return render_template("admin/users.html", users=users)
 
 
@@ -311,7 +387,7 @@ def add_user():
     return render_template("admin/user_form.html", form=form, title="Add User")
 
 
-@admin_bp.route("/users/edit/<int:user_id>", methods=["GET", "POST"])
+@admin_bp.route("/users/edit/<string:user_id>", methods=["GET", "POST"])
 @login_required
 @super_admin_required
 def edit_user(user_id):
@@ -336,7 +412,7 @@ def edit_user(user_id):
     )
 
 
-@admin_bp.route("/users/delete/<int:user_id>", methods=["POST"])
+@admin_bp.route("/users/delete/<string:user_id>", methods=["POST"])
 @login_required
 @super_admin_required
 def delete_user(user_id):
@@ -418,7 +494,7 @@ def add_sermon():
     return render_template("admin/sermon_form.html", form=form, title="Add Sermon")
 
 
-@admin_bp.route("/sermons/edit/<int:sermon_id>", methods=["GET", "POST"])
+@admin_bp.route("/sermons/edit/<string:sermon_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
 def edit_sermon(sermon_id):
@@ -475,7 +551,7 @@ def edit_sermon(sermon_id):
     )
 
 
-@admin_bp.route("/sermons/delete/<int:sermon_id>", methods=["POST"])
+@admin_bp.route("/sermons/delete/<string:sermon_id>", methods=["POST"])
 @login_required
 @admin_required
 def delete_sermon(sermon_id):
@@ -498,7 +574,7 @@ def delete_sermon(sermon_id):
     return redirect(url_for("admin.sermons"))
 
 
-@admin_bp.route("/sermons/toggle-live/<int:sermon_id>", methods=["POST"])
+@admin_bp.route("/sermons/toggle-live/<string:sermon_id>", methods=["POST"])
 @login_required
 @admin_required
 def toggle_live_sermon(sermon_id):
@@ -574,7 +650,7 @@ def add_event():
     return render_template("admin/event_form.html", form=form, title="Add Event")
 
 
-@admin_bp.route("/events/edit/<int:event_id>", methods=["GET", "POST"])
+@admin_bp.route("/events/edit/<string:event_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
 def edit_event(event_id):
@@ -583,14 +659,15 @@ def edit_event(event_id):
     form = EventForm(obj=event)
 
     if form.validate_on_submit():
-        if form.image.data:
+        uploaded_image = form.image.data
+        if hasattr(uploaded_image, "filename") and uploaded_image.filename:
             if event.image:
                 old_path = os.path.join(
                     current_app.config["UPLOAD_FOLDER"], event.image
                 )
                 if os.path.exists(old_path):
                     os.remove(old_path)
-            event.image = save_picture(form.image.data, "events", size=(800, 500))
+            event.image = save_picture(uploaded_image, "events", size=(800, 500))
 
         event.title = form.title.data
         event.description = form.description.data
@@ -624,7 +701,7 @@ def edit_event(event_id):
     )
 
 
-@admin_bp.route("/events/delete/<int:event_id>", methods=["POST"])
+@admin_bp.route("/events/delete/<string:event_id>", methods=["POST"])
 @login_required
 @admin_required
 def delete_event(event_id):
@@ -692,7 +769,7 @@ def add_blog():
     return render_template("admin/blog_form.html", form=form, title="Add Blog Post")
 
 
-@admin_bp.route("/blog/edit/<int:post_id>", methods=["GET", "POST"])
+@admin_bp.route("/blog/edit/<string:post_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
 def edit_blog(post_id):
@@ -735,7 +812,7 @@ def edit_blog(post_id):
     )
 
 
-@admin_bp.route("/blog/delete/<int:post_id>", methods=["POST"])
+@admin_bp.route("/blog/delete/<string:post_id>", methods=["POST"])
 @login_required
 @admin_required
 def delete_blog(post_id):
@@ -759,7 +836,7 @@ def gallery():
     """List all gallery images"""
     page = request.args.get("page", 1, type=int)
     images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).paginate(
-        page=page, per_page=20
+        page=page, per_page=10
     )
     return render_template("admin/gallery.html", images=images)
 
@@ -794,7 +871,7 @@ def add_gallery():
     return render_template("admin/gallery_form.html", form=form, title="Add Image")
 
 
-@admin_bp.route("/gallery/delete/<int:image_id>", methods=["POST"])
+@admin_bp.route("/gallery/delete/<string:image_id>", methods=["POST"])
 @login_required
 @admin_required
 def delete_gallery(image_id):
@@ -820,7 +897,10 @@ def delete_gallery(image_id):
 @admin_required
 def radio():
     """List all radio stations"""
-    stations = RadioStation.query.all()
+    page = request.args.get("page", 1, type=int)
+    stations = RadioStation.query.order_by(RadioStation.created_at.desc()).paginate(
+        page=page, per_page=10, error_out=False
+    )
     return render_template("admin/radio.html", stations=stations)
 
 
@@ -856,7 +936,7 @@ def add_radio():
     )
 
 
-@admin_bp.route("/radio/edit/<int:station_id>", methods=["GET", "POST"])
+@admin_bp.route("/radio/edit/<string:station_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
 def edit_radio(station_id):
@@ -893,7 +973,7 @@ def edit_radio(station_id):
     )
 
 
-@admin_bp.route("/radio/delete/<int:station_id>", methods=["POST"])
+@admin_bp.route("/radio/delete/<string:station_id>", methods=["POST"])
 @login_required
 @admin_required
 def delete_radio(station_id):
@@ -916,6 +996,7 @@ def delete_radio(station_id):
 @admin_required
 def testimonies():
     """List all testimonies"""
+    sync_categorized_contact_messages()
     page = request.args.get('page', 1, type=int)
     testimonies = Testimony.query.order_by(Testimony.created_at.desc()).paginate(page=page, per_page=10)
     return render_template('admin/testimonies.html', testimonies=testimonies)
@@ -959,7 +1040,7 @@ def add_testimony():
     return render_template('admin/testimony_form.html', form=form, title='Add Testimony')
 
 
-@admin_bp.route('/testimonies/edit/<int:testimony_id>', methods=['GET', 'POST'])
+@admin_bp.route('/testimonies/edit/<string:testimony_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def edit_testimony(testimony_id):
@@ -999,7 +1080,7 @@ def edit_testimony(testimony_id):
     return render_template('admin/testimony_form.html', form=form, testimony=testimony, title='Edit Testimony')
 
 
-@admin_bp.route('/testimonies/approve/<int:testimony_id>', methods=['POST'])
+@admin_bp.route('/testimonies/approve/<string:testimony_id>', methods=['POST'])
 @login_required
 @admin_required
 def approve_testimony(testimony_id):
@@ -1015,7 +1096,7 @@ def approve_testimony(testimony_id):
     return redirect(url_for('admin.testimonies'))
 
 
-@admin_bp.route('/testimonies/delete/<int:testimony_id>', methods=['POST'])
+@admin_bp.route('/testimonies/delete/<string:testimony_id>', methods=['POST'])
 @login_required
 @admin_required
 def delete_testimony(testimony_id):
@@ -1041,6 +1122,7 @@ def delete_testimony(testimony_id):
 @admin_required
 def prayer_requests():
     """List all prayer requests"""
+    sync_categorized_contact_messages()
     page = request.args.get('page', 1, type=int)
 
     # Get paginated results
@@ -1118,7 +1200,7 @@ def add_prayer_request():
     return render_template('admin/add_prayer_request.html', form=form, title='Add Prayer Request')
 
 
-@admin_bp.route('/prayer-requests/edit/<int:request_id>', methods=['GET', 'POST'])
+@admin_bp.route('/prayer-requests/edit/<string:request_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def edit_prayer_request(request_id):
@@ -1168,7 +1250,7 @@ def edit_prayer_request(request_id):
     return render_template('admin/edit_prayer_request.html', form=form, prayer=prayer, title='Edit Prayer Request')
 
 
-@admin_bp.route('/prayer-requests/respond/<int:request_id>', methods=['POST'])
+@admin_bp.route('/prayer-requests/respond/<string:request_id>', methods=['POST'])
 @login_required
 @admin_required
 def respond_prayer(request_id):
@@ -1199,7 +1281,7 @@ def respond_prayer(request_id):
     return redirect(url_for('admin.prayer_requests'))
 
 
-@admin_bp.route('/prayer-requests/mark-answered/<int:request_id>', methods=['POST'])
+@admin_bp.route('/prayer-requests/mark-answered/<string:request_id>', methods=['POST'])
 @login_required
 @admin_required
 def mark_answered(request_id):
@@ -1214,7 +1296,7 @@ def mark_answered(request_id):
     return redirect(url_for('admin.prayer_requests'))
 
 
-@admin_bp.route('/prayer-requests/delete/<int:request_id>', methods=['POST'])
+@admin_bp.route('/prayer-requests/delete/<string:request_id>', methods=['POST'])
 @login_required
 @admin_required
 def delete_prayer(request_id):
@@ -1532,7 +1614,7 @@ def analytics_data():
     })
 
 
-@admin_bp.route('/analytics/delete-financial/<int:record_id>', methods=['POST'])
+@admin_bp.route('/analytics/delete-financial/<string:record_id>', methods=['POST'])
 @login_required
 @super_admin_required
 def delete_financial(record_id):
@@ -1691,11 +1773,13 @@ def settings():
 @admin_required
 def contact_messages():
     """List all contact messages"""
+    sync_categorized_contact_messages()
     page = request.args.get('page', 1, type=int)
-    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).paginate(page=page, per_page=15)
-    return render_template('admin/contact_messages.html', messages=messages)
+    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).paginate(page=page, per_page=10)
+    unread_count = ContactMessage.query.filter_by(is_read=False).count()
+    return render_template('admin/contact_messages.html', messages=messages, unread_count=unread_count)
 
-@admin_bp.route('/contact-messages/delete/<int:msg_id>', methods=['POST'])
+@admin_bp.route('/contact-messages/delete/<string:msg_id>', methods=['POST'])
 @login_required
 @admin_required
 def delete_contact_message(msg_id):
@@ -1718,7 +1802,7 @@ def delete_contact_message(msg_id):
 #     return redirect(url_for('admin.contact_messages'))
 
 
-@admin_bp.route('/gallery/edit/<int:image_id>', methods=['GET', 'POST'])
+@admin_bp.route('/gallery/edit/<string:image_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def edit_gallery(image_id):
@@ -1759,7 +1843,7 @@ def edit_gallery(image_id):
 
 
 
-@admin_bp.route('/gallery/toggle-featured/<int:image_id>', methods=['POST'])
+@admin_bp.route('/gallery/toggle-featured/<string:image_id>', methods=['POST'])
 @login_required
 @admin_required
 def toggle_featured(image_id):
@@ -1774,7 +1858,7 @@ def toggle_featured(image_id):
 
 
 
-@admin_bp.route('/contact-messages/mark-read/<int:msg_id>', methods=['POST'])
+@admin_bp.route('/contact-messages/mark-read/<string:msg_id>', methods=['POST'])
 @login_required
 @admin_required
 def mark_contact_read(msg_id):

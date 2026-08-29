@@ -1,11 +1,12 @@
 from extensions import db
 from datetime import datetime
+from models.uuid_utils import uuid_pk_column, uuid_fk_column
 
 
 class Event(db.Model):
     __tablename__ = "events"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = uuid_pk_column()
     title = db.Column(db.String(200), nullable=False)
     slug = db.Column(db.String(200), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
@@ -40,8 +41,8 @@ class Event(db.Model):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-    updated_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_by = uuid_fk_column("users.id")
+    updated_by = uuid_fk_column("users.id")
 
     def __repr__(self):
         return f"<Event {self.title}>"

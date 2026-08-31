@@ -13,6 +13,25 @@ class Config:
         or "sqlite:///golammi.db"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = (
+        {
+            "pool_pre_ping": True,
+            "pool_recycle": 240,
+            "pool_timeout": 30,
+            "connect_args": {
+                "sslmode": "require",
+                "keepalives": 1,
+                "keepalives_idle": 30,
+                "keepalives_interval": 10,
+                "keepalives_count": 5,
+            },
+        }
+        if (
+            (os.environ.get("DATABASE_URL") or os.environ.get("PRODUCTION_DATABASE_URL") or "")
+            .startswith("postgresql")
+        )
+        else {}
+    )
     UPLOAD_FOLDER = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "static/uploads"
     )

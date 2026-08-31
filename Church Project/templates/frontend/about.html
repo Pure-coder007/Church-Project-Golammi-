@@ -133,6 +133,65 @@
         margin-bottom: 0;
     }
 
+    .history-section .story-visual-card,
+    .history-section .family-story-card {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f6ef 100%);
+        border: 1px solid rgba(180, 149, 79, 0.12);
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .history-section .story-visual-card img,
+    .history-section .family-story-card img {
+        width: 100%;
+        height: 100%;
+        min-height: 340px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .history-section .story-visual-copy,
+    .history-section .family-story-copy {
+        padding: 28px 28px 30px;
+    }
+
+    .history-section .story-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(180, 149, 79, 0.12);
+        color: var(--gold);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .history-section .story-visual-copy h3,
+    .history-section .family-story-copy h3 {
+        color: var(--black);
+        font-size: 1.7rem;
+        font-weight: 700;
+        margin-bottom: 0.85rem;
+    }
+
+    .history-section .story-visual-copy p,
+    .history-section .family-story-copy p {
+        color: #555;
+        font-size: 0.96rem;
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+    .history-section .family-story-card {
+        margin-top: 2rem;
+    }
+
     .timeline-wrapper {
         position: relative;
         padding-left: 40px;
@@ -302,6 +361,8 @@
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .leadership-section .leader-card:hover {
@@ -309,58 +370,31 @@
         box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
     }
 
+    .leadership-section .leadership-grid {
+        justify-content: center;
+    }
+
     .leadership-section .leader-card .leader-image {
         position: relative;
         overflow: hidden;
-        height: 280px;
+        height: 320px;
+        background: linear-gradient(180deg, #f8f9ff 0%, #eef2fb 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
     }
 
     .leadership-section .leader-card .leader-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center top;
         transition: transform 0.5s ease;
     }
 
     .leadership-section .leader-card:hover .leader-image img {
         transform: scale(1.05);
-    }
-
-    .leadership-section .leader-card .leader-image .social-links {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-        padding: 20px 15px 15px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .leadership-section .leader-card:hover .leader-image .social-links {
-        opacity: 1;
-    }
-
-    .leadership-section .leader-card .leader-image .social-links a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.15);
-        color: #fff;
-        font-size: 0.9rem;
-        transition: background 0.3s ease;
-        text-decoration: none;
-    }
-
-    .leadership-section .leader-card .leader-image .social-links a:hover {
-        background: var(--gold);
-        color: var(--black);
     }
 
     .leadership-section .leader-card .leader-info {
@@ -400,6 +434,19 @@
         .page-title p { font-size: 1rem; }
         .history-section .history-content h2 { font-size: 1.7rem; }
         .history-section .founder-card .founder-image { width: 100px; height: 100px; }
+        .history-section .story-visual-card img,
+        .history-section .family-story-card img { min-height: 260px; }
+        .history-section .story-visual-copy,
+        .history-section .family-story-copy { padding: 22px; }
+        .history-section .story-visual-copy h3,
+        .history-section .family-story-copy h3 { font-size: 1.35rem; }
+        .leadership-section .leader-card .leader-image {
+            height: 280px;
+            padding: 10px;
+        }
+        .leadership-section .leader-card .leader-info {
+            padding: 18px 18px 20px;
+        }
         .timeline-wrapper { padding-left: 25px; }
         .timeline-wrapper::before { left: 8px; }
         .timeline-item::before { left: -25px; width: 12px; height: 12px; }
@@ -410,7 +457,13 @@
         .history-section .history-content h2 { font-size: 1.4rem; }
         .mission-vision-section .mv-card { padding: 25px 20px; }
         .about-stats .stats-card .stats-number { font-size: 2rem; }
-        .leadership-section .leader-card .leader-image { height: 220px; }
+        .leadership-section .leader-card .leader-image {
+            height: 250px;
+            padding: 8px;
+        }
+        .leadership-section .leader-card .leader-info h4 { font-size: 1rem; }
+        .leadership-section .leader-card .leader-info .position,
+        .leadership-section .leader-card .leader-info p { font-size: 0.82rem; }
     }
 </style>
 {% endblock %}
@@ -453,6 +506,36 @@
                                 <h4>Prophet Dr. James Elinissi Iferemilekun</h4>
                                 <p class="founder-title">Founder &amp; General Overseer</p>
                                 <p>Known as the Lion of Jesus, Prophet Elinissi is the founder of Gateway of Life &amp; Miracle Ministries Int'l and carries a prophetic mandate to reconstruct mankind, awaken destinies, and restore divine order through the power of the Holy Spirit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-visual-card mt-4">
+                        <div class="row g-0 align-items-stretch">
+                            <div class="col-lg-5">
+                                <img src="{{ url_for('static', filename='assets/img/founder_small.jpeg') }}" alt="Young Prophet Dr. James Elinissi Iferemilekun">
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="story-visual-copy">
+                                    <span class="story-label"><i class="bi bi-camera-fill"></i> Early Years</span>
+                                    <h3>The Founder’s Early Journey</h3>
+                                    <p>This photograph carries a deeply personal part of the founder’s story. He was just 7 years old when his spiritual father, Prophet David Falade, was barbing his Nazarethic hair. It was not merely a childhood moment captured in an image, but a quiet sign of spiritual covering, early consecration, and the prophetic shaping of a life that God had already set apart. Long before the ministry became known to many, there were already signs that his journey would be unusual. Looking at this moment now, one can see the tenderness of God’s hand in the hidden years, preparing a child for an assignment that would later touch many lives.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="family-story-card">
+                        <div class="row g-0 align-items-stretch">
+                            <div class="col-lg-7 order-2 order-lg-1">
+                                <div class="family-story-copy">
+                                    <span class="story-label"><i class="bi bi-people-fill"></i> Family In Ministry</span>
+                                    <h3>The Founder and His Wife</h3>
+                                    <p>Ministry is not only built on calling, it is also strengthened by covenant, support, and shared sacrifice. This moment with the founder and his wife reflects that side of the story. Their walk together speaks of faith, service, endurance, and the quiet strength that helps sustain the work of God behind the scenes as well as before the congregation.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 order-1 order-lg-2">
+                                <img src="{{ url_for('static', filename='assets/img/founder_and_wife.jpeg') }}" alt="Prophet Dr. James Elinissi Iferemilekun and his wife">
                             </div>
                         </div>
                     </div>
@@ -640,34 +723,11 @@
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="leader-card">
-                    <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/go40.jpg') }}" alt="Prophet Dr. James Elinissi Iferemilekun">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-youtube"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
-                    </div>
-                    <div class="leader-info">
-                        <h4>Prophet Dr. James Elinissi Iferemilekun</h4>
-                        <p class="position">Founder / General Overseer</p>
-                        <p>Also known as the Lion of Jesus, he leads the ministry with a prophetic mandate for reconstruction, restoration, and destiny awakening.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
+        <div class="row g-4 leadership-grid">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
                         <img src="{{ url_for('static', filename='assets/img/person/person-f-7.webp') }}" alt="Lady Evangelist Elinissi Deborah Adejoke">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
                     </div>
                     <div class="leader-info">
                         <h4>Lady Evangelist Elinissi Deborah Adejoke</h4>
@@ -677,53 +737,35 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-7.webp') }}" alt="Evang Adeleye Mojeed Femi">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/EVANGELIST FEMI ADELEYE.jpeg') }}" alt="EVANGELIST FEMI ADELEYE">
                     </div>
                     <div class="leader-info">
-                        <h4>Evang Adeleye Mojeed Femi</h4>
+                        <h4>EVANGELIST FEMI ADELEYE</h4>
                         <p class="position">Church Admin</p>
                         <p>He oversees church administration and helps coordinate the operational life of the ministry.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-8.webp') }}" alt="Evang Jacobyeiya Samuel">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-whatsapp"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/Evangelist Jacobyeiya Sunday Samuel.jpeg') }}" alt="Evangelist Jacobyeiya Sunday Samuel">
                     </div>
                     <div class="leader-info">
-                        <h4>Evang Jacobyeiya Samuel</h4>
+                        <h4>Evangelist Jacobyeiya Sunday Samuel</h4>
                         <p class="position">Church Advisory Council Leader</p>
                         <p>He serves in counsel and guidance, helping strengthen the church through advisory leadership.</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row g-4 mt-2">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-11.webp') }}" alt="Pastor Divine Michael Bajulaiye">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/Pastor Divine Michael Bajulaiye .jpeg') }}" alt="Pastor Divine Michael Bajulaiye">
                     </div>
                     <div class="leader-info">
                         <h4>Pastor Divine Michael Bajulaiye</h4>
@@ -733,59 +775,83 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-12.webp') }}" alt="Lady Evangelist Omokoga Sarah">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/Deaconess Olalusi Modupeola Deborah.jpeg') }}" alt="Deaconess Olalusi Modupeola Deborah">
                     </div>
                     <div class="leader-info">
-                        <h4>Lady Evangelist Omokoga Sarah</h4>
+                        <h4>Deaconess Olalusi Modupeola Deborah</h4>
                         <p class="position">Minister</p>
                         <p>She serves faithfully in ministry and supports the spiritual life and work of the church.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-m-13.webp') }}" alt="Pastor Ojo Opeyemi and Evang Andrew Dickson">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/Pastor Ojo Opeyemi.jpeg') }}" alt="Pastor Ojo Opeyemi">
                     </div>
                     <div class="leader-info">
-                        <h4>Pastor Ojo Opeyemi &amp; Evang Andrew Dickson</h4>
+                        <h4>Pastor Ojo Opeyemi</h4>
                         <p class="position">Ministers</p>
-                        <p>They are part of the ministerial team serving the church through teaching, evangelism, and pastoral support.</p>
+                        <p>He is part of the ministerial team serving the church through teaching, evangelism, and pastoral support.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
                 <div class="leader-card">
                     <div class="leader-image">
-                        <img src="{{ url_for('static', filename='assets/img/person/person-f-10.webp') }}" alt="Deaconess Dominic Comfort, Deaconess Olalusi Modupeola, and Minister Adeyemi Opeyemi">
-                        <div class="social-links">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
+                        <img src="{{ url_for('static', filename='assets/img/Evang Andrew Dickson.jpeg') }}" alt="Evang Andrew Dickson">
                     </div>
                     <div class="leader-info">
-                        <h4>Support Ministers</h4>
-                        <p class="position">Ministry Team</p>
-                        <p>Deaconess Dominic Comfort, Deaconess Olalusi Modupeola, and Minister Adeyemi Opeyemi are among the ministers serving the church faithfully.</p>
+                        <h4>Evang Andrew Dickson</h4>
+                        <p class="position">Ministers</p>
+                        <p>He is part of the ministerial team serving the church faithfully through support, outreach, and service.</p>
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/Deaconess Dominic Comfort.jpeg') }}" alt="Deaconess Dominic Comfort">
+                    </div>
+                    <div class="leader-info">
+                        <h4>Deaconess Dominic Comfort</h4>
+                        <p class="position">Ministry Team</p>
+                        <p>She is among the faithful workers strengthening the ministry through committed service and support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/Minister Adeyemi Opeyemi.jpeg') }}" alt="Minister Adeyemi Opeyemi">
+                    </div>
+                    <div class="leader-info">
+                        <h4>Minister Adeyemi Opeyemi</h4>
+                        <p class="position">Assistant Media Director </p>
+                        <p>He serves as an assistant media director of the church, contributing with dedication to the life and work of the church.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <img src="{{ url_for('static', filename='assets/img/WhatsApp Image 2026-08-31 at 9.29.44 AM.jpeg') }}" alt="Lady Evangelist Omokoga Sarah Abisola">
+                    </div>
+                    <div class="leader-info">
+                        <h4>Lady Evangelist Omokoga Sarah Abisola</h4>
+                        <p class="position">Choir Coordinator</p>
+                        <p>She serves in the choir ministry and supports the work of the church through dedicated leadership and service.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

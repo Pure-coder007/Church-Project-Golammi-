@@ -6,11 +6,16 @@
 
 {% block extra_css %}
 <style>
+    #header {
+        z-index: 1005;
+    }
+
     .page-title {
         padding: 180px 0 100px 0;
         position: relative;
         background-size: cover;
         background-position: center;
+        z-index: 0;
     }
 
     .page-title::before {
@@ -66,6 +71,25 @@
 
     .page-title .breadcrumbs .separator {
         color: rgba(255, 255, 255, 0.4);
+    }
+
+    @media (max-width: 1199px) {
+        #header .mobile-nav-toggle {
+            position: relative;
+            z-index: 1006;
+            color: #ffffff !important;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        #header .mobile-nav-toggle:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
     }
 
     .history-section .history-content h3 {

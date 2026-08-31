@@ -186,6 +186,21 @@
                 font-size: 14px;
             }
 
+            #header .container-fluid.container-xl {
+                justify-content: flex-start !important;
+                gap: 12px;
+            }
+
+            #header .navmenu {
+                order: 1;
+                margin-right: 0;
+            }
+
+            #header .logo {
+                order: 2;
+                margin-right: auto;
+            }
+
             .mobile-nav-toggle {
                 font-size: 34px !important;
             }
@@ -293,6 +308,10 @@
         @media (max-width: 480px) {
             html {
                 font-size: 13px;
+            }
+
+            #header .container-fluid.container-xl {
+                gap: 10px;
             }
 
             .mobile-nav-toggle {

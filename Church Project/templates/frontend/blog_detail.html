@@ -16,7 +16,7 @@
         <div class="row g-5">
             <div class="col-lg-8">
                 {% if post.featured_image %}
-                <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="{{ post.title }}" class="img-fluid rounded-4 mb-4">
+                <img src="{{ media_url(post.featured_image) }}" alt="{{ post.title }}" class="img-fluid rounded-4 mb-4">
                 {% endif %}
                 <div class="p-4 rounded-4 bg-white shadow-sm">
                     <span class="badge text-bg-warning mb-3">{{ post.category }}</span>

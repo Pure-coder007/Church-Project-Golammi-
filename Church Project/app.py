@@ -7,7 +7,7 @@ from routes.admin import admin_bp
 from models import User, Sermon, Event, BlogPost, GalleryImage, RadioStation, RadioSchedule, Testimony, PrayerRequest, DonationSubmission, ActivityLog, ChurchStats, FinancialRecord, MemberGrowth
 from routes.frontend import frontend_bp
 from flask_login import current_user
-from utils import get_current_time
+from utils import get_current_time, media_url
 import os
 import hashlib
 from datetime import datetime
@@ -171,6 +171,7 @@ def create_app(config_class=DevelopmentConfig):
     def utility_processor():
         return {
             "get_current_time": get_current_time,
+            "media_url": media_url,
             "app_name": "GOLAMMI Worship Center",
         }
 

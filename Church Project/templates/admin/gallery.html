@@ -284,7 +284,7 @@
     <div class="gallery-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
         <div class="image-wrapper">
             {% if image.thumbnail_path %}
-            <img src="{{ url_for('static', filename='uploads/' + image.thumbnail_path) }}" alt="{{ image.title }}" loading="lazy">
+            <img src="{{ media_url(image.thumbnail_path) }}" alt="{{ image.title }}" loading="lazy">
             {% else %}
             <img src="{{ url_for('static', filename='assets/img/placeholder.jpg') }}" alt="{{ image.title }}" loading="lazy">
             {% endif %}
@@ -294,7 +294,7 @@
                     <button
                         type="button"
                         class="btn-action"
-                        onclick="viewImage('{{ url_for('static', filename='uploads/' + (image.image_path or image.thumbnail_path)) }}', '{{ image.title|e }}')"
+                        onclick="viewImage('{{ media_url(image.image_path or image.thumbnail_path) }}', '{{ image.title|e }}')"
                         title="View Full Image"
                     >
                         <i class="bi bi-eye"></i>

@@ -58,7 +58,7 @@
                             <td>{{ loop.index + (sermons.page - 1) * sermons.per_page }}</td>
                             <td>
                                 {% if sermon.thumbnail %}
-                                <img src="{{ url_for('static', filename='uploads/' + sermon.thumbnail) }}" alt="{{ sermon.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
+                                <img src="{{ media_url(sermon.thumbnail) }}" alt="{{ sermon.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
                                 {% else %}
                                 <div class="inline-avatar"><i class="bi bi-mic"></i></div>
                                 {% endif %}

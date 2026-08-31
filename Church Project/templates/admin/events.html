@@ -41,7 +41,7 @@
                             <td>{{ loop.index + (events.page - 1) * events.per_page }}</td>
                             <td>
                                 {% if event.image %}
-                                <img src="{{ url_for('static', filename='uploads/' + event.image) }}" alt="{{ event.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
+                                <img src="{{ media_url(event.image) }}" alt="{{ event.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
                                 {% else %}
                                 <div class="inline-avatar"><i class="bi bi-calendar-event"></i></div>
                                 {% endif %}

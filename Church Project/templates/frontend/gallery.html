@@ -465,7 +465,7 @@
             {% if images.items %}
                 {% for image in images.items %}
                 <div class="gallery-item {% if loop.first and images.items|length > 1 %}featured{% endif %}" data-category="{{ image.category }}">
-                    <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" alt="{{ image.title }}" loading="lazy">
+                    <img src="{{ media_url(image.image_path) }}" alt="{{ image.title }}" loading="lazy">
                     <span class="category-badge">{{ image.category|title }}</span>
                     <div class="gallery-overlay">
                         <span class="gallery-icon"><i class="bi bi-arrows-expand"></i></span>

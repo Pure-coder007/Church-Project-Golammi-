@@ -18,7 +18,7 @@
         padding: 92px 0 56px;
         background:
             linear-gradient(135deg, rgba(10, 10, 10, 0.88), rgba(30, 24, 12, 0.72)),
-            url({{ url_for('static', filename='uploads/' + event.image) if event.image else url_for('static', filename='assets/img/go59.jpg') }}) center/cover no-repeat;
+            url({{ media_url(event.image) if event.image else url_for('static', filename='assets/img/go59.jpg') }}) center/cover no-repeat;
         color: #fff;
     }
 
@@ -657,7 +657,7 @@
                     <article class="event-panel event-story-card">
                         {% if event.image %}
                         <img
-                            src="{{ url_for('static', filename='uploads/' + event.image) }}"
+                            src="{{ media_url(event.image) }}"
                             alt="{{ event.title }}"
                             class="event-story-image"
                         >

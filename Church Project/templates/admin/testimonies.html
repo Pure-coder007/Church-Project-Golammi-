@@ -366,7 +366,7 @@
                             data-content="{{ testimony.content|e }}"
                             data-email="{{ (testimony.author_email or '')|e }}"
                             data-phone="{{ (testimony.author_phone or '')|e }}"
-                            data-image="{{ url_for('static', filename='uploads/' + testimony.image) if testimony.image else url_for('static', filename='assets/img/logo_2.png') }}"
+                            data-image="{{ media_url(testimony.image) if testimony.image else url_for('static', filename='assets/img/logo_2.png') }}"
                             data-featured="{{ 'true' if testimony.is_featured else 'false' }}"
                             data-status="{% if testimony.is_published and testimony.is_approved %}Published{% elif testimony.is_approved %}Approved{% else %}Pending{% endif %}"
                             data-status-class="{% if testimony.is_published and testimony.is_approved %}bg-success{% elif testimony.is_approved %}bg-warning text-dark{% else %}bg-danger{% endif %}"

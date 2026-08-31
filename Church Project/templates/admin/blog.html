@@ -41,7 +41,7 @@
                             <td>{{ loop.index + (posts.page - 1) * posts.per_page }}</td>
                             <td>
                                 {% if post.featured_image %}
-                                <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="{{ post.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
+                                <img src="{{ media_url(post.featured_image) }}" alt="{{ post.title }}" style="width: 58px; height: 58px; object-fit: cover; border-radius: 18px;">
                                 {% else %}
                                 <div class="inline-avatar"><i class="bi bi-journal-richtext"></i></div>
                                 {% endif %}

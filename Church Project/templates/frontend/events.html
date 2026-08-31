@@ -167,7 +167,7 @@
                 </div>
                 <div class="col-lg-4 text-center">
                     {% if featured_event.image %}
-                    <img src="{{ url_for('static', filename='uploads/' + featured_event.image) }}" alt="{{ featured_event.title }}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
+                    <img src="{{ media_url(featured_event.image) }}" alt="{{ featured_event.title }}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
                     {% else %}
                     <img src="{{ url_for('static', filename='assets/img/go21.jpg') }}" alt="Conference" class="img-fluid rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
                     {% endif %}

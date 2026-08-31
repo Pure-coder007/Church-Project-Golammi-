@@ -35,6 +35,9 @@ class Config:
     UPLOAD_FOLDER = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "static/uploads"
     )
+    CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "").strip()
+    CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY", "").strip()
+    CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET", "").strip()
     MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50MB max upload
 
     # Security

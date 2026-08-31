@@ -107,7 +107,7 @@
                             {% endif %}
                             {% if testimony and testimony.image %}
                             <div class="mt-2">
-                                <img src="{{ url_for('static', filename='uploads/' + testimony.image) }}" alt="Current image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                                <img src="{{ media_url(testimony.image) }}" alt="Current image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
                                 <br><small class="text-muted">Current image</small>
                             </div>
                             {% endif %}

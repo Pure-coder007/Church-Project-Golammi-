@@ -76,7 +76,7 @@
                             <small class="text-muted">JPG, PNG, WEBP (Recommended: 800x500)</small>
                             {% if post and post.featured_image %}
                             <div class="mt-2">
-                                <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="Current image" style="width: 150px; height: 94px; object-fit: cover; border-radius: 6px;">
+                                <img src="{{ media_url(post.featured_image) }}" alt="Current image" style="width: 150px; height: 94px; object-fit: cover; border-radius: 6px;">
                             </div>
                             {% endif %}
                         </div>

@@ -340,7 +340,7 @@
                     <div class="sermon-card">
                         <div class="sermon-image">
                             {% if sermon.thumbnail %}
-                            <img src="{{ url_for('static', filename='uploads/' + sermon.thumbnail) }}" alt="{{ sermon.title }}">
+                            <img src="{{ media_url(sermon.thumbnail) }}" alt="{{ sermon.title }}">
                             {% else %}
                             <img src="{{ url_for('static', filename='assets/img/go5.jpg') }}" alt="{{ sermon.title }}">
                             {% endif %}
@@ -361,7 +361,7 @@
                                 </a>
                                 {% endif %}
                                 {% if sermon.audio_file %}
-                                <a href="{{ url_for('static', filename='uploads/' + sermon.audio_file) }}" class="btn-sermon btn-sermon-outline" download>
+                                <a href="{{ media_url(sermon.audio_file) }}" class="btn-sermon btn-sermon-outline" download>
                                     <i class="bi bi-download"></i> Audio
                                 </a>
                                 {% endif %}
@@ -429,7 +429,7 @@
                         </a>
                         {% endif %}
                         {% if featured_sermon.audio_file %}
-                        <a href="{{ url_for('static', filename='uploads/' + featured_sermon.audio_file) }}" class="btn-sermon btn-sermon-outline" download style="padding: 10px 25px; border-radius: 30px; font-size: 0.85rem; font-weight: 600; border: 2px solid var(--gold); color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                        <a href="{{ media_url(featured_sermon.audio_file) }}" class="btn-sermon btn-sermon-outline" download style="padding: 10px 25px; border-radius: 30px; font-size: 0.85rem; font-weight: 600; border: 2px solid var(--gold); color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
                             <i class="bi bi-download"></i> Download
                         </a>
                         {% endif %}
@@ -439,7 +439,7 @@
             <div class="col-lg-6" data-aos="fade-left">
                 <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
                     {% if featured_sermon.thumbnail %}
-                    <img src="{{ url_for('static', filename='uploads/' + featured_sermon.thumbnail) }}" alt="{{ featured_sermon.title }}" class="img-fluid w-100" style="height: 300px; object-fit: cover;">
+                    <img src="{{ media_url(featured_sermon.thumbnail) }}" alt="{{ featured_sermon.title }}" class="img-fluid w-100" style="height: 300px; object-fit: cover;">
                     {% else %}
                     <img src="{{ url_for('static', filename='assets/img/go25.jpg') }}" alt="{{ featured_sermon.title }}" class="img-fluid w-100" style="height: 300px; object-fit: cover;">
                     {% endif %}

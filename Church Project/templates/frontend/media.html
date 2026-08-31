@@ -97,7 +97,7 @@
                     <div class="media-card">
                         <div class="media-image">
                             {% if sermon.thumbnail %}
-                            <img src="{{ url_for('static', filename='uploads/' + sermon.thumbnail) }}" alt="{{ sermon.title }}">
+                            <img src="{{ media_url(sermon.thumbnail) }}" alt="{{ sermon.title }}">
                             {% else %}
                             <img src="{{ url_for('static', filename='assets/img/go5.jpg') }}" alt="{{ sermon.title }}">
                             {% endif %}

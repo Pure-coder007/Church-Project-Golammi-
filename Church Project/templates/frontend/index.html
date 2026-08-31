@@ -916,7 +916,7 @@
                         <div class="client-info">
                             <div class="client-image">
                                 {% if testimony.image %}
-                                <img src="{{ url_for('static', filename='uploads/' + testimony.image) }}" alt="{{ testimony.author_name }}">
+                                <img src="{{ media_url(testimony.image) }}" alt="{{ testimony.author_name }}">
                                 {% else %}
                                 <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="{{ testimony.author_name }}">
                                 {% endif %}
@@ -1060,7 +1060,7 @@
                 <article>
                     <div class="post-img">
                         {% if post.featured_image %}
-                        <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}" alt="{{ post.title }}" class="img-fluid">
+                        <img src="{{ media_url(post.featured_image) }}" alt="{{ post.title }}" class="img-fluid">
                         {% else %}
                         <img src="{{ url_for('static', filename='assets/img/go31.jpg') }}" alt="{{ post.title }}" class="img-fluid">
                         {% endif %}

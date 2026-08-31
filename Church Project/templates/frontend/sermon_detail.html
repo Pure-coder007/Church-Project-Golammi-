@@ -16,7 +16,7 @@
         <div class="row g-5">
             <div class="col-lg-8">
                 {% if sermon.thumbnail %}
-                <img src="{{ url_for('static', filename='uploads/' + sermon.thumbnail) }}" alt="{{ sermon.title }}" class="img-fluid rounded-4 mb-4">
+                <img src="{{ media_url(sermon.thumbnail) }}" alt="{{ sermon.title }}" class="img-fluid rounded-4 mb-4">
                 {% endif %}
                 <div class="p-4 rounded-4 bg-white shadow-sm">
                     <span class="badge text-bg-warning mb-3">{{ sermon.category|title }}</span>
@@ -31,7 +31,7 @@
                         <a class="btn btn-outline-primary" href="{{ sermon.live_stream_url }}" target="_blank">Open Live Stream</a>
                         {% endif %}
                         {% if sermon.audio_file %}
-                        <a class="btn btn-outline-dark" href="{{ url_for('static', filename='uploads/' + sermon.audio_file) }}" download>Download Audio</a>
+                        <a class="btn btn-outline-dark" href="{{ media_url(sermon.audio_file) }}" download>Download Audio</a>
                         {% endif %}
                     </div>
                 </div>

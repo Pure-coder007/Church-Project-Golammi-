@@ -426,7 +426,7 @@
             <div class="modal-content">
                 <div class="event-promo-layout">
                     <div class="event-promo-image-pane">
-                        <img src="{{ url_for('static', filename='uploads/' + event_modal_event.image) }}" alt="{{ event_modal_event.title }}" id="eventPromoModalLabel">
+                        <img src="{{ media_url(event_modal_event.image) }}" alt="{{ event_modal_event.title }}" id="eventPromoModalLabel">
                     </div>
                     <div class="event-promo-copy">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

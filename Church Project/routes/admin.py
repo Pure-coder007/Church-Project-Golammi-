@@ -19,7 +19,7 @@ from forms import (
     UserForm, SermonForm, EventForm, BlogForm, GalleryForm,
     RadioForm, RadioScheduleForm, TestimonyForm, SettingsForm, PrayerRequestForm
 )
-from utils import save_picture, save_file, generate_slug, get_current_time
+from utils import save_picture, save_file, generate_slug, get_current_time, delete_media_asset
 from datetime import datetime, timedelta
 import os
 from sqlalchemy import func, extract
@@ -505,22 +505,13 @@ def edit_sermon(sermon_id):
     if form.validate_on_submit():
         # Handle file uploads
         if form.audio_file.data:
-            # Delete old file if exists
             if sermon.audio_file:
-                old_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], sermon.audio_file
-                )
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(sermon.audio_file)
             sermon.audio_file = save_file(form.audio_file.data, "sermons")
 
         if form.thumbnail.data:
             if sermon.thumbnail:
-                old_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], sermon.thumbnail
-                )
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(sermon.thumbnail)
             sermon.thumbnail = save_picture(
                 form.thumbnail.data, "thumbnails", size=(400, 225)
             )
@@ -558,15 +549,10 @@ def delete_sermon(sermon_id):
     """Delete a sermon"""
     sermon = Sermon.query.get_or_404(sermon_id)
 
-    # Delete associated files
     if sermon.audio_file:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], sermon.audio_file)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(sermon.audio_file)
     if sermon.thumbnail:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], sermon.thumbnail)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(sermon.thumbnail)
 
     db.session.delete(sermon)
     db.session.commit()
@@ -662,11 +648,7 @@ def edit_event(event_id):
         uploaded_image = form.image.data
         if hasattr(uploaded_image, "filename") and uploaded_image.filename:
             if event.image:
-                old_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], event.image
-                )
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(event.image)
             event.image = save_picture(uploaded_image, "events", size=(800, 500))
 
         event.title = form.title.data
@@ -708,9 +690,7 @@ def delete_event(event_id):
     """Delete an event"""
     event = Event.query.get_or_404(event_id)
     if event.image:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], event.image)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(event.image)
     db.session.delete(event)
     db.session.commit()
     flash("Event deleted successfully!", "success")
@@ -780,11 +760,7 @@ def edit_blog(post_id):
     if form.validate_on_submit():
         if form.featured_image.data:
             if post.featured_image:
-                old_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], post.featured_image
-                )
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(post.featured_image)
             post.featured_image = save_picture(
                 form.featured_image.data, "blog", size=(800, 500)
             )
@@ -819,9 +795,7 @@ def delete_blog(post_id):
     """Delete a blog post"""
     post = BlogPost.query.get_or_404(post_id)
     if post.featured_image:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], post.featured_image)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(post.featured_image)
     db.session.delete(post)
     db.session.commit()
     flash("Blog post deleted successfully!", "success")
@@ -878,13 +852,9 @@ def delete_gallery(image_id):
     """Delete a gallery image"""
     image = GalleryImage.query.get_or_404(image_id)
     if image.image_path:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], image.image_path)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(image.image_path)
     if image.thumbnail_path:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], image.thumbnail_path)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(image.thumbnail_path)
     db.session.delete(image)
     db.session.commit()
     flash("Image deleted successfully!", "success")
@@ -947,11 +917,7 @@ def edit_radio(station_id):
     if form.validate_on_submit():
         if form.cover_image.data:
             if station.cover_image:
-                old_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], station.cover_image
-                )
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(station.cover_image)
             station.cover_image = save_picture(
                 form.cover_image.data, "radio", size=(400, 400)
             )
@@ -980,9 +946,7 @@ def delete_radio(station_id):
     """Delete a radio station"""
     station = RadioStation.query.get_or_404(station_id)
     if station.cover_image:
-        path = os.path.join(current_app.config["UPLOAD_FOLDER"], station.cover_image)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(station.cover_image)
     db.session.delete(station)
     db.session.commit()
     flash("Radio station deleted successfully!", "success")
@@ -1052,11 +1016,8 @@ def edit_testimony(testimony_id):
         # Handle image upload
         uploaded_image = form.image.data
         if hasattr(uploaded_image, "filename") and uploaded_image.filename:
-            # Delete old image if exists
             if testimony.image:
-                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], testimony.image)
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(testimony.image)
             testimony.image = save_picture(uploaded_image, 'testimonies', size=(400, 400))
 
         # Update fields
@@ -1103,11 +1064,8 @@ def delete_testimony(testimony_id):
     """Delete a testimony"""
     testimony = Testimony.query.get_or_404(testimony_id)
 
-    # Delete associated image
     if testimony.image:
-        path = os.path.join(current_app.config['UPLOAD_FOLDER'], testimony.image)
-        if os.path.exists(path):
-            os.remove(path)
+        delete_media_asset(testimony.image)
 
     db.session.delete(testimony)
     db.session.commit()
@@ -1813,17 +1771,11 @@ def edit_gallery(image_id):
     if form.validate_on_submit():
         # Handle image upload
         if form.image.data:
-            # Delete old images
             if image.image_path:
-                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image.image_path)
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(image.image_path)
             if image.thumbnail_path:
-                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image.thumbnail_path)
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                delete_media_asset(image.thumbnail_path)
 
-            # Save new images
             image_path = save_picture(form.image.data, 'gallery', size=(800, 800))
             thumbnail_path = save_picture(form.image.data, 'gallery/thumbnails', size=(300, 300))
             image.image_path = image_path

@@ -1,7 +1,7 @@
 {% extends "frontend/base.html" %}
 
 {% block title %}Radio | Gateway of Life and Miracle Ministries International | Golammi Worship Center{% endblock %}
-{% block meta_description %}Listen to live radio broadcasts from Gateway of Life and Miracle Ministries International - Golammi Worship Center.{% endblock %}
+{% block meta_description %}GOLAMMI Worship Radio is coming soon. Check back for prophetic worship, teaching, and live ministry broadcasts.{% endblock %}
 {% block meta_keywords %}Golammi Worship Center, GWC, radio, live broadcast, worship, sermons{% endblock %}
 
 {% block extra_css %}
@@ -45,6 +45,43 @@
         margin-bottom: 1rem;
         position: relative;
         z-index: 1;
+    }
+    .radio-player .radio-status.coming-soon {
+        background: var(--gold);
+        color: var(--black);
+    }
+    .radio-player .radio-status.coming-soon .pulse-dot {
+        background: var(--black);
+        animation: none;
+    }
+    .radio-player .coming-soon-copy {
+        max-width: 570px;
+        margin: 0.8rem auto 0;
+        color: rgba(255,255,255,0.72);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        position: relative;
+        z-index: 1;
+    }
+    .radio-player .coming-soon-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 1.5rem;
+        padding: 11px 18px;
+        border: 1px solid rgba(201,168,76,0.72);
+        border-radius: 999px;
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+        transition: all 0.25s ease;
+    }
+    .radio-player .coming-soon-link:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--black);
     }
     .radio-player .radio-status .pulse-dot {
         display: inline-block;
@@ -223,12 +260,12 @@
 <section class="section" style="padding-top: 40px;">
     <div class="container">
         <div class="radio-player" data-aos="fade-up">
+            {% if station and station.is_active and station.stream_url %}
             <span class="radio-icon"><i class="bi bi-radioactive"></i></span>
             <span class="radio-status">
-                <span class="pulse-dot"></span> 
-                {% if station and station.is_active %}LIVE{% else %}OFFLINE{% endif %}
+                <span class="pulse-dot"></span> LIVE
             </span>
-            <h2>{% if station %}{{ station.name }}{% else %}GOLAMMI Worship Radio{% endif %}</h2>
+            <h2>{{ station.name }}</h2>
             <p class="radio-sub">24/7 Streaming of Prophetic Worship &amp; Teaching</p>
             <p class="now-playing">Now Playing: <span>{{ station.current_track or 'Prophetic Worship - Season of Reconstruction' }}</span></p>
 
@@ -250,11 +287,16 @@
 
             <!-- Audio element for streaming -->
             <audio id="radioAudio" style="display: none;">
-                {% if station and station.stream_url %}
                 <source src="{{ station.stream_url }}" type="audio/mpeg">
                 <source src="{{ station.stream_url }}" type="audio/ogg">
-                {% endif %}
             </audio>
+            {% else %}
+            <span class="radio-icon"><i class="bi bi-broadcast"></i></span>
+            <span class="radio-status coming-soon"><span class="pulse-dot"></span> COMING SOON</span>
+            <h2>GOLAMMI Worship Radio</h2>
+            <p class="coming-soon-copy">We are preparing a home for prophetic worship, life-changing teaching, and ministry broadcasts. Please check back soon.</p>
+            <a class="coming-soon-link" href="{{ url_for('frontend.contact') }}"><i class="bi bi-bell"></i> Stay Connected</a>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -262,6 +304,7 @@
 <!-- ======= Schedule ======= -->
 <section class="section" style="padding-top: 0; padding-bottom: 40px;">
     <div class="container">
+        {% if station and station.is_active and station.stream_url %}
         <div class="text-center mb-4" data-aos="fade-up">
             <h3 style="color: var(--black); font-size: 1.4rem; font-weight: 700;">Broadcast Schedule</h3>
             <p style="color: #666; font-size: 0.9rem;">Tune in daily for programs that will bless and uplift your spirit.</p>
@@ -301,6 +344,12 @@
         <div class="text-center mt-4" data-aos="fade-up">
             <p style="color: #888; font-size: 0.85rem;"><i class="bi bi-headphones" style="color: var(--gold);"></i> Also available on mobile app and smart speakers</p>
         </div>
+        {% else %}
+        <div class="text-center" data-aos="fade-up">
+            <h3 style="color: var(--black); font-size: 1.4rem; font-weight: 700;">A new way to stay connected is on the way</h3>
+            <p style="color: #666; font-size: 0.9rem; max-width: 580px; margin: 0.75rem auto 0;">Follow the ministry online for updates on the launch of GOLAMMI Worship Radio.</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 

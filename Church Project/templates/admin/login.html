@@ -113,6 +113,13 @@
         color: var(--gold);
     }
 
+    .login-card .login-logo .logo-icon img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+        vertical-align: middle;
+    }
+
     .login-card .login-logo img {
         width: 70px;
         height: 70px;
@@ -582,7 +589,7 @@
         <!-- Logo -->
         <div class="login-logo">
             <div class="logo-icon">
-                <i class="bi bi-church"></i>
+                <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center">
             </div>
             <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center">
             <h2>Welcome Back</h2>

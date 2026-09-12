@@ -59,6 +59,14 @@ def is_valid_reason(reason):
     return normalize_contact_reason(reason) in {"prayer", "testimony", "giving", "general", "volunteer"}
 
 
+def event_closest_first_order(now=None):
+    now = now or datetime.utcnow()
+    return (
+        case((Event.start_date >= now, 0), else_=1),
+        Event.start_date.asc(),
+    )
+
+
 def get_event_modal_event():
     now = datetime.utcnow()
     featured_upcoming = (
@@ -69,7 +77,7 @@ def get_event_modal_event():
             db.or_(Event.end_date.is_(None), Event.end_date >= now),
             Event.is_featured == True,
         )
-        .order_by(Event.start_date.asc(), Event.created_at.desc())
+        .order_by(*event_closest_first_order(now), Event.created_at.desc())
         .first()
     )
     if featured_upcoming:
@@ -82,7 +90,7 @@ def get_event_modal_event():
             Event.image != "",
             db.or_(Event.end_date.is_(None), Event.end_date >= now),
         )
-        .order_by(Event.start_date.asc(), Event.created_at.desc())
+        .order_by(*event_closest_first_order(now), Event.created_at.desc())
         .first()
     )
     if upcoming:
@@ -113,11 +121,12 @@ def index():
     featured_sermons = (
         Sermon.query.filter_by(is_featured=True, is_published=True).limit(3).all()
     )
+    now = datetime.utcnow()
     upcoming_events = (
         Event.query.filter(
-            Event.start_date >= datetime.utcnow(), Event.is_published == True
+            Event.start_date >= now, Event.is_published == True
         )
-        .order_by(Event.start_date)
+        .order_by(*event_closest_first_order(now))
         .limit(3)
         .all()
     )
@@ -238,15 +247,13 @@ def events():
     if category != "all":
         query = query.filter_by(category=category)
 
-    future_first = case((Event.start_date >= now, 0), else_=1)
-
-    events = query.order_by(future_first, Event.start_date.asc()).paginate(
+    events = query.order_by(*event_closest_first_order(now)).paginate(
         page=page, per_page=current_app.config["EVENTS_PER_PAGE"], error_out=False
     )
 
     featured_event = (
         Event.query.filter_by(is_featured=True, is_published=True)
-        .order_by(future_first, Event.start_date.asc())
+        .order_by(*event_closest_first_order(now))
         .first()
     )
 
@@ -269,10 +276,7 @@ def event_detail(slug):
             Event.is_published == True,
             Event.category == event.category,
         )
-        .order_by(
-            case((Event.start_date >= now, 0), else_=1),
-            Event.start_date.asc(),
-        )
+        .order_by(*event_closest_first_order(now))
         .limit(3)
         .all()
     )
@@ -334,7 +338,7 @@ def giving():
         "email": "",
         "phone": "",
         "giving_type": "",
-        "amount": "",
+        "amount": "2000",
         "message": "",
         "anonymous": False,
     }
@@ -402,7 +406,7 @@ def giving():
                 "email": "",
                 "phone": "",
                 "giving_type": "",
-                "amount": "",
+                "amount": "2000",
                 "message": "",
                 "anonymous": False,
             }

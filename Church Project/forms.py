@@ -56,7 +56,12 @@ class UserForm(FlaskForm):
     full_name = StringField("Full Name", validators=[DataRequired(), Length(max=120), validate_text_field])
     role = SelectField(
         "Role",
-        choices=[("admin", "Admin"), ("moderator", "Moderator"), ("editor", "Editor")],
+        choices=[
+            ("super_admin", "Super Admin"),
+            ("admin", "Admin"),
+            ("moderator", "Moderator"),
+            ("editor", "Editor"),
+        ],
     )
     password = PasswordField("Password", validators=[Optional(), Length(min=6)])
     is_active = BooleanField("Active")

@@ -70,7 +70,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label fw-bold">Password {% if not user %}<span class="text-danger">*</span>{% endif %}</label>
-                            {{ form.password(class="form-control", placeholder="{% if user %}Leave blank to keep current{% else %}Enter password{% endif %}") }}
+                            {{ form.password(class="form-control") }}
                             {% if form.password.errors %}
                                 {% for error in form.password.errors %}
                                     <small class="text-danger">{{ error }}</small>

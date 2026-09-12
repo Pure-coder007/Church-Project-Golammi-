@@ -9,8 +9,8 @@
     <meta name="keywords" content="{% block meta_keywords %}Golammi Worship Center, GWC, Gateway of Life and Miracle Ministries, prophetic ministry, church, worship, prayer, miracles{% endblock %}">
 
     <!-- Favicons -->
-    <link href="{{ url_for('static', filename='assets/img/logo_2.png') }}" rel="icon">
-    <link href="{{ url_for('static', filename='assets/img/logo_2.png') }}" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='assets/img/gol_logo.png') }}" rel="icon">
+    <link href="{{ url_for('static', filename='assets/img/gol_logo.png') }}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -43,6 +43,7 @@
         .my_logo {
             width: 5rem;
             height: 5rem;
+            object-fit: contain;
         }
 
         /* ======================================================
@@ -389,7 +390,7 @@
     PRELOADER WITH LOGO
     ====================================================== -->
     <div id="preloader">
-        <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="loader-logo">
+        <img src="{{ url_for('static', filename='assets/img/gol_logo.png') }}" alt="Golammi Worship Center" class="loader-logo">
     </div>
 
     <!-- ======= Header ======= -->
@@ -397,7 +398,7 @@
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
             <a href="{{ url_for('frontend.index') }}" class="logo d-flex align-items-center">
                 <div>
-                    <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="my_logo">
+                    <img src="{{ url_for('static', filename='assets/img/gol_logo.png') }}" alt="Golammi Worship Center" class="my_logo">
                 </div>
             </a>
 
@@ -458,7 +459,7 @@
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="{{ url_for('frontend.index') }}" class="logo d-flex align-items-center">
                         <div>
-                            <img src="{{ url_for('static', filename='assets/img/logo_2.png') }}" alt="Golammi Worship Center" class="my_logo">
+                            <img src="{{ url_for('static', filename='assets/img/gol_logo.png') }}" alt="Golammi Worship Center" class="my_logo">
                         </div>
                     </a>
                     <div class="footer-contact pt-3">
